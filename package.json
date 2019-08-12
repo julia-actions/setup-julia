@@ -1,23 +1,25 @@
 {
-  "name": "node12-template-action",
-  "version": "0.0.0",
+  "name": "setup-julia",
+  "version": "1.0.0",
   "private": true,
-  "description": "Node 12 template action",
-  "main": "lib/main.js",
+  "description": "setup Julia action",
+  "main": "lib/setup-julia.js",
   "scripts": {
     "build": "tsc",
+    "format": "prettier --write **/*.ts",
+    "format-check": "prettier --check **/*.ts",
     "test": "jest"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/actions/node12-template.git"
+    "url": "git+https://github.com/julia-actions/setup-julia.git"
   },
   "keywords": [
     "actions",
-    "node",
+    "julia",
     "setup"
   ],
-  "author": "GitHub",
+  "author": "Sascha Mann",
   "license": "MIT",
   "dependencies": {
     "@actions/core": "^1.0.0",
@@ -33,6 +35,7 @@
     "@types/semver": "^6.0.0",
     "jest": "^24.8.0",
     "jest-circus": "^24.7.1",
+    "prettier": "^1.17.1",
     "ts-jest": "^24.0.2",
     "typescript": "^3.5.1"
   }

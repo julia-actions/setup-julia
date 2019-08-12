@@ -1,10 +1,10 @@
-name: 'Node 12 Template Action'
-description: 'Get started with Node actions'
-author: 'GitHub'
+name: 'Setup Julia environment'
+description: 'Setup a Julia environment and add it to the PATH'
+author: 'Sascha Mann <git@mail.saschamann.eu>'
 inputs: 
-  myInput:
-    description: 'Input to use'
-    default: 'world'
+  version:
+    description: 'The Julia version to download (if necessary) and use. Example: 1.0'
+    default: '1.0'
 runs:
   using: 'node12'
-  main: 'lib/main.js'
+  main: 'lib/setup-julia.js'
