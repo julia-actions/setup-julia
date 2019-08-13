@@ -4,7 +4,9 @@ This action sets up a Julia environment for use in actions by download a specifi
 
 ## Usage
 
-See [action.yml](action.yml)
+See [action.yml](action.yml).
+
+Take a look at [github.com/exercism/julia](https://github.com/exercism/julia/pull/153) for an example, non-package Julia project making use of this action.
 
 ### Basic:
 
