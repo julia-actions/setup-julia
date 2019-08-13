@@ -7,7 +7,7 @@ import * as path from 'path'
 
 // Store information about the environment
 const osPlat = os.platform() // possible values: win32 (Windows), linux (Linux), darwin (macOS)
-console.log(`[DEBUG] platform: ${osPlat}`)
+core.debug(`platform: ${osPlat}`)
 
 function getMajorMinorVersion(version: string): string {
     return version.split('.').slice(0, 2).join('.')
@@ -56,11 +56,11 @@ function getFileName(version: string): string {
 async function run() {
     try {
         const version = core.getInput('version')
-        console.log(`[DEBUG] selected Julia version: ${version}`)
+        core.debug(`selected Julia version: ${version}`)
 
         // Download Julia
         const downloadURL = getDownloadURL(version)
-        console.log(`[DEBUG] download Julia from ${downloadURL}`)
+        core.debug(`download Julia from ${downloadURL}`)
         const juliaDownloadPath = await tc.downloadTool(downloadURL)
 
         // Install Julia
