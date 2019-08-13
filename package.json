@@ -1,6 +1,6 @@
 {
   "name": "setup-julia",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "private": true,
   "description": "setup Julia action",
   "main": "lib/setup-julia.js",
@@ -19,7 +19,7 @@
     "julia",
     "setup"
   ],
-  "author": "Sascha Mann",
+  "author": "Sascha Mann <git@mail.saschamann.eu>",
   "license": "MIT",
   "dependencies": {
     "@actions/core": "^1.0.0",

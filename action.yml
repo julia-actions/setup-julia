@@ -3,8 +3,8 @@ description: 'Setup a Julia environment and add it to the PATH'
 author: 'Sascha Mann <git@mail.saschamann.eu>'
 inputs: 
   version:
-    description: 'The Julia version to download (if necessary) and use. Example: 1.0'
-    default: '1.0'
+    description: 'The Julia version to download (if necessary) and use. Example: 1.0.4'
+    default: '1.0.4'
 runs:
   using: 'node12'
   main: 'lib/setup-julia.js'
