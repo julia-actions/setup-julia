@@ -6,8 +6,8 @@
   "main": "lib/setup-julia.js",
   "scripts": {
     "build": "tsc",
-    "format": "prettier --write **/*.ts",
-    "format-check": "prettier --check **/*.ts",
+    "format": "prettier --single-quote --print-width 120 --tab-width 4 --no-semi --write **/*.ts",
+    "format-check": "prettier  --single-quote --print-width 120 --tab-width 4 --no-semi --check **/*.ts",
     "test": "jest"
   },
   "repository": {
