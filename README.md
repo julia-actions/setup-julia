@@ -67,7 +67,7 @@ This action will likely be updated quite frequently in the near future. I'm shar
 
 **DO NOT USE THIS AS YOUR ONLY FORM OF CI** (yet).
 
-Unfortunately, because non-container actions must use JavaScript/TypeScript as scripting language, `npm` is involved. The dependencies are vendored but this action relies 100% on GitHub to audit the dependencies they add to their action toolkit.
+Unfortunately, because non-container actions must use JavaScript/TypeScript as scripting language, `npm` is involved. The published action only uses the toolkit-dependencies maintained by GitHub but, as usual with `npm`, these load over 50 transitive dependencies. If this causes issues with your security policies, you might want to fork the action, so that you can audit and lock exact versions of all direct and transitive dependencies.
 
 ## Licence info
 Parts of this software have been derived from the `setup-go` [action](https://github.com/actions/setup-go) and the [JavaScript Action Template](https://github.com/actions/javascript-template), both released by GitHub under the MIT licence.
