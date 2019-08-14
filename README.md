@@ -5,6 +5,7 @@ This action sets up a Julia environment for use in actions by downloading a spec
 ## Table of Contents
 - [Table of Contents](#table-of-contents)
 - [Usage](#usage)
+- [Versioning](#versioning)
 - [Future plans & ideas](#future-plans--ideas)
 - [Words of caution](#words-of-caution)
 - [Licence info](#licence-info)
@@ -46,6 +47,25 @@ jobs:
       - run: julia -e 'println("Hello, World!")'
 ```
 
+## Versioning
+
+This action follows [GitHub's advice](https://help.github.com/en/articles/about-actions#versioning-your-action) on versioning actions, with an additional `latest` tag.
+
+If you don't want to deal with updating the version of the action, similiarly to how Travis CI handles it, use `latest` or major version branches.
+
+It's unlikely, but not impossible, that there will be breaking changes post-v1.0.0 unless a new major version of Julia is introduced.
+
+You can specify commits, branches or tags in your workflows as follows:
+
+```yaml
+steps:
+  - uses: julia-actions/setup-julia@6ae948d # commit SHA
+  - uses: julia-actions/setup-julia@master  # branch
+  - uses: julia-actions/setup-julia@latest  # latest version tag (may break existing workflows)
+  - uses: julia-actions/setup-julia@v1      # major version tag
+  - uses: julia-actions/setup-julia@v0.1.0  # specific version tag
+```
+
 ## Future plans & ideas
 
 In no particular order:
@@ -56,7 +76,7 @@ In no particular order:
 * Add support for nightly Julia builds.
 * Support 32-bit Julia on 64-bit windows.
 * Write some unit tests for the action.
-* Figure out the best way to handle versioning.
+* Add CI script that checks if tags have been updated on release.
 * Hash and signature checks.
 
 ### Other Julia-related actions:
