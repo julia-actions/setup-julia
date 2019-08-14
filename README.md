@@ -2,6 +2,13 @@
 
 This action sets up a Julia environment for use in actions by download a specified version of Julia and adding it to PATH.
 
+## Table of Contents
+- [Table of Contents](#table-of-contents)
+- [Usage](#usage)
+- [Future plans & ideas](#future-plans--ideas)
+- [Words of caution](#words-of-caution)
+- [Licence info](#licence-info)
+
 ## Usage
 
 See [action.yml](action.yml).
