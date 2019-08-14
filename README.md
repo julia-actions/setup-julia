@@ -1,6 +1,6 @@
 # setup-julia Action
 
-This action sets up a Julia environment for use in actions by download a specified version of Julia and adding it to PATH.
+This action sets up a Julia environment for use in actions by downloading a specified version of Julia and adding it to PATH.
 
 ## Table of Contents
 - [Table of Contents](#table-of-contents)
