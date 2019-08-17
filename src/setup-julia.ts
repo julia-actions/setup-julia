@@ -53,36 +53,52 @@ function getFileName(version: string): string {
     return `julia-${version}${versionExt}.${ext}`
 }
 
+async function installJulia(version: string): Promise<string> {
+    // Download Julia
+    const downloadURL = getDownloadURL(version)
+    core.debug(`downloading Julia from ${downloadURL}`)
+    const juliaDownloadPath = await tc.downloadTool(downloadURL)
+
+    // Install it
+    switch (osPlat) {
+        case 'linux':
+            const juliaExtractedFolder = await tc.extractTar(juliaDownloadPath)
+            return path.join(juliaExtractedFolder, `julia-${version}`)
+        case 'win32':
+            const juliaInstallationPath = path.join('C:', 'Julia')
+            await exec.exec('powershell', ['-Command', `Start-Process -FilePath ${juliaDownloadPath} -ArgumentList "/S /D=${juliaInstallationPath}" -NoNewWindow -Wait`])
+            return juliaInstallationPath
+        case 'darwin':
+            await exec.exec('hdiutil', ['attach', juliaDownloadPath])
+            return `/Volumes/Julia-${version}/Julia-${getMajorMinorVersion(version)}.app/Contents/Resources/julia`
+        default:
+            throw `Platform ${osPlat} is not supported`
+    }
+}
+
 async function run() {
     try {
         const version = core.getInput('version')
         core.debug(`selected Julia version: ${version}`)
 
-        // Download Julia
-        const downloadURL = getDownloadURL(version)
-        core.debug(`download Julia from ${downloadURL}`)
-        const juliaDownloadPath = await tc.downloadTool(downloadURL)
+        // Search in cache
+        let juliaPath: string;
+        juliaPath = tc.find('julia', version)
 
-        // Install Julia
-        if (osPlat === 'linux') { // Linux
-            const juliaExtractedFolder = await tc.extractTar(juliaDownloadPath)
-            const juliaCachedPath = await tc.cacheDir(juliaExtractedFolder, 'julia', version)
-            const juliaPath = path.join(juliaCachedPath, `julia-${version}`)
-            core.addPath(path.join(juliaPath, 'bin'))
-        
-        } else if (osPlat === 'win32') { // Windows
-            // Install Julia in C:\Julia
-            const juliaInstallationPath = path.join('C:', 'Julia')
-            await exec.exec('powershell', ['-Command', `Start-Process -FilePath ${juliaDownloadPath} -ArgumentList "/S /D=${juliaInstallationPath}" -NoNewWindow -Wait`])
-            const juliaCachedPath = await tc.cacheDir(juliaInstallationPath, 'julia', version)
-            core.addPath(path.join(juliaCachedPath, 'bin'))
-        
-        } else if (osPlat === 'darwin') { // macOS
-            await exec.exec('hdiutil', ['attach', juliaDownloadPath])
-            const juliaCachedPath = await tc.cacheDir(`/Volumes/Julia-${version}/Julia-${getMajorMinorVersion(version)}.app/Contents/Resources/julia`, 'julia', version)
-            core.addPath(path.join(juliaCachedPath, 'bin'))
+        if (!juliaPath) {
+            core.debug(`could not find Julia ${version} in cache`)
+            const juliaInstallationPath = await installJulia(version);
+
+            // Add it to cache
+            juliaPath = await tc.cacheDir(juliaInstallationPath, 'julia', version)
+            core.debug(`added Julia to cache: ${juliaPath}`)
+        } else {
+            core.debug(`using cached version of Julia: ${juliaPath}`)
         }
 
+        // Add it to PATH
+        core.addPath(path.join(juliaPath, 'bin'))
+        
         // Test if Julia has been installed by showing versioninfo()
         await exec.exec('julia', ['-e', 'using InteractiveUtils; versioninfo()'])
     } catch (error) {
