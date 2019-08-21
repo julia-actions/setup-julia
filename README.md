@@ -127,7 +127,6 @@ In no particular order:
 * Check if a cached version of Julia is available instead of installing it everytime CI runs.
 * Add version shortcuts like `1.x`, `1.1.x`, `latest` and `lts`.
 * Add support for nightly Julia builds.
-* Support 32-bit Julia on 64-bit windows.
 * Write some unit tests for the action.
 * Add CI script that checks if tags have been updated on release.
 * Hash and signature checks.
