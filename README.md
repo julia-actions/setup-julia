@@ -21,7 +21,7 @@ Take a look at [github.com/exercism/julia](https://github.com/exercism/julia/pul
 ```yaml
 steps:
 - uses: actions/checkout@v1.0.0
-- uses: julia-actions/setup-julia@v0.1.0
+- uses: julia-actions/setup-julia@v0.2
   with:
     version: 1.0.4
 - run: julia -e 'println("Hello, World!")'
@@ -43,7 +43,7 @@ jobs:
     steps:
       - uses: actions/checkout@v1.0.0
       - name: "Set up Julia"
-        uses: julia-actions/setup-julia@v0.1.0
+        uses: julia-actions/setup-julia@v0.2
         with:
           version: ${{ matrix.julia-version }}
       - run: julia -e 'println("Hello, World!")'
@@ -68,7 +68,7 @@ jobs:
     steps:
       - uses: actions/checkout@v1.0.0
       - name: "Set up Julia"
-        uses: julia-actions/setup-julia@v0.1.0
+        uses: julia-actions/setup-julia@v0.2
         with:
           version: ${{ matrix.julia-version }}
           arch: ${{ matrix.julia-arch }}
@@ -94,7 +94,7 @@ jobs:
     steps:
       - uses: actions/checkout@v1.0.0
       - name: "Set up Julia"
-        uses: julia-actions/setup-julia@v0.1.0
+        uses: julia-actions/setup-julia@v0.2
         with:
           version: ${{ matrix.julia-version }}
       - run: julia -e 'println("Hello, World!")'
