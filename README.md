@@ -29,6 +29,8 @@ steps:
 
 ### Matrix Testing:
 
+#### 64-bit Julia only
+
 ```yaml
 jobs:
   test:
@@ -37,6 +39,57 @@ jobs:
       matrix:
         julia-version: [1.0.4, 1.1.1, 1.2.0-rc3, 1.3.0-alpha]
         os: [ubuntu-latest, windows-latest, macOS-latest]
+    
+    steps:
+      - uses: actions/checkout@v1.0.0
+      - name: "Set up Julia"
+        uses: julia-actions/setup-julia@v0.1.0
+        with:
+          version: ${{ matrix.julia-version }}
+      - run: julia -e 'println("Hello, World!")'
+```
+
+#### 32-bit Julia
+
+```yaml
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        julia-version: [1.0.4, 1.1.1, 1.2.0-rc3, 1.3.0-alpha]
+        julia-arch: [x64, x86]
+        os: [ubuntu-latest, windows-latest, macOS-latest]
+        # 32-bit Julia binaries are not available on macOS
+        exclude:
+          - os: macOS-latest
+            julia-arch: x86
+    
+    steps:
+      - uses: actions/checkout@v1.0.0
+      - name: "Set up Julia"
+        uses: julia-actions/setup-julia@v0.1.0
+        with:
+          version: ${{ matrix.julia-version }}
+          arch: ${{ matrix.julia-arch }}
+      - run: julia -e 'println("Hello, World!")'
+```
+
+Alternatively, you can include specific version and OS combinations that will use 32-bit Julia:
+
+```yaml
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        julia-version: [1.0.4, 1.1.1, 1.2.0-rc3, 1.3.0-alpha]
+        os: [ubuntu-latest, windows-latest, macOS-latest]
+        # Additionally create a job using 32-bit Julia 1.0.4 on windows-latest
+        include:
+          - os: windows-latest
+            julia-version: [1.0.4]
+            julia-arch: x86
     
     steps:
       - uses: actions/checkout@v1.0.0
