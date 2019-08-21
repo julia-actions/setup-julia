@@ -13,38 +13,41 @@ function getMajorMinorVersion(version: string): string {
     return version.split('.').slice(0, 2).join('.')
 }
 
-function getDownloadURL(version: string): string {
+function getDownloadURL(version: string, arch: string): string {
     const baseURL = 'https://julialang-s3.julialang.org/bin'
-    let platform: string, arch: string
+    let platform: string
     const versionDir = getMajorMinorVersion(version)
 
     if (osPlat === 'win32') { // Windows
         platform = 'winnt'
-        arch = 'x64'
     } else if (osPlat === 'darwin') { // macOS
+        if (arch == 'x86') {
+            throw '32-bit Julia is not available on macOS'
+        }
         platform = 'mac'
-        arch = 'x64'
     } else if (osPlat === 'linux') { // Linux
         platform = 'linux'
-        arch = 'x64'
     } else {
         throw `Platform ${osPlat} is not supported`
     }
 
-    return `${baseURL}/${platform}/${arch}/${versionDir}/${getFileName(version)}`
+    return `${baseURL}/${platform}/${arch}/${versionDir}/${getFileName(version, arch)}`
 }
 
-function getFileName(version: string): string {
+function getFileName(version: string, arch: string): string {
     let versionExt: string, ext: string
 
     if (osPlat === 'win32') { // Windows
-        versionExt = '-win64'
+        versionExt = arch == 'x64' ? '-win64' : '-win32'
         ext = 'exe'
     } else if (osPlat === 'darwin') { // macOS
+        if (arch == 'x86') {
+            throw '32-bit Julia is not available on macOS'
+        }
         versionExt = '-mac64'
         ext = 'dmg'
     } else if (osPlat === 'linux') { // Linux
-        versionExt = '-linux-x86_64'
+        versionExt = arch == 'x64' ? '-linux-x86_64' : '-linux-i686'
         ext = 'tar.gz'
     } else {
         throw `Platform ${osPlat} is not supported`
@@ -53,9 +56,9 @@ function getFileName(version: string): string {
     return `julia-${version}${versionExt}.${ext}`
 }
 
-async function installJulia(version: string): Promise<string> {
+async function installJulia(version: string, arch: string): Promise<string> {
     // Download Julia
-    const downloadURL = getDownloadURL(version)
+    const downloadURL = getDownloadURL(version, arch)
     core.debug(`downloading Julia from ${downloadURL}`)
     const juliaDownloadPath = await tc.downloadTool(downloadURL)
 
@@ -79,18 +82,19 @@ async function installJulia(version: string): Promise<string> {
 async function run() {
     try {
         const version = core.getInput('version')
-        core.debug(`selected Julia version: ${version}`)
+        const arch = core.getInput('arch')
+        core.debug(`selected Julia version: ${arch}/${version}`)
 
         // Search in cache
         let juliaPath: string;
-        juliaPath = tc.find('julia', version)
+        juliaPath = tc.find('julia', version, arch)
 
         if (!juliaPath) {
             core.debug(`could not find Julia ${version} in cache`)
-            const juliaInstallationPath = await installJulia(version);
+            const juliaInstallationPath = await installJulia(version, arch);
 
             // Add it to cache
-            juliaPath = await tc.cacheDir(juliaInstallationPath, 'julia', version)
+            juliaPath = await tc.cacheDir(juliaInstallationPath, 'julia', version, arch)
             core.debug(`added Julia to cache: ${juliaPath}`)
         } else {
             core.debug(`using cached version of Julia: ${juliaPath}`)
