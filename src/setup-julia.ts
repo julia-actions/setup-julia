@@ -81,9 +81,11 @@ async function installJulia(version: string, arch: string): Promise<string> {
 
 async function run() {
     try {
-        const version = core.getInput('version')
+        const versionInput = core.getInput('version')
         const arch = core.getInput('arch')
-        core.debug(`selected Julia version: ${arch}/${version}`)
+        core.debug(`selected Julia version: ${arch}/${versionInput}`)
+
+        const version = versionInput == 'stable' ? '1.2.0' : versionInput == 'lts' ? '1.0.5' : versionInput;
 
         // Search in cache
         let juliaPath: string;
@@ -102,7 +104,7 @@ async function run() {
 
         // Add it to PATH
         core.addPath(path.join(juliaPath, 'bin'))
-        
+
         // Test if Julia has been installed by showing versioninfo()
         await exec.exec('julia', ['-e', 'using InteractiveUtils; versioninfo()'])
     } catch (error) {
