@@ -2,12 +2,60 @@ import * as core from '@actions/core'
 import * as exec from '@actions/exec'
 import * as tc from '@actions/tool-cache'
 
+import * as https from 'https'
 import * as os from 'os'
 import * as path from 'path'
+
+import * as semver from 'semver'
 
 // Store information about the environment
 const osPlat = os.platform() // possible values: win32 (Windows), linux (Linux), darwin (macOS)
 core.debug(`platform: ${osPlat}`)
+
+async function getJuliaReleases(): Promise<string[]> {
+    // Wrap everything in a Promise so that it can be called with await.
+    return new Promise((resolve, reject) => {
+        const options = {
+            hostname: 'api.github.com',
+            path: '/repos/julialang/julia/releases?per_page=100',
+            method: 'GET',
+            headers: {
+                'Accept': 'application/vnd.github.v3+json', // locks GitHub API version to v3
+                'User-Agent': `${process.env.GITHUB_ACTION} Action running in ${process.env.GITHUB_REPOSITORY}`
+            }
+        }
+        
+        https.request(options, res => {
+            let data = ''
+
+            res.on('data', d => {
+                data += d
+            })
+
+            res.on('end', () => {
+                resolve(JSON.parse(data).map((r) => r.tag_name as string))
+            })
+        }).on('error', err => {
+            reject(new Error(`Error while requesting Julia versions from GitHub:\n${err}`))
+        }).end()
+    })
+}
+
+async function getJuliaVersion(versionInput: string): Promise<string> {
+    if (semver.valid(versionInput) == versionInput) {
+        // versionInput is a valid version, use it directly
+        return versionInput
+    }
+
+    // use the highest available version that matches versionInput
+    const releases = await getJuliaReleases()
+    const version = semver.maxSatisfying(releases, versionInput)
+    if (version == null) {
+        throw `Could not find a Julia version that matches ${versionInput}`
+    }
+
+    return version
+}
 
 function getMajorMinorVersion(version: string): string {
     return version.split('.').slice(0, 2).join('.')
@@ -81,8 +129,9 @@ async function installJulia(version: string, arch: string): Promise<string> {
 
 async function run() {
     try {
-        const version = core.getInput('version')
+        const versionInput = core.getInput('version')
         const arch = core.getInput('arch')
+        const version = await getJuliaVersion(versionInput)
         core.debug(`selected Julia version: ${arch}/${version}`)
 
         // Search in cache
