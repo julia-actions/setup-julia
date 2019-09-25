@@ -33,6 +33,7 @@ async function getJuliaReleases(): Promise<string[]> {
             })
 
             res.on('end', () => {
+                core.debug(data)
                 resolve(JSON.parse(data).map((r) => r.tag_name as string))
             })
         }).on('error', err => {
