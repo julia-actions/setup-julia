@@ -47,12 +47,15 @@ async function getJuliaVersion(versionInput: string): Promise<string> {
         return versionInput
     }
 
-    // use the highest available version that matches versionInput
+    // Use the highest available version that matches versionInput
     const releases = await getJuliaReleases()
-    const version = semver.maxSatisfying(releases, versionInput)
+    let version = semver.maxSatisfying(releases, versionInput)
     if (version == null) {
         throw `Could not find a Julia version that matches ${versionInput}`
     }
+
+    // GitHub tags start with v, remove it
+    version = version.replace(/^v/, '')
 
     return version
 }
