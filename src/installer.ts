@@ -12,7 +12,7 @@ import * as semver from 'semver'
 const osPlat = os.platform() // possible values: win32 (Windows), linux (Linux), darwin (macOS)
 core.debug(`platform: ${osPlat}`)
 
-async function getJuliaReleases(): Promise<string[]> {
+export async function getJuliaReleases(): Promise<string[]> {
     // Wrap everything in a Promise so that it can be called with await.
     return new Promise((resolve, reject) => {
         const options = {
@@ -42,15 +42,14 @@ async function getJuliaReleases(): Promise<string[]> {
     })
 }
 
-export async function getJuliaVersion(versionInput: string): Promise<string> {
+export async function getJuliaVersion(availableReleases: string[], versionInput: string): Promise<string> {
     if (semver.valid(versionInput) == versionInput) {
         // versionInput is a valid version, use it directly
         return versionInput
     }
 
     // Use the highest available version that matches versionInput
-    const releases = await getJuliaReleases()
-    let version = semver.maxSatisfying(releases, versionInput)
+    let version = semver.maxSatisfying(availableReleases, versionInput)
     if (version == null) {
         throw `Could not find a Julia version that matches ${versionInput}`
     }
