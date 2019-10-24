@@ -5,9 +5,11 @@ This action sets up a Julia environment for use in actions by downloading a spec
 ## Table of Contents
 - [Table of Contents](#table-of-contents)
 - [Usage](#usage)
+  - [Basic](#basic)
+  - [Julia Versions](#julia-versions)
+  - [Matrix Testing](#matrix-testing)
 - [Versioning](#versioning)
 - [Future plans & ideas](#future-plans--ideas)
-- [Words of caution](#words-of-caution)
 - [Licence info](#licence-info)
 
 ## Usage
@@ -16,7 +18,7 @@ See [action.yml](action.yml).
 
 Take a look at [github.com/exercism/julia](https://github.com/exercism/julia/pull/153) for an example, non-package Julia project making use of this action.
 
-### Basic:
+### Basic
 
 ```yaml
 steps:
@@ -27,7 +29,23 @@ steps:
 - run: julia -e 'println("Hello, World!")'
 ```
 
-### Matrix Testing:
+### Julia Versions
+
+You can either specify specific Julia versions or version ranges. If you specify a version range, the **highest** available Julia version that matches the range will be selected.
+
+#### Examples
+
+- `1.2.0` is a valid semver version. The action will try to download exactly this version. If it's not available, the build step will fail.
+- `1.0.x` is a version range that will match the highest available Julia version that starts with `1.0`, e.g. `1.0.5`.
+- `^1.3.0-rc1` is a caret version range that includes preleases. It matches all versions `≥ 1.3.0-rc1` and `< 1.4.0`.
+
+Internally the action uses node's semver package to resolve version ranges. Its [documentation](https://github.com/npm/node-semver#advanced-range-syntax) contains more details on the version range syntax.
+
+#### WARNING: Version ranges are experimental and potentially unstable
+
+For now, the action fetches the list of available Julia releases from the GitHub API. During testing it has happened that the host the action runner was on was hit by rate limiting. Once it's available we will use a list of versions provided on julialang.org.
+
+### Matrix Testing
 
 #### 64-bit Julia only
 
@@ -37,7 +55,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        julia-version: [1.0.4, 1.1.1, 1.2.0-rc3, 1.3.0-alpha]
+        julia-version: [1.0.x, 1.2.0, ^1.3.0-rc1]
         os: [ubuntu-latest, windows-latest, macOS-latest]
     
     steps:
@@ -57,7 +75,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        julia-version: [1.0.4, 1.1.1, 1.2.0-rc3, 1.3.0-alpha]
+        julia-version: [1.0.x, 1.2.0, ^1.3.0-rc1]
         julia-arch: [x64, x86]
         os: [ubuntu-latest, windows-latest, macOS-latest]
         # 32-bit Julia binaries are not available on macOS
@@ -83,7 +101,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        julia-version: [1.0.4, 1.1.1, 1.2.0-rc3, 1.3.0-alpha]
+        julia-version: [1.0.x, 1.2.0, ^1.3.0-rc1]
         os: [ubuntu-latest, windows-latest, macOS-latest]
         # Additionally create a job using 32-bit Julia 1.0.4 on windows-latest
         include:
@@ -123,30 +141,11 @@ steps:
 
 In no particular order:
 
-### `setup-julia`:
-* Check if a cached version of Julia is available instead of installing it everytime CI runs.
-* Add version shortcuts like `1.x`, `1.1.x`, `latest` and `lts`.
+* Check if a cached version of Julia is available instead of installing it everytime CI runs ([waiting on GitHub to add proper caching](https://twitter.com/natfriedman/status/1164210683979812869))
 * Add support for nightly Julia builds.
 * Write some unit tests for the action.
 * Add CI script that checks if tags have been updated on release.
 * Hash and signature checks.
-
-### Other Julia-related actions:
-
-These would be nice to have but I make no promises of ever creating them myself.
-
-* Default build script for packages, similar to how Travis CI works if you don't specify a script.
-* Find out if it's possible to cache packages using [`@actions/tool-cache`](https://github.com/actions/toolkit/tree/master/packages/tool-cache).
-* Actions for standard tools like Documenter, Coverage reporting and so on
-* Actions for registering and tagging package releases instead of relying on external apps.
-
-## Words of caution
-
-This action will likely be updated quite frequently in the near future. I'm sharing it now so that others who want to try out Julia on GitHub actions can do so without relying on Docker.
-
-**DO NOT USE THIS AS YOUR ONLY FORM OF CI** (yet).
-
-Unfortunately, because non-container actions must use JavaScript/TypeScript as scripting language, `npm` is involved. The published action only uses the toolkit-dependencies maintained by GitHub but, as usual with `npm`, these load over 50 transitive dependencies. If this causes issues with your security policies, you might want to fork the action, so that you can audit and lock exact versions of all direct and transitive dependencies.
 
 ## Licence info
 Parts of this software have been derived from the `setup-go` [action](https://github.com/actions/setup-go) and the [TypeScript Action Template](https://github.com/actions/typescript-action), both released by GitHub under the MIT licence.
