@@ -43,7 +43,7 @@ Internally the action uses node's semver package to resolve version ranges. Its 
 
 #### WARNING: Version ranges are experimental and potentially unstable
 
-For now, the action fetches the list of available Julia releases from the GitHub API. During testing it has happened that the host the action runner was on was hit by rate limiting. Once it's available we will use a list of versions provided on julialang.org.
+For now, the action fetches the list of available Julia releases from the GitHub API. During testing it has happened that the host the action runner was on was hit by rate limiting. If this happens, the action falls back to a hardcoded list of releases. Once available we will use a list of versions provided on julialang.org.
 
 ### Matrix Testing
 
