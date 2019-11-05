@@ -14,7 +14,7 @@ This action sets up a Julia environment for use in actions by downloading a spec
 
 See [action.yml](action.yml).
 
-Take a look at [github.com/exercism/julia](https://github.com/exercism/julia/pull/153) for an example, non-package Julia project making use of this action.
+You can find a list of example workflows making use of this action here: [julia-actions/example-workflows](https://github.com/julia-actions/example-workflows).
 
 ### Basic:
 
