@@ -104,7 +104,7 @@ jobs:
 
 This action follows [GitHub's advice](https://help.github.com/en/articles/about-actions#versioning-your-action) on versioning actions, with an additional `latest` tag.
 
-If you don't want to deal with updating the version of the action, similiarly to how Travis CI handles it, use `latest` or major version branches.
+If you don't want to deal with updating the version of the action, similiarly to how Travis CI handles it, use `latest` or major version branches. [Dependabot](https://dependabot.com/) can also be used to automatically create Pull Requests to update actions used in your workflows.
 
 It's unlikely, but not impossible, that there will be breaking changes post-v1.0.0 unless a new major version of Julia is introduced.
 
