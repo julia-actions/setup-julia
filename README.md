@@ -143,7 +143,6 @@ In no particular order:
 
 * Check if a cached version of Julia is available instead of installing it everytime CI runs ([waiting on GitHub to add proper caching](https://twitter.com/natfriedman/status/1164210683979812869))
 * Add support for nightly Julia builds.
-* Write some unit tests for the action.
 * Add CI script that checks if tags have been updated on release.
 * Hash and signature checks.
 
