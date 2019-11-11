@@ -10,7 +10,7 @@ async function run() {
     try {
         const versionInput = core.getInput('version')
         const arch = core.getInput('arch')
-        const availableReleases = await installer.getJuliaReleases()
+        const availableReleases = installer.juliaVersions
         const version = await installer.getJuliaVersion(availableReleases, versionInput)
         core.debug(`selected Julia version: ${arch}/${version}`)
 
