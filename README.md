@@ -33,6 +33,8 @@ steps:
 
 You can either specify specific Julia versions or version ranges. If you specify a version range, the **highest** available Julia version that matches the range will be selected.
 
+**Warning:** It is strongly recommended to wrap versions in quotes. Otherwise, the YAML parser used by GitHub Actions parses certain versions as numbers which causes the wrong version to be selected. For example, `1.0` is parsed as `1`.
+
 #### Examples
 
 - `1.2.0` is a valid semver version. The action will try to download exactly this version. If it's not available, the build step will fail.
