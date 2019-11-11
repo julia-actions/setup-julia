@@ -36,14 +36,14 @@ You can either specify specific Julia versions or version ranges. If you specify
 #### Examples
 
 - `1.2.0` is a valid semver version. The action will try to download exactly this version. If it's not available, the build step will fail.
-- `1.0.x` is a version range that will match the highest available Julia version that starts with `1.0`, e.g. `1.0.5`.
+- `1.0` is a version range that will match the highest available Julia version that starts with `1.0`, e.g. `1.0.5`.
 - `^1.3.0-rc1` is a caret version range that includes preleases. It matches all versions `≥ 1.3.0-rc1` and `< 1.4.0`.
 
 Internally the action uses node's semver package to resolve version ranges. Its [documentation](https://github.com/npm/node-semver#advanced-range-syntax) contains more details on the version range syntax.
 
-#### WARNING: Version ranges are experimental and potentially unstable
+#### WARNING: Version ranges are experimental and potentially out of date
 
-For now, the action fetches the list of available Julia releases from the GitHub API. During testing it has happened that the host the action runner was on was hit by rate limiting. If this happens, the action falls back to a hardcoded list of releases. Once available we will use a list of versions provided on julialang.org.
+Currently the list of available versions is hardcoded. You have to use the latest version of the action to be able to install the latest Julia versions. Once available we will use a list of versions provided on julialang.org.
 
 ### Matrix Testing
 
@@ -55,7 +55,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        julia-version: [1.0.x, 1.2.0, ^1.3.0-rc1]
+        julia-version: ['1.0', '1.2.0', '^1.3.0-rc1']
         os: [ubuntu-latest, windows-latest, macOS-latest]
     
     steps:
@@ -75,7 +75,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        julia-version: [1.0.x, 1.2.0, ^1.3.0-rc1]
+        julia-version: ['1.0', '1.2.0', '^1.3.0-rc1']
         julia-arch: [x64, x86]
         os: [ubuntu-latest, windows-latest, macOS-latest]
         # 32-bit Julia binaries are not available on macOS
@@ -101,12 +101,12 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        julia-version: [1.0.x, 1.2.0, ^1.3.0-rc1]
+        julia-version: ['1.0', '1.2.0', '^1.3.0-rc1']
         os: [ubuntu-latest, windows-latest, macOS-latest]
         # Additionally create a job using 32-bit Julia 1.0.4 on windows-latest
         include:
           - os: windows-latest
-            julia-version: [1.0.4]
+            julia-version: ['1.0.4']
             julia-arch: x86
     
     steps:
