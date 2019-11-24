@@ -106,8 +106,10 @@ export async function installJulia(version: string, arch: string): Promise<strin
     // Install it
     switch (osPlat) {
         case 'linux':
-            const juliaExtractedFolder = await tc.extractTar(juliaDownloadPath)
-            return path.join(juliaExtractedFolder, `julia-${version}`)
+            // tc.extractTar doesn't support stripping components, so we have to call tar manually
+            await exec.exec('mkdir', [`${process.env.HOME}/julia`])
+            await exec.exec('tar', ['xf', juliaDownloadPath, '--strip-components=1', '-C', `${process.env.HOME}/julia`])
+            return `${process.env.HOME}/julia`
         case 'win32':
             const juliaInstallationPath = path.join('C:', 'Julia')
             await exec.exec('powershell', ['-Command', `Start-Process -FilePath ${juliaDownloadPath} -ArgumentList "/S /D=${juliaInstallationPath}" -NoNewWindow -Wait`])
