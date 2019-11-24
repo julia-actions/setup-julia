@@ -112,7 +112,12 @@ export async function installJulia(version: string, arch: string): Promise<strin
             return `${process.env.HOME}/julia`
         case 'win32':
             const juliaInstallationPath = path.join('C:', 'Julia')
-            await exec.exec('powershell', ['-Command', `Start-Process -FilePath ${juliaDownloadPath} -ArgumentList "/S /D=${juliaInstallationPath}" -NoNewWindow -Wait`])
+            if (version == 'nightly' || semver.gtr(version, '1.3', {includePrerelease: true})) {
+                // The installer changed in 1.4: https://github.com/JuliaLang/julia/blob/ef0c9108b12f3ae177c51037934351ffa703b0b5/NEWS.md#build-system-changes
+                await exec.exec('powershell', ['-Command', `Start-Process -FilePath ${juliaDownloadPath} -ArgumentList "/SILENT /dir=${juliaInstallationPath}" -NoNewWindow -Wait`])
+            } else {
+                await exec.exec('powershell', ['-Command', `Start-Process -FilePath ${juliaDownloadPath} -ArgumentList "/S /D=${juliaInstallationPath}" -NoNewWindow -Wait`])
+            }
             return juliaInstallationPath
         case 'darwin':
             await exec.exec('hdiutil', ['attach', juliaDownloadPath])
