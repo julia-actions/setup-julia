@@ -1,5 +1,7 @@
 import * as installer from '../src/installer'
 
+import * as semver from 'semver'
+
 const testVersions = ['v1.3.0-rc4', 'v1.3.0-rc3', 'v1.3.0-rc2', 'v1.0.5', 'v1.2.0', 'v1.3.0-rc1', 'v1.2.0-rc3', 'v1.3.0-alpha', 'v1.2.0-rc2', 'v1.2.0-rc1', 'v1.1.1', 'v1.0.4', 'v1.1.0', 'v1.1.0-rc2', 'v1.1.0-rc1', 'v1.0.3', 'v1.0.2', 'v1.0.1', 'v1.0.0']
 
 describe('installer tests', () => {
@@ -25,6 +27,16 @@ describe('installer tests', () => {
                 expect(await installer.getJuliaVersion(testVersions, '1.0')).toEqual('1.0.5')
                 expect(await installer.getJuliaVersion(testVersions, '^1.3.0-rc1')).toEqual('1.3.0-rc4')
                 expect(await installer.getJuliaVersion(testVersions, '^1.2.0-rc1')).toEqual('1.2.0')
+            })
+        })
+    })
+    describe('node-semver behaviour', () => {
+        describe('Windows installer change', () => {
+            it('Correctly understands >1.4.0', () => {
+                expect(semver.gtr('1.4.0-rc1', '1.3', {includePrerelease: true})).toBeTruthy()
+                expect(semver.gtr('1.4.0-DEV', '1.3', {includePrerelease: true})).toBeTruthy()
+                expect(semver.gtr('1.3.1', '1.3', {includePrerelease: true})).toBeFalsy()
+                expect(semver.gtr('1.3.2-rc1', '1.3', {includePrerelease: true})).toBeFalsy()
             })
         })
     })
