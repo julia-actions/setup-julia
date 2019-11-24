@@ -1,0 +1,14 @@
+#!/bin/sh
+
+branch_name="$(git symbolic-ref --short -q HEAD)"
+
+git checkout -B test/"$branch_name"
+
+npm install
+npm run build
+npm test
+npm prune --production
+
+sed -i 's/node_modules/!node_modules/g' .gitignore
+git add node_modules
+git commit -a -m "Add production dependencies & build"
