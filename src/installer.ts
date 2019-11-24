@@ -21,6 +21,11 @@ export async function getJuliaVersion(availableReleases: string[], versionInput:
         return versionInput
     }
 
+    // nightlies
+    if (versionInput == 'nightly') {
+        return 'nightly'
+    }
+
     // Use the highest available version that matches versionInput
     let version = semver.maxSatisfying(availableReleases, versionInput)
     if (version == null) {
@@ -38,9 +43,7 @@ function getMajorMinorVersion(version: string): string {
 }
 
 function getDownloadURL(version: string, arch: string): string {
-    const baseURL = 'https://julialang-s3.julialang.org/bin'
     let platform: string
-    const versionDir = getMajorMinorVersion(version)
 
     if (osPlat === 'win32') { // Windows
         platform = 'winnt'
@@ -54,6 +57,16 @@ function getDownloadURL(version: string, arch: string): string {
     } else {
         throw `Platform ${osPlat} is not supported`
     }
+
+    // nightlies
+    if (version == 'nightly') {
+        const baseURL = 'https://julialangnightlies-s3.julialang.org/bin'
+        return `${baseURL}/${platform}/${arch}/${getFileName('latest', arch)}`
+    }
+
+    // normal versions
+    const baseURL = 'https://julialang-s3.julialang.org/bin'
+    const versionDir = getMajorMinorVersion(version)
 
     return `${baseURL}/${platform}/${arch}/${versionDir}/${getFileName(version, arch)}`
 }
@@ -71,7 +84,11 @@ function getFileName(version: string, arch: string): string {
         versionExt = '-mac64'
         ext = 'dmg'
     } else if (osPlat === 'linux') { // Linux
-        versionExt = arch == 'x64' ? '-linux-x86_64' : '-linux-i686'
+        if (version == 'latest') { // nightly version
+            versionExt = arch == 'x64' ? '-linux64' : '-linux32'
+        } else {
+            versionExt = arch == 'x64' ? '-linux-x86_64' : '-linux-i686'
+        }
         ext = 'tar.gz'
     } else {
         throw `Platform ${osPlat} is not supported`

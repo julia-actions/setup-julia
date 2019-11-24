@@ -14,6 +14,10 @@ describe('installer tests', () => {
                 expect(await installer.getJuliaVersion(['v1.2.0', 'v1.3.0-alpha', 'v1.3.0-rc1', 'v1.3.0'], '1.3.0-alpha')).toEqual('1.3.0-alpha')
                 expect(await installer.getJuliaVersion([], '1.3.0-rc2')).toEqual('1.3.0-rc2')
             })
+            it('Doesn\'t change the version when given `nightly`', async () => {
+                expect(await installer.getJuliaVersion([], 'nightly')).toEqual('nightly')
+                expect(await installer.getJuliaVersion(testVersions, 'nightly')).toEqual('nightly')
+            })
         })
         describe('version ranges', () => {
             it('Chooses the highest available version that matches the input', async () => {
