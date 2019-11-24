@@ -116,7 +116,9 @@ export async function installJulia(version: string, arch: string): Promise<strin
             return juliaInstallationPath
         case 'darwin':
             await exec.exec('hdiutil', ['attach', juliaDownloadPath])
-            return `/Volumes/Julia-${version}/Julia-${getMajorMinorVersion(version)}.app/Contents/Resources/julia`
+            await exec.exec('mkdir', [`${process.env.HOME}/julia`])
+            await exec.exec('/bin/bash', ['-c', `cp -a /Volumes/Julia-*/Julia-*.app/Contents/Resources/julia ${process.env.HOME}`])
+            return `${process.env.HOME}/julia`
         default:
             throw `Platform ${osPlat} is not supported`
     }
