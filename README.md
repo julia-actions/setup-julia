@@ -11,7 +11,6 @@ This action sets up a Julia environment for use in actions by downloading a spec
   - [Julia Versions](#julia-versions)
   - [Matrix Testing](#matrix-testing)
 - [Versioning](#versioning)
-- [Future plans & ideas](#future-plans--ideas)
 - [Licence info](#licence-info)
 
 ## Usage
@@ -25,7 +24,7 @@ You can find a list of example workflows making use of this action here: [julia-
 ```yaml
 steps:
 - uses: actions/checkout@v1.0.0
-- uses: julia-actions/setup-julia@v0.2
+- uses: julia-actions/setup-julia@v1
   with:
     version: 1.0.4
 - run: julia -e 'println("Hello, World!")'
@@ -66,7 +65,7 @@ jobs:
     steps:
       - uses: actions/checkout@v1.0.0
       - name: "Set up Julia"
-        uses: julia-actions/setup-julia@v0.2
+        uses: julia-actions/setup-julia@v1
         with:
           version: ${{ matrix.julia-version }}
       - run: julia -e 'println("Hello, World!")'
@@ -91,7 +90,7 @@ jobs:
     steps:
       - uses: actions/checkout@v1.0.0
       - name: "Set up Julia"
-        uses: julia-actions/setup-julia@v0.2
+        uses: julia-actions/setup-julia@v1
         with:
           version: ${{ matrix.julia-version }}
           arch: ${{ matrix.julia-arch }}
@@ -117,7 +116,7 @@ jobs:
     steps:
       - uses: actions/checkout@v1.0.0
       - name: "Set up Julia"
-        uses: julia-actions/setup-julia@v0.2
+        uses: julia-actions/setup-julia@v1
         with:
           version: ${{ matrix.julia-version }}
       - run: julia -e 'println("Hello, World!")'
@@ -141,14 +140,6 @@ steps:
   - uses: julia-actions/setup-julia@v1      # major version tag
   - uses: julia-actions/setup-julia@v0.1.0  # specific version tag
 ```
-
-## Future plans & ideas
-
-In no particular order:
-
-* Check if a cached version of Julia is available instead of installing it everytime CI runs ([waiting on GitHub to add proper caching](https://twitter.com/natfriedman/status/1164210683979812869))
-* Add CI script that checks if tags have been updated on release.
-* Hash and signature checks.
 
 ## Licence info
 Parts of this software have been derived from the `setup-go` [action](https://github.com/actions/setup-go) and the [TypeScript Action Template](https://github.com/actions/typescript-action), both released by GitHub under the MIT licence.
