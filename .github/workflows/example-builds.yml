@@ -19,7 +19,7 @@ jobs:
     steps:
       - uses: actions/checkout@v1.0.0
       - name: "Set up Julia"
-        uses: .
+        uses: ./
         with:
           version: ${{ matrix.julia-version }}
           arch: ${{ matrix.julia-arch }}

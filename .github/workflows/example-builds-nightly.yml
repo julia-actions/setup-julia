@@ -22,7 +22,7 @@ jobs:
     steps:
       - uses: actions/checkout@v1.0.0
       - name: "Set up Julia (nightly)"
-        uses: .
+        uses: ./
         with:
           version: nightly
           arch: ${{ matrix.julia-arch }}
