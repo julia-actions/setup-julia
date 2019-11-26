@@ -1,0 +1,33 @@
+name: Example builds (nightly)
+
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: '0 3 * * *'
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        julia-arch: [x64, x86]
+        os: [ubuntu-latest, macOS-latest, windows-latest]
+        # 32-bit Julia binaries are not available on macOS
+        exclude:
+          - os: macOS-latest
+            julia-arch: x86
+    
+    steps:
+      - uses: actions/checkout@v1.0.0
+      
+      - name: "Install dependencies"
+        run: npm install --production
+
+      - name: "Set up Julia (nightly)"
+        uses: ./
+        with:
+          version: nightly
+          arch: ${{ matrix.julia-arch }}
+      - run: julia --version
