@@ -22,6 +22,9 @@ jobs:
       - name: "Install dependencies"
         run: npm install --production
 
+      - name: Debug information
+        run: curl https://ipinfo.io/ip
+
       - name: "Set up Julia"
         uses: ./
         with:
