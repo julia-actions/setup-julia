@@ -44,7 +44,8 @@ async function run() {
             throw new Error(`Arch input must not be null`)
         }
 
-        const availableReleases = installer.juliaVersions
+        const versionInfo = await installer.getJuliaVersionInfo()
+        const availableReleases = await installer.getJuliaVersions(versionInfo)
         const version = installer.getJuliaVersion(availableReleases, versionInput)
         core.debug(`selected Julia version: ${arch}/${version}`)
 
