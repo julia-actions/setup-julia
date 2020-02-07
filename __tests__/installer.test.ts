@@ -78,24 +78,6 @@ describe('version matching tests', () => {
     })
 })
 
-describe('versions.json parsing', () => {
-    // Instead of downloading versions.json, use fixtures/versions.json
-    beforeEach(() => {
-        nock('https://julialang-s3.julialang.org')
-        .get('/bin/versions.json')
-        .replyWithFile(200, path.join(fixtureDir, 'versions.json'))
-    })
-
-    afterEach(() => {
-        nock.cleanAll()
-        nock.enableNetConnect()
-    })
-
-    it('Correctly extracts the list of available versions', async () => {
-        expect(await (await installer.getJuliaVersions(await installer.getJuliaVersionInfo())).sort()).toEqual(testVersions.sort())
-    })
-})
-
 describe('installer tests', () => {
     beforeAll(async () => {
         await io.rmRF(toolDir)
@@ -110,4 +92,22 @@ describe('installer tests', () => {
             console.log('Failed to remove test directories')
         }
     }, 100000)
+
+    describe('versions.json parsing', () => {
+        // Instead of downloading versions.json, use fixtures/versions.json
+        beforeEach(() => {
+            nock('https://julialang-s3.julialang.org')
+            .get('/bin/versions.json')
+            .replyWithFile(200, path.join(fixtureDir, 'versions.json'))
+        })
+    
+        afterEach(() => {
+            nock.cleanAll()
+            nock.enableNetConnect()
+        })
+    
+        it('Extracts the list of available versions', async () => {
+            expect(await (await installer.getJuliaVersions(await installer.getJuliaVersionInfo())).sort()).toEqual(testVersions.sort())
+        })
+    })
 })

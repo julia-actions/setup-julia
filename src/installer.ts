@@ -8,8 +8,19 @@ import * as path from 'path'
 
 import * as semver from 'semver'
 
+// Translations between actions input and Julia arch names
+const osMap = {
+    'win32': 'winnt',
+    'darwin': 'mac',
+    'linux': 'linux'
+}
+const archMap = {
+    'x86': 'i686',
+    'x64': 'x86_64'
+}
+
 // Store information about the environment
-const osPlat = os.platform() // possible values: win32 (Windows), linux (Linux), darwin (macOS)
+const osPlat = osMap[os.platform()] // possible values: win32 (Windows), linux (Linux), darwin (macOS)
 core.debug(`platform: ${osPlat}`)
 
 /**
@@ -28,10 +39,10 @@ export async function getJuliaVersionInfo(): Promise<object> {
 /**
  * @returns An array of all Julia versions available for download
  */
-export async function getJuliaVersions(juliaVersionInfo): Promise<string[]> {
+export async function getJuliaVersions(versionInfo): Promise<string[]> {
     let versions: string[] = []
 
-    for (var version in juliaVersionInfo) {
+    for (var version in versionInfo) {
         versions.push(version)
     }
 
@@ -61,68 +72,47 @@ export function getJuliaVersion(availableReleases: string[], versionInput: strin
     return version
 }
 
-function getMajorMinorVersion(version: string): string {
-    return version.split('.').slice(0, 2).join('.')
-}
-
-function getDownloadURL(version: string, arch: string): string {
-    let platform: string
-
-    if (osPlat === 'win32') { // Windows
-        platform = 'winnt'
-    } else if (osPlat === 'darwin') { // macOS
-        if (arch == 'x86') {
-            throw new Error('32-bit Julia is not available on macOS')
-        }
-        platform = 'mac'
-    } else if (osPlat === 'linux') { // Linux
-        platform = 'linux'
-    } else {
-        throw new Error(`Platform ${osPlat} is not supported`)
-    }
-
-    // nightlies
-    if (version == 'nightly') {
-        const baseURL = 'https://julialangnightlies-s3.julialang.org/bin'
-        return `${baseURL}/${platform}/${arch}/${getFileName('latest', arch)}`
-    }
-
-    // normal versions
-    const baseURL = 'https://julialang-s3.julialang.org/bin'
-    const versionDir = getMajorMinorVersion(version)
-
-    return `${baseURL}/${platform}/${arch}/${versionDir}/${getFileName(version, arch)}`
-}
-
-function getFileName(version: string, arch: string): string {
+function getNightlyFileName(arch: string): string {
     let versionExt: string, ext: string
 
-    if (osPlat === 'win32') { // Windows
+    if (osPlat == 'winnt') {
         versionExt = arch == 'x64' ? '-win64' : '-win32'
         ext = 'exe'
-    } else if (osPlat === 'darwin') { // macOS
+    } else if (osPlat == 'mac') {
         if (arch == 'x86') {
             throw new Error('32-bit Julia is not available on macOS')
         }
         versionExt = '-mac64'
         ext = 'dmg'
-    } else if (osPlat === 'linux') { // Linux
-        if (version == 'latest') { // nightly version
-            versionExt = arch == 'x64' ? '-linux64' : '-linux32'
-        } else {
-            versionExt = arch == 'x64' ? '-linux-x86_64' : '-linux-i686'
-        }
+    } else if (osPlat === 'linux') {
+        versionExt = arch == 'x64' ? '-linux64' : '-linux32'
         ext = 'tar.gz'
     } else {
         throw new Error(`Platform ${osPlat} is not supported`)
     }
 
-    return `julia-${version}${versionExt}.${ext}`
+    return `julia-latest${versionExt}.${ext}`
+}
+
+export async function getDownloadURL(versionInfo, version: string, arch: string): Promise<string> {
+    // nightlies
+    if (version == 'nightly') {
+        const baseURL = 'https://julialangnightlies-s3.julialang.org/bin'
+        return `${baseURL}/${osPlat}/${arch}/${getNightlyFileName(arch)}`
+    }
+
+    versionInfo['1.3.0-rc3'].files.forEach(file => {
+        if (file.os == osPlat && file.arch == archMap[arch]) {
+            return file.url
+        }
+    })
+
+    throw `Could not find ${archMap[arch]}/${version} binaries`
 }
 
 export async function installJulia(version: string, arch: string): Promise<string> {
     // Download Julia
-    const downloadURL = getDownloadURL(version, arch)
+    const downloadURL = await getDownloadURL(await getJuliaVersionInfo(), version, arch)
     core.debug(`downloading Julia from ${downloadURL}`)
     const juliaDownloadPath = await tc.downloadTool(downloadURL)
 
