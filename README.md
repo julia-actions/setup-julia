@@ -51,6 +51,8 @@ Currently the list of available versions is hardcoded. You have to use the lates
 
 ### Matrix Testing
 
+`bash` is chosen as shell to enforce consistent behaviour across operating systems. [Other shells](https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#using-a-specific-shell) are available but you may have to escape quotation marks or otherwise adjust the syntax.
+
 #### 64-bit Julia only
 
 ```yaml
@@ -69,6 +71,7 @@ jobs:
         with:
           version: ${{ matrix.julia-version }}
       - run: julia -e 'println("Hello, World!")'
+        shell: bash
 ```
 
 #### 32-bit Julia
@@ -95,6 +98,7 @@ jobs:
           version: ${{ matrix.julia-version }}
           arch: ${{ matrix.julia-arch }}
       - run: julia -e 'println("Hello, World!")'
+        shell: bash
 ```
 
 Alternatively, you can include specific version and OS combinations that will use 32-bit Julia:
@@ -120,6 +124,7 @@ jobs:
         with:
           version: ${{ matrix.julia-version }}
       - run: julia -e 'println("Hello, World!")'
+        shell: bash
 ```
 
 ## Versioning
