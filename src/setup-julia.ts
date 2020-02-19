@@ -36,7 +36,7 @@ async function run() {
         exec.exec('julia', ['--version'])
 
         // If step debug logs are enabled, also show the full version info
-        if (process.env.ACTIONS_STEP_DEBUG == 'true') {
+        if (process.env.ACTIONS_STEP_DEBUG == 'true' || core.getInput('show-versioninfo') == 'true') {
             exec.exec('julia', ['-e', 'using InteractiveUtils; versioninfo()'])
         }
     } catch (error) {

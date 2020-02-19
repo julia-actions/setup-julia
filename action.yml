@@ -9,6 +9,10 @@ inputs:
     description: 'Architecture of the Julia binaries. Defaults to x64.'
     required: false
     default: 'x64'
+  show-versioninfo:
+    description: 'Display InteractiveUtils.versioninfo() after installing'
+    required: false
+    default: 'false'
 runs:
   using: 'node12'
   main: 'lib/setup-julia.js'
