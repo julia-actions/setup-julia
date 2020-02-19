@@ -32,8 +32,13 @@ async function run() {
         // Add it to PATH
         core.addPath(path.join(juliaPath, 'bin'))
         
-        // Test if Julia has been installed by showing versioninfo()
-        await exec.exec('julia', ['-e', 'using InteractiveUtils; versioninfo()'])
+        // Test if Julia has been installed
+        exec.exec('julia', ['--version'])
+
+        // If enabled, also show the full version info
+        if (core.getInput('show-versioninfo') == 'true') {
+            exec.exec('julia', ['-e', 'using InteractiveUtils; versioninfo()'])
+        }
     } catch (error) {
         core.setFailed(error.message)
     }
