@@ -15,7 +15,7 @@ inputs:
     default: 'false'
 runs:
   using: 'node12'
-  main: 'lib/setup-julia.js'
+  main: 'dist/index.js'
 branding:
   icon: 'download'
   color: 'green'
