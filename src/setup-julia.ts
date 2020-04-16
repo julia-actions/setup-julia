@@ -31,6 +31,9 @@ async function run() {
 
         // Add it to PATH
         core.addPath(path.join(juliaPath, 'bin'))
+
+        // Set JULIA_NUM_THREADS
+        core.exportVariable("JULIA_NUM_THREADS", "2")
         
         // Test if Julia has been installed
         exec.exec('julia', ['--version'])
