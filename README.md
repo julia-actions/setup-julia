@@ -12,7 +12,7 @@ This action sets up a Julia environment for use in actions by downloading a spec
   - [Matrix Testing](#matrix-testing)
 - [Versioning](#versioning)
 - [Privacy Info](#privacy-info)
-- [Licence info](#licence-info)
+- [Third party information](#third-party-information)
 
 ## Usage
 
@@ -157,5 +157,6 @@ In a later release of the action, an action input to opt out of telemetry will b
 
 **This action itself does not collect any kind of personal data or telemetry information.**
 
-## Licence info
-Parts of this software have been derived from the `setup-go` [action](https://github.com/actions/setup-go) and the [TypeScript Action Template](https://github.com/actions/typescript-action), both released by GitHub under the MIT licence.
+## Third party information
+Parts of this software have been derived from other open source software.
+See [THIRD_PARTY_NOTICE.md](THIRD_PARTY_NOTICE.md) for details.
