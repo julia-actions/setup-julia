@@ -13,6 +13,13 @@ inputs:
     description: 'Display InteractiveUtils.versioninfo() after installing'
     required: false
     default: 'false'
+  cache-artifacts:
+    description: 'Cache ~/.julia/artifacts. Will fail if no file matches **/Project.toml.'
+    required: false
+    default: 'true'
+outputs:
+  artifacts-cache-id:
+    description: 'The cache id of the artifacts cache.'
 runs:
   using: 'node12'
   main: 'dist/index.js'

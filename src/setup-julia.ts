@@ -5,6 +5,7 @@ import * as tc from '@actions/tool-cache'
 import * as path from 'path'
 
 import * as installer from './installer'
+import * as jlcache from './caching'
 
 async function run() {
     try {
@@ -38,6 +39,13 @@ async function run() {
         // If enabled, also show the full version info
         if (core.getInput('show-versioninfo') == 'true') {
             exec.exec('julia', ['-e', 'using InteractiveUtils; versioninfo()'])
+        }
+
+        // Create caches
+        if (core.getInput('cache-artifacts') == 'true') {
+            core.debug('caching artifacts directory...')
+            const cacheId = await jlcache.cacheArtifacts()
+            core.setOutput('artifacts-cache-id', cacheId.toString())
         }
     } catch (error) {
         core.setFailed(error.message)
