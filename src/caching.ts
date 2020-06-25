@@ -12,6 +12,7 @@ const JULIA_HOME = path.join(`${process.env.HOME}`, '.julia')
  * Cache the ~/.julia/artifacts directory.
  */
 export async function cacheArtifacts(): Promise<number> {
+    // TODO: Add error handling in case no Project.toml files are present
     const projectFiles = await (await glob.create('**/Project.toml')).glob()
     let projectsHash = ''
     projectFiles.forEach((f) => {
