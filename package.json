@@ -1,6 +1,6 @@
 {
   "name": "setup-julia",
-  "version": "1.1.7",
+  "version": "1.1.8",
   "private": true,
   "description": "setup Julia action",
   "main": "lib/setup-julia.js",
