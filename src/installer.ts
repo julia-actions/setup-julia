@@ -138,8 +138,9 @@ export async function installJulia(version: string, arch: string): Promise<strin
 export async function optOutOfPkgTelemetry() {
     let telemetryPath: string
 
-    if (process.env.HOME) {
+    if (os.homedir()) {
         telemetryPath = path.join(os.homedir(), '.julia', 'servers')
+        core.debug(`telemetry.toml location: ${telemetryPath}`)
     } else {
         telemetryPath = '' // Otherwise tsc claims the variable is being used before being assigned below
         core.setFailed('Something went horribly wrong and $HOME is not defined. Failing build to avoid sending telemetry data unintentionally')
