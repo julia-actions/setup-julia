@@ -153,7 +153,7 @@ steps:
 Julia version 1.5 and later collects telemetry information during certain `Pkg` operations.
 Please refer to <https://julialang.org/legal/data/> for details on the data that is being collected.
 
-You can opt out of all telemetry in the action environment by setting the input `pkg-telemetry: 'false'`, which will create a file `~/.julia/servers/telemetry.toml` with the content `telemetry = false`:
+You can opt out of all Pkg telemetry in the action environment by setting the input `pkg-telemetry: 'false'`, which will create a file `~/.julia/servers/telemetry.toml` with the content `telemetry = false`:
 
 ```yaml
       - name: "Set up Julia"
