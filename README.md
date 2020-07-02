@@ -172,7 +172,8 @@ This can be overriden by setting the input `pkg-telemetry: 'true'`.
           pkg-telemetry: 'true' # Never opt-out of Pkg telemetry, even in private repos.
 ```
 
-You can also add a step to your workflows that edits `telemetry.toml` in the action environment as described in the [Opting Out](https://julialang.org/legal/data/#opting_out) section of the above document. This may be useful if you want more fine-grained control over the opt-out.
+You can also add a step to your workflows that edits `telemetry.toml` in the action environment as described in the [Opting Out](https://julialang.org/legal/data/#opting_out) section of the above document.
+This may be useful if you want more fine-grained control over the opt-out.
 
 **This action itself does not collect any kind of personal data or telemetry information.**
 
