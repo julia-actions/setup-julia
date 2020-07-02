@@ -1,7 +1,9 @@
 import * as core from '@actions/core'
 import * as exec from '@actions/exec'
+import * as io from '@actions/io'
 import * as tc from '@actions/tool-cache'
 
+import * as fs from 'fs'
 import * as os from 'os'
 import * as path from 'path'
 
@@ -126,4 +128,26 @@ export async function installJulia(version: string, arch: string): Promise<strin
         default:
             throw `Platform ${osPlat} is not supported`
     }
+}
+
+/**
+ * Opt out of all Pkg telemetry.
+ * 
+ * More info: https://julialang.org/legal/data/#opting_out
+ */
+export async function optOutOfPkgTelemetry() {
+    let telemetryPath: string
+
+    if (process.env.HOME) {
+        telemetryPath = path.join(process.env.HOME, '.julia', 'servers')
+    } else {
+        telemetryPath = '' // Otherwise tsc claims the variable is being used before being assigned below
+        core.setFailed('Something went horribly wrong and $HOME is not defined. Failing build to avoid sending telemetry data unintentionally')
+    }
+
+    // Create telemetry.toml file
+    await io.mkdirP(telemetryPath)
+    fs.writeFileSync(path.join(telemetryPath, 'telemetry.toml'), 'telemetry = false')
+
+    core.debug('Opted out of all Pkg telemetry')
 }

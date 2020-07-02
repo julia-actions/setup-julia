@@ -13,6 +13,10 @@ inputs:
     description: 'Display InteractiveUtils.versioninfo() after installing'
     required: false
     default: 'false'
+  pkg-telemetry:
+    description: 'Opts out of all Pkg telemetry if set to false. False by default in private repos unless overridden by setting it to true. See README for details.'
+    required: false
+    default: 'default'
 runs:
   using: 'node12'
   main: 'dist/index.js'

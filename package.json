@@ -1,6 +1,6 @@
 {
   "name": "setup-julia",
-  "version": "1.1.8",
+  "version": "1.2.0",
   "private": true,
   "description": "setup Julia action",
   "main": "lib/setup-julia.js",
@@ -23,6 +23,7 @@
   "dependencies": {
     "@actions/core": "^1.0.0",
     "@actions/exec": "^1.0.0",
+    "@actions/github": "^4.0.0",
     "@actions/io": "^1.0.0",
     "@actions/tool-cache": "^1.0.0",
     "semver": "^6.3.0"

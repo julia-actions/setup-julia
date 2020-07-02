@@ -151,9 +151,28 @@ steps:
 ## Privacy Info
 
 Julia version 1.5 and later collects telemetry information during certain `Pkg` operations.
-Please refer to <https://julialang.org/legal/data/> for information on what data is collected.
-This action does not alter the Julia installation in any way, therefore telemetry on your CI runs will be collected by the Julia Pkg server unless you opt out.
-In a later release of the action, an action input to opt out of telemetry will be provided but for now you need to add a step to your workflows that edits `telemetry.toml` in the CI environment as described in the [Opting Out](https://julialang.org/legal/data/#opting_out) section of the above document.
+Please refer to <https://julialang.org/legal/data/> for details on the data that is being collected.
+
+You can opt out of all telemetry in the action environment by setting the input `pkg-telemetry: 'false'`, which will create a file `~/.julia/servers/telemetry.toml` with the content `telemetry = false`:
+
+```yaml
+      - name: "Set up Julia"
+        uses: julia-actions/setup-julia@v1
+        with:
+          pkg-telemetry: 'false' # Always opt-out of Pkg telemetry
+```
+
+The action defaults to opting out of Pkg telemetry in private repositories or scheduled workflows.
+This can be overriden by setting the input `pkg-telemetry: 'true'`.
+
+```yaml
+      - name: "Set up Julia"
+        uses: julia-actions/setup-julia@v1
+        with:
+          pkg-telemetry: 'true' # Never opt-out of Pkg telemetry, even in private repos.
+```
+
+You can also add a step to your workflows that edits `telemetry.toml` in the action environment as described in the [Opting Out](https://julialang.org/legal/data/#opting_out) section of the above document. This may be useful if you want more fine-grained control over the opt-out.
 
 **This action itself does not collect any kind of personal data or telemetry information.**
 
