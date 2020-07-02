@@ -169,7 +169,7 @@ This can be overriden by setting the input `pkg-telemetry: 'true'`.
       - name: "Set up Julia"
         uses: julia-actions/setup-julia@v1
         with:
-          pkg-telemetry: 'true' # Never opt-out of Pkg telemetry, even in private repos.
+          pkg-telemetry: 'true' # Never opt-out of Pkg telemetry, not even in private repos.
 ```
 
 You can also add a step to your workflows that edits `telemetry.toml` in the action environment as described in the [Opting Out](https://julialang.org/legal/data/#opting_out) section of the above document.
