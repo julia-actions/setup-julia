@@ -1,4 +1,4 @@
-name: Example builds
+name: Example builds (telemetry opt-out)
 
 on: [push, pull_request]
 
@@ -8,7 +8,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        julia-version: ['1.0.5', '1', '^1.5.0-beta1']
+        julia-version: ['^1.5.0-0']
         julia-arch: [x64, x86]
         os: [ubuntu-latest, macOS-latest, windows-latest]
         # 32-bit Julia binaries are not available on macOS
@@ -30,8 +30,12 @@ jobs:
         with:
           version: ${{ matrix.julia-version }}
           arch: ${{ matrix.julia-arch }}
+          pkg-telemetry: 'false'
 
       - run: julia --version
 
-      - run: julia -e "VERSION >= v"1.5.0-beta1" && (using Pkg; Pkg.telemetryinfo())"
+      - run: cat "$HOME"/.julia/servers/telemetry.toml
+        shell: bash
+
+      - run: julia -e "using Pkg; Pkg.telemetryinfo()"
         shell: bash
