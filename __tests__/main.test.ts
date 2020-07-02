@@ -1,5 +1,11 @@
 import * as installer from '../src/installer'
 
+import * as exec from '@actions/exec'
+import { ExecOptions } from '@actions/exec/lib/interfaces'
+import * as io from '@actions/io'
+
+import * as path from 'path'
+
 import * as semver from 'semver'
 
 const testVersions = ['v1.3.0-rc4', 'v1.3.0-rc3', 'v1.3.0-rc2', 'v1.0.5', 'v1.2.0', 'v1.3.0-rc1', 'v1.2.0-rc3', 'v1.3.0-alpha', 'v1.2.0-rc2', 'v1.2.0-rc1', 'v1.1.1', 'v1.0.4', 'v1.1.0', 'v1.1.0-rc2', 'v1.1.0-rc1', 'v1.0.3', 'v1.0.2', 'v1.0.1', 'v1.0.0']
@@ -41,3 +47,45 @@ describe('installer tests', () => {
         })
     })
 })
+
+// describe('telemetry opt-out', () => {
+//     // TODO: Julia actually needs to be installed first... & only run if version >= 1.5.0-beta1
+//     // For now, only run this as test in CI, but not locally
+//     if (process.env.CI) {
+//         beforeEach(async () => {
+//             await installer.optOutOfPkgTelemetry()
+//         })
+    
+//         afterEach(() => {
+//             if (process.env.HOME) {
+//                 // This is guaranteed to not be undefined because installer.optOutOfTelemetry() is set in beforeEach and will fail if $HOME is not set
+//                 io.rmRF(path.join(process.env.HOME, '.julia', 'servers', 'telemetry.toml'))
+//             }
+//         })
+
+//         describe('Pkg.telemetryinfo()', async () => {
+//             const options: ExecOptions = {}
+//             let out = '', err = ''
+//             options.listeners = {
+//                 stdout: (data: Buffer) => {
+//                     out += data.toString()
+//                 },
+//                 stderr: (data: Buffer) => {
+//                     err += data.toString()
+//                 }
+//             }
+//             await exec.exec('julia', ['-e', 'using Pkg; Pkg.telemetryinfo()'])
+
+//             it('Only contains Julia-Pkg-Protocol', () => {
+//                 expect(out.startsWith('Julia-Pkg-Protocol')).toBeTruthy()
+//                 expect(out.includes('Julia-Version')).toBeFalsy()
+//                 expect(out.includes('Julia-System')).toBeFalsy()
+//                 expect(out.includes('Julia-Client-UUID')).toBeFalsy()
+//                 expect(out.includes('Julia-Project-Hash')).toBeFalsy()
+//                 expect(out.includes('Julia-CI-Variables')).toBeFalsy()
+//                 expect(out.includes('Julia-HyperLogLog')).toBeFalsy()
+//                 expect(out.includes('Julia-Interactive')).toBeFalsy()
+//             })
+//         })
+//     }
+// })
