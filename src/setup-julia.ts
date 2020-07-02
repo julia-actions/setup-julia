@@ -42,9 +42,10 @@ async function run() {
         }
 
         // Pkg telemetry opt out
-        const telemetryInput = core.getInput('pkg-telemetry')
+        let telemetryInput = core.getInput('pkg-telemetry')
         if (!['true', 'false', 'default'].includes(telemetryInput)) {
-            core.setFailed(`Invalid pkg-telemetry input: ${telemetryInput}. Must be 'true', 'false' or 'default'.`)
+            core.warning(`Invalid pkg-telemetry input: ${telemetryInput}. Must be 'true', 'false' or 'default'. Falling back to 'false'.`)
+            telemetryInput = 'false'
         }
 
         // Assume it's a private repo by default
