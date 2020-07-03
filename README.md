@@ -42,7 +42,7 @@ You can either specify specific Julia versions or version ranges. If you specify
 - `1.2.0` is a valid semver version. The action will try to download exactly this version. If it's not available, the build step will fail.
 - `1.0` is a version range that will match the highest available Julia version that starts with `1.0`, e.g. `1.0.5`.
 - `^1.3.0-rc1` is a caret version range that includes pre-releases starting at `rc1`. It matches all versions `≥ 1.3.0-rc1` and `< 1.4.0`.
-- `^1.3-0` is a caret version range that includes _all_ pre-releases. It matches all versions `≥ 1.3.0-` and `< 1.4.0`.
+- `^1.3.0-0` is a caret version range that includes _all_ pre-releases. It matches all versions `≥ 1.3.0-` and `< 1.4.0`.
 - `nightly` will install the latest nightly build.
 
 Internally the action uses node's semver package to resolve version ranges. Its [documentation](https://github.com/npm/node-semver#advanced-range-syntax) contains more details on the version range syntax. You can test what version will be selected for a given input in this JavaScript [REPL](https://repl.it/@SaschaMann/setup-julia-version-logic).
