@@ -28,7 +28,7 @@ export function getJuliaVersion(availableReleases: string[], versionInput: strin
     // Use the highest available version that matches versionInput
     let version = semver.maxSatisfying(availableReleases, versionInput)
     if (version == null) {
-        throw `Could not find a Julia version that matches ${versionInput}`
+        throw new Error(`Could not find a Julia version that matches ${versionInput}`)
     }
 
     // GitHub tags start with v, remove it
@@ -48,13 +48,13 @@ function getDownloadURL(version: string, arch: string): string {
         platform = 'winnt'
     } else if (osPlat === 'darwin') { // macOS
         if (arch == 'x86') {
-            throw '32-bit Julia is not available on macOS'
+            throw new Error('32-bit Julia is not available on macOS')
         }
         platform = 'mac'
     } else if (osPlat === 'linux') { // Linux
         platform = 'linux'
     } else {
-        throw `Platform ${osPlat} is not supported`
+        throw new Error(`Platform ${osPlat} is not supported`)
     }
 
     // nightlies
@@ -78,7 +78,7 @@ function getFileName(version: string, arch: string): string {
         ext = 'exe'
     } else if (osPlat === 'darwin') { // macOS
         if (arch == 'x86') {
-            throw '32-bit Julia is not available on macOS'
+            throw new Error('32-bit Julia is not available on macOS')
         }
         versionExt = '-mac64'
         ext = 'dmg'
@@ -90,7 +90,7 @@ function getFileName(version: string, arch: string): string {
         }
         ext = 'tar.gz'
     } else {
-        throw `Platform ${osPlat} is not supported`
+        throw new Error(`Platform ${osPlat} is not supported`)
     }
 
     return `julia-${version}${versionExt}.${ext}`
@@ -124,6 +124,6 @@ export async function installJulia(version: string, arch: string): Promise<strin
             await exec.exec('/bin/bash', ['-c', `cp -a /Volumes/Julia-*/Julia-*.app/Contents/Resources/julia ${process.env.HOME}`])
             return `${process.env.HOME}/julia`
         default:
-            throw `Platform ${osPlat} is not supported`
+            throw new Error(`Platform ${osPlat} is not supported`)
     }
 }
