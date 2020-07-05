@@ -4,7 +4,7 @@ on:
   push:
   pull_request:
   schedule:
-    - cron: '0 3 * * *'
+    - cron: '59 * * * *'
 
 jobs:
   test:
@@ -34,3 +34,6 @@ jobs:
           version: nightly
           arch: ${{ matrix.julia-arch }}
       - run: julia --version
+      
+      - name: "Debugging info"
+        run: curl ifconfig.me
