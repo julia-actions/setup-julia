@@ -29,6 +29,13 @@ describe('installer tests', () => {
                 expect(await installer.getJuliaVersion(testVersions, '^1.2.0-rc1')).toEqual('1.2.0')
             })
         })
+        describe('invalid version range (#38)', () => {
+            it('Throws an error if a version range does not match any available version', () => {
+                expect(() => {
+                    installer.getJuliaVersion(['v1.5.0-rc1', 'v1.5.0-beta1', 'v1.4.2', 'v1.4.1', 'v1.4.0', 'v1.4.0-rc2', 'v1.4.0-rc1'], '1.6')
+                }).toThrowError()
+            })
+        })
     })
     describe('node-semver behaviour', () => {
         describe('Windows installer change', () => {
