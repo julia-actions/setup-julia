@@ -22,6 +22,9 @@ jobs:
     steps:
       - uses: actions/checkout@v1.0.0
       
+      - name: "Debugging info"
+        run: curl ifconfig.me
+      
       - name: "Install dependencies"
         run: |
           npm install
@@ -34,6 +37,3 @@ jobs:
           version: nightly
           arch: ${{ matrix.julia-arch }}
       - run: julia --version
-      
-      - name: "Debugging info"
-        run: curl ifconfig.me
