@@ -150,15 +150,6 @@ steps:
   - uses: julia-actions/setup-julia@v0.1.0  # specific version tag
 ```
 
-## Privacy Info
-
-Julia version 1.5 and later collects telemetry information during certain `Pkg` operations.
-Please refer to <https://julialang.org/legal/data/> for information on what data is collected.
-This action does not alter the Julia installation in any way, therefore telemetry on your CI runs will be collected by the Julia Pkg server unless you opt out.
-In a later release of the action, an action input to opt out of telemetry will be provided but for now you need to add a step to your workflows that edits `telemetry.toml` in the CI environment as described in the [Opting Out](https://julialang.org/legal/data/#opting_out) section of the above document.
-
-**This action itself does not collect any kind of personal data or telemetry information.**
-
 ## Third party information
 Parts of this software have been derived from other open source software.
 See [THIRD_PARTY_NOTICE.md](THIRD_PARTY_NOTICE.md) for details.
