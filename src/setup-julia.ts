@@ -8,8 +8,22 @@ import * as installer from './installer'
 
 async function run() {
     try {
+        // Inputs
         const versionInput = core.getInput('version')
         const arch = core.getInput('arch')
+
+        // It can easily happen that, for example, a workflow file contains an input `version: ${{ matrix.julia-version }}`
+        // while the strategy matrix only contains a key `${{ matrix.version }}`.
+        // In that case, we want the action to fail, rather than trying to download julia from an URL that's missing parts and 404ing.
+        // We _could_ fall back to the default but that means that builds silently do things differently than they're meant to, which
+        // is worse than failing the build.
+        if (!versionInput) {
+            throw new Error('Version input must not be null')
+        }
+        if (!arch) {
+            throw new Error(`Arch input must not be null`)
+        }
+
         const availableReleases = installer.juliaVersions
         const version = installer.getJuliaVersion(availableReleases, versionInput)
         core.debug(`selected Julia version: ${arch}/${version}`)
