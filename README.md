@@ -11,7 +11,7 @@ This action sets up a Julia environment for use in actions by downloading a spec
   - [Julia Versions](#julia-versions)
   - [Matrix Testing](#matrix-testing)
 - [Versioning](#versioning)
-- [Privacy Info](#privacy-info)
+- [Debug logs](#debug-logs)
 - [Third party information](#third-party-information)
 
 ## Usage
@@ -149,6 +149,11 @@ steps:
   - uses: julia-actions/setup-julia@v1      # major version tag
   - uses: julia-actions/setup-julia@v0.1.0  # specific version tag
 ```
+
+## Debug logs
+
+You can enable [Step Debug Logs](https://github.com/actions/toolkit/blob/main/docs/action-debugging.md#step-debug-logs) for more detailed logs.
+Note that when debug logs are enabled, a request will be sent to `https://httpbin.julialang.org/ip` and the runner's IP will be printed to the debug logs.
 
 ## Third party information
 Parts of this software have been derived from other open source software.

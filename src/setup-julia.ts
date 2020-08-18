@@ -2,12 +2,31 @@ import * as core from '@actions/core'
 import * as exec from '@actions/exec'
 import * as tc from '@actions/tool-cache'
 
+import * as https from 'https'
 import * as path from 'path'
 
 import * as installer from './installer'
 
 async function run() {
     try {
+        // Debugging info
+        if (core.isDebug()) {
+            // Log Runner IP Address
+            https.get('https://httpbin.julialang.org/ip', resp => {
+                let data = ''
+
+                resp.on('data', chunk => {
+                    data += chunk
+                })
+
+                resp.on('end', () => {
+                    core.debug(`Runner IP address: ${JSON.parse(data).origin}`)
+                })
+            }).on('error', err => {
+                core.debug(`ERROR: Could not retrieve runner IP: ${err}`)
+            })
+        }
+
         // Inputs
         const versionInput = core.getInput('version')
         const arch = core.getInput('arch')
