@@ -4,7 +4,7 @@ on:
   push:
   pull_request:
   schedule:
-    - cron: '59 * * * *'
+    - cron: '37 17 * * *'
 
 jobs:
   test:
@@ -21,9 +21,6 @@ jobs:
     
     steps:
       - uses: actions/checkout@v1.0.0
-      
-      - name: "Debugging info"
-        run: curl ifconfig.me
       
       - name: "Install dependencies"
         run: |
