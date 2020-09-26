@@ -33,4 +33,5 @@ jobs:
         with:
           version: nightly
           arch: ${{ matrix.julia-arch }}
+          show-versioninfo: 'true'
       - run: julia --version
