@@ -2,6 +2,7 @@ import * as core from '@actions/core'
 import * as exec from '@actions/exec'
 import * as tc from '@actions/tool-cache'
 
+import * as fs from 'fs'
 import * as https from 'https'
 import * as path from 'path'
 
@@ -58,12 +59,18 @@ async function run() {
             // Add it to cache
             juliaPath = await tc.cacheDir(juliaInstallationPath, 'julia', version, arch)
             core.debug(`added Julia to cache: ${juliaPath}`)
+
+            // Remove temporary dir
+            fs.rmdirSync(juliaInstallationPath, {recursive: true})
         } else {
             core.debug(`using cached version of Julia: ${juliaPath}`)
         }
 
         // Add it to PATH
         core.addPath(path.join(juliaPath, 'bin'))
+
+        // Set output
+        core.setOutput('julia-bindir', path.join(juliaPath, 'bin'))
         
         // Test if Julia has been installed
         exec.exec('julia', ['--version'])

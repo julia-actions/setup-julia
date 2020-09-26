@@ -26,6 +26,7 @@ jobs:
           npm run pack
 
       - name: "Set up Julia"
+        id: setup-julia
         uses: ./
         with:
           version: ${{ matrix.julia-version }}

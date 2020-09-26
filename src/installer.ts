@@ -2,6 +2,7 @@ import * as core from '@actions/core'
 import * as exec from '@actions/exec'
 import * as tc from '@actions/tool-cache'
 
+import * as fs from 'fs'
 import * as os from 'os'
 import * as path from 'path'
 
@@ -102,27 +103,26 @@ export async function installJulia(version: string, arch: string): Promise<strin
     core.debug(`downloading Julia from ${downloadURL}`)
     const juliaDownloadPath = await tc.downloadTool(downloadURL)
 
+    const tempInstallDir = fs.mkdtempSync(`julia-${arch}-${version}-`)
+
     // Install it
     switch (osPlat) {
         case 'linux':
             // tc.extractTar doesn't support stripping components, so we have to call tar manually
-            await exec.exec('mkdir', [`${process.env.HOME}/julia`])
-            await exec.exec('tar', ['xf', juliaDownloadPath, '--strip-components=1', '-C', `${process.env.HOME}/julia`])
-            return `${process.env.HOME}/julia`
+            await exec.exec('tar', ['xf', juliaDownloadPath, '--strip-components=1', '-C', tempInstallDir])
+            return tempInstallDir
         case 'win32':
-            const juliaInstallationPath = path.join('C:', 'Julia')
             if (version == 'nightly' || semver.gtr(version, '1.3', {includePrerelease: true})) {
                 // The installer changed in 1.4: https://github.com/JuliaLang/julia/blob/ef0c9108b12f3ae177c51037934351ffa703b0b5/NEWS.md#build-system-changes
-                await exec.exec('powershell', ['-Command', `Start-Process -FilePath ${juliaDownloadPath} -ArgumentList "/SILENT /dir=${juliaInstallationPath}" -NoNewWindow -Wait`])
+                await exec.exec('powershell', ['-Command', `Start-Process -FilePath ${juliaDownloadPath} -ArgumentList "/SILENT /dir=${path.join(process.cwd(), tempInstallDir)}" -NoNewWindow -Wait`])
             } else {
-                await exec.exec('powershell', ['-Command', `Start-Process -FilePath ${juliaDownloadPath} -ArgumentList "/S /D=${juliaInstallationPath}" -NoNewWindow -Wait`])
+                await exec.exec('powershell', ['-Command', `Start-Process -FilePath ${juliaDownloadPath} -ArgumentList "/S /D=${path.join(process.cwd(), tempInstallDir)}" -NoNewWindow -Wait`])
             }
-            return juliaInstallationPath
+            return tempInstallDir
         case 'darwin':
             await exec.exec('hdiutil', ['attach', juliaDownloadPath])
-            await exec.exec('mkdir', [`${process.env.HOME}/julia`])
-            await exec.exec('/bin/bash', ['-c', `cp -a /Volumes/Julia-*/Julia-*.app/Contents/Resources/julia ${process.env.HOME}`])
-            return `${process.env.HOME}/julia`
+            await exec.exec('/bin/bash', ['-c', `cp -a /Volumes/Julia-*/Julia-*.app/Contents/Resources/julia ${tempInstallDir}`])
+            return path.join(tempInstallDir, 'julia')
         default:
             throw new Error(`Platform ${osPlat} is not supported`)
     }
