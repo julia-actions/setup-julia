@@ -143,12 +143,16 @@ You can specify commits, branches or tags in your workflows as follows:
 
 ```yaml
 steps:
-  - uses: julia-actions/setup-julia@6ae948d # commit SHA
+  - uses: julia-actions/setup-julia@d26d1111976eae5f00db04f0515ab744ec9cd79e # commit SHA of the tagged 1.3.1 commit
   - uses: julia-actions/setup-julia@master  # branch
   - uses: julia-actions/setup-julia@latest  # latest version tag (may break existing workflows)
   - uses: julia-actions/setup-julia@v1      # major version tag
   - uses: julia-actions/setup-julia@v0.1.0  # specific version tag
 ```
+
+If your workflow requires access to secrets, you should always pin it to a commit SHA instead of a tag.
+This will protect you in case a bad actor gains access to the setup-julia repo.
+You can find more information in [GitHub's security hardening guide](https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/security-hardening-for-github-actions#using-third-party-actions).
 
 ## Debug logs
 
