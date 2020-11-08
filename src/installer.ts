@@ -38,11 +38,11 @@ function calculateChecksum(file: string): string {
         if (data) {
             hash.update(data)
         } else {
-            return hash.digest('hex')
+            throw new Error(`Could not calculate checksum of file ${file}`)
         }
     })
 
-    throw new Error(`Could not calculate checksum of file ${file}`)
+    return hash.digest('hex')
 }
 
 /**
