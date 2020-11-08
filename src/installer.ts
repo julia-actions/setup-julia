@@ -97,7 +97,7 @@ export async function getDownloadURL(versionInfo, version: string, arch: string)
         return `${baseURL}/${osPlat}/${arch}/${getNightlyFileName(arch)}`
     }
 
-    versionInfo['1.3.0-rc3'].files.forEach(file => {
+    versionInfo[version].files.forEach(file => {
         if (file.os == osPlat && file.arch == archMap[arch]) {
             return file.url
         }
