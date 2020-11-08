@@ -111,6 +111,10 @@ function getNightlyFileName(arch: string): string {
 }
 
 export function getFileInfo(versionInfo, version: string, arch: string) {
+    if (version == 'nightly') {
+        return null
+    }
+
     for (let file of versionInfo[version].files) {
         if (file.os == osMap[osPlat] && file.arch == archMap[arch]) {
             return file
@@ -139,11 +143,11 @@ export async function installJulia(versionInfo, version: string, arch: string): 
 
     // Verify checksum
     if (version != 'nightly') {
-        core.debug(fileInfo.sha256)
-        core.debug(await calculateChecksum(juliaDownloadPath))
-        if (fileInfo.sha256 != await calculateChecksum(juliaDownloadPath)) {
-            throw new Error('Checksum of downloaded file does not match the expected checksum from versions.json')
+        const checkSum = await calculateChecksum(juliaDownloadPath)
+        if (fileInfo.sha256 != checkSum) {
+            throw new Error(`Checksum of downloaded file does not match the expected checksum from versions.json.\nExpected: ${fileInfo.sha256}\nGot: ${checkSum}`)
         }
+        core.debug(`Checksum of downloaded file matches expected checksum: ${checkSum}`)
     } else {
         core.debug('Skipping checksum check for nightly binaries.')
     }
