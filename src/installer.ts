@@ -106,9 +106,9 @@ export async function getDownloadURL(versionInfo, version: string, arch: string)
     throw `Could not find ${archMap[arch]}/${version} binaries`
 }
 
-export async function installJulia(version: string, arch: string): Promise<string> {
+export async function installJulia(versionInfo, version: string, arch: string): Promise<string> {
     // Download Julia
-    const downloadURL = await getDownloadURL(await getJuliaVersionInfo(), version, arch)
+    const downloadURL = await getDownloadURL(versionInfo, version, arch)
     core.debug(`downloading Julia from ${downloadURL}`)
     const juliaDownloadPath = await tc.downloadTool(downloadURL)
 

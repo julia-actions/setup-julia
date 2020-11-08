@@ -55,7 +55,7 @@ async function run() {
 
         if (!juliaPath) {
             core.debug(`could not find Julia ${arch}/${version} in cache`)
-            const juliaInstallationPath = await installer.installJulia(version, arch)
+            const juliaInstallationPath = await installer.installJulia(versionInfo, version, arch)
 
             // Add it to cache
             juliaPath = await tc.cacheDir(juliaInstallationPath, 'julia', version, arch)
