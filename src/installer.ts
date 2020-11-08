@@ -38,7 +38,7 @@ export async function getJuliaVersionInfo(): Promise<object> {
 export async function getJuliaVersions(versionInfo): Promise<string[]> {
     let versions: string[] = []
 
-    for (var version in versionInfo) {
+    for (let version of versionInfo) {
         versions.push(version)
     }
 
@@ -90,7 +90,7 @@ function getNightlyFileName(arch: string): string {
     return `julia-latest${versionExt}.${ext}`
 }
 
-export async function getDownloadURL(versionInfo, version: string, arch: string): Promise<string> {
+export function getDownloadURL(versionInfo, version: string, arch: string): string {
     // nightlies
     if (version == 'nightly') {
         const baseURL = 'https://julialangnightlies-s3.julialang.org/bin'
@@ -109,7 +109,7 @@ export async function getDownloadURL(versionInfo, version: string, arch: string)
 
 export async function installJulia(versionInfo, version: string, arch: string): Promise<string> {
     // Download Julia
-    const downloadURL = await getDownloadURL(versionInfo, version, arch)
+    const downloadURL = getDownloadURL(versionInfo, version, arch)
     core.debug(`downloading Julia from ${downloadURL}`)
     const juliaDownloadPath = await tc.downloadTool(downloadURL)
 
