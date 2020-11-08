@@ -91,6 +91,9 @@ function getNightlyFileName(arch: string): string {
 }
 
 export async function getDownloadURL(versionInfo, version: string, arch: string): Promise<string> {
+
+    core.debug('CHECKPOINT getDownloadURL')
+
     // nightlies
     if (version == 'nightly') {
         const baseURL = 'https://julialangnightlies-s3.julialang.org/bin'
@@ -107,6 +110,9 @@ export async function getDownloadURL(versionInfo, version: string, arch: string)
 }
 
 export async function installJulia(versionInfo, version: string, arch: string): Promise<string> {
+
+    core.debug('CHECKPOINT installJulia')
+
     // Download Julia
     const downloadURL = await getDownloadURL(versionInfo, version, arch)
     core.debug(`downloading Julia from ${downloadURL}`)
