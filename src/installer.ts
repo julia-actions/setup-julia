@@ -2,6 +2,7 @@ import * as core from '@actions/core'
 import * as exec from '@actions/exec'
 import * as tc from '@actions/tool-cache'
 
+import * as crypto from 'crypto'
 import * as fs from 'fs'
 import * as os from 'os'
 import * as path from 'path'
@@ -22,6 +23,27 @@ const archMap = {
 // Store information about the environment
 const osPlat = os.platform() // possible values: win32 (Windows), linux (Linux), darwin (macOS)
 core.debug(`platform: ${osPlat}`)
+
+/**
+ * Based on https://nodejs.org/api/crypto.html#crypto_crypto_createhash_algorithm_options
+ * 
+ * @returns The SHA256 checksum of a given file.
+ */
+function calculateChecksum(file: string): string {
+    const hash = crypto.createHash('sha256')
+    const input = fs.createReadStream(file)
+
+    input.on('readable', () => {
+        const data = input.read()
+        if (data) {
+            hash.update(data)
+        } else {
+            return hash.digest('hex')
+        }
+    })
+
+    throw new Error(`Could not calculate checksum of file ${file}`)
+}
 
 /**
  * @returns The content of the downloaded versions.json file as object.
@@ -112,6 +134,11 @@ export async function installJulia(versionInfo, version: string, arch: string): 
     const downloadURL = getDownloadURL(versionInfo, version, arch)
     core.debug(`downloading Julia from ${downloadURL}`)
     const juliaDownloadPath = await tc.downloadTool(downloadURL)
+
+    // Verify checksum
+    if (versionInfo[version].sha256 != calculateChecksum(juliaDownloadPath)) {
+        throw new Error('Checksum of downloaded file does not match the expected checksum from versions.json')
+    }
 
     const tempInstallDir = fs.mkdtempSync(`julia-${arch}-${version}-`)
 
