@@ -27,11 +27,7 @@ core.debug(`platform: ${osPlat}`)
  * @returns The content of the downloaded versions.json file as object.
  */
 export async function getJuliaVersionInfo(): Promise<object> {
-    let versionsFile = tc.find('julia-versions', 'latest')
-    if (!versionsFile) {
-        versionsFile = await tc.downloadTool('https://julialang-s3.julialang.org/bin/versions.json')
-        tc.cacheFile(versionsFile, 'versions.json', 'julia-versions', 'latest')
-    }
+    const versionsFile = await tc.downloadTool('https://julialang-s3.julialang.org/bin/versions.json')
 
     return JSON.parse(fs.readFileSync(versionsFile).toString())
 }
