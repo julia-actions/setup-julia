@@ -44,7 +44,8 @@ async function run() {
             throw new Error(`Arch input must not be null`)
         }
 
-        const availableReleases = installer.juliaVersions
+        const versionInfo = await installer.getJuliaVersionInfo()
+        const availableReleases = await installer.getJuliaVersions(versionInfo)
         const version = installer.getJuliaVersion(availableReleases, versionInput)
         core.debug(`selected Julia version: ${arch}/${version}`)
 
@@ -53,8 +54,8 @@ async function run() {
         juliaPath = tc.find('julia', version, arch)
 
         if (!juliaPath) {
-            core.debug(`could not find Julia ${version} in cache`)
-            const juliaInstallationPath = await installer.installJulia(version, arch);
+            core.debug(`could not find Julia ${arch}/${version} in cache`)
+            const juliaInstallationPath = await installer.installJulia(versionInfo, version, arch)
 
             // Add it to cache
             juliaPath = await tc.cacheDir(juliaInstallationPath, 'julia', version, arch)
