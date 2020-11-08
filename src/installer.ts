@@ -44,10 +44,12 @@ function calculateChecksum(file: string): string {
         }
     })
 
+    core.debug(`hashDigest: ${hashDigest}`)
+
     if (!hashDigest) {
         throw new Error(`Could not calculate checksum of file ${file}`)
     }
-    
+
     return hashDigest
 }
 
