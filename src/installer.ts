@@ -38,7 +38,7 @@ export async function getJuliaVersionInfo(): Promise<object> {
 export async function getJuliaVersions(versionInfo): Promise<string[]> {
     let versions: string[] = []
 
-    for (let version of versionInfo) {
+    for (let version in versionInfo) {
         versions.push(version)
     }
 
