@@ -133,8 +133,8 @@ describe('installer tests', () => {
             nock.enableNetConnect()
         })
         
-        it('Throws an error if the checksum of the downloaded file doesn\'t match the expected checksum', () => {
-            expect(installer.installJulia(versionInfo, '1.1.0', 'x64')).toThrowError(/^(Checksum of downloaded file does not match the expected checksum from versions\.json\.).*/)
+        it('Throws an error if the checksum of the downloaded file doesn\'t match the expected checksum', async () => {
+            expect(await installer.installJulia(versionInfo, '1.1.0', 'x64')).toThrowError(/^(Checksum of downloaded file does not match the expected checksum from versions\.json\.).*/)
         })
     })
 })
