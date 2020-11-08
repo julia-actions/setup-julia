@@ -97,14 +97,12 @@ export async function getDownloadURL(versionInfo, version: string, arch: string)
         return `${baseURL}/${osPlat}/${arch}/${getNightlyFileName(arch)}`
     }
 
-    core.debug(versionInfo)
-
-    versionInfo[version].files.forEach(file => {
-        core.debug(file)
+    for (let file of versionInfo[version].files) {
         if (file.os == osPlat && file.arch == archMap[arch]) {
+            core.debug(file)
             return file.url
         }
-    })
+    }
 
     throw `Could not find ${archMap[arch]}/${version} binaries`
 }
