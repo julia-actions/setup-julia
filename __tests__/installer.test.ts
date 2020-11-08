@@ -110,31 +110,4 @@ describe('installer tests', () => {
             expect(await (await installer.getJuliaVersions(await installer.getJuliaVersionInfo())).sort()).toEqual(testVersions.sort())
         })
     })
-
-    describe('checksum matching', () => {
-        let versionInfo
-
-        beforeAll(async () => {
-            versionInfo = await installer.getJuliaVersionInfo()
-        })
-
-        beforeEach(() => {
-            nock('https://julialang-s3.julialang.org').persist()
-                .get(uri => !(uri.includes('versions.json'))) // Mock all requests to binaries
-                .reply(200, 'Malformed binary.')
-                
-            nock('https://julialang-s3.julialang.org').persist()
-                .get('/bin/versions.json')
-                .replyWithFile(200, path.join(fixtureDir, 'versions.json'))
-        })
-
-        afterEach(() => {
-            nock.cleanAll()
-            nock.enableNetConnect()
-        })
-        
-        it('Throws an error if the checksum of the downloaded file doesn\'t match the expected checksum', () => {
-            expect(async () => {await installer.installJulia(versionInfo, '1.1.0', 'x64')}).toThrowError('Checksum of downloaded file does not match the expected checksum from versions.json.\nExpected: 80cfd013e526b5145ec3254920afd89bb459f1db7a2a3f21849125af20c05471\nGot: ffe3b3fa2c274b3a288ed9461b7a1878e810c2ca4ec1c8e1b180826844b108f7')
-        })
-    })
 })
