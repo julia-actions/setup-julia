@@ -33,16 +33,22 @@ function calculateChecksum(file: string): string {
     const hash = crypto.createHash('sha256')
     const input = fs.createReadStream(file)
 
+    let hashDigest: string = ''
+
     input.on('readable', () => {
         const data = input.read()
         if (data) {
             hash.update(data)
         } else {
-            throw new Error(`Could not calculate checksum of file ${file}`)
+            hashDigest = hash.digest('hex')
         }
     })
 
-    return hash.digest('hex')
+    if (!hashDigest) {
+        throw new Error(`Could not calculate checksum of file ${file}`)
+    }
+    
+    return hashDigest
 }
 
 /**
