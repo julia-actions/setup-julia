@@ -34,8 +34,8 @@ const toolDir = path.join(__dirname, 'runner', 'tools')
 const tempDir = path.join(__dirname, 'runner', 'temp')
 const fixtureDir = path.join(__dirname, 'fixtures')
 
-process.env['RUNNER_TOOL_CACHE'] = toolDir;
-process.env['RUNNER_TEMP'] = tempDir;
+process.env['RUNNER_TOOL_CACHE'] = toolDir
+process.env['RUNNER_TEMP'] = tempDir
 
 import * as installer from '../src/installer'
 
@@ -111,7 +111,7 @@ describe('installer tests', () => {
         })
     })
 
-    describe('signature matching', () => {
+    describe('checksum matching', () => {
         let versionInfo
 
         beforeAll(async () => {
@@ -133,8 +133,8 @@ describe('installer tests', () => {
             nock.enableNetConnect()
         })
         
-        it('Throws an error if the signature of the downloaded file doesn\'t match the expected signature', async () => {
-            expect(await installer.installJulia(versionInfo, '1.1.0', 'x64')).toThrowError('Checksum of downloaded file does not match the expected checksum from versions.json.\nExpected: 80cfd013e526b5145ec3254920afd89bb459f1db7a2a3f21849125af20c05471\nGot: ffe3b3fa2c274b3a288ed9461b7a1878e810c2ca4ec1c8e1b180826844b108f7')
+        it('Throws an error if the checksum of the downloaded file doesn\'t match the expected checksum', () => {
+            expect(installer.installJulia(versionInfo, '1.1.0', 'x64')).toThrowError(/^(Checksum of downloaded file does not match the expected checksum from versions\.json\.).*/)
         })
     })
 })
