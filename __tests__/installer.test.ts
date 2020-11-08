@@ -93,21 +93,41 @@ describe('installer tests', () => {
         }
     }, 100000)
 
+    
+    // Instead of downloading versions.json, use fixtures/versions.json
+    beforeEach(() => {
+        nock('https://julialang-s3.julialang.org')
+        .get('/bin/versions.json')
+        .replyWithFile(200, path.join(fixtureDir, 'versions.json'))
+    })
+
+    afterEach(() => {
+        nock.cleanAll()
+        nock.enableNetConnect()
+    })
+
     describe('versions.json parsing', () => {
-        // Instead of downloading versions.json, use fixtures/versions.json
+        it('Extracts the list of available versions', async () => {
+            expect(await (await installer.getJuliaVersions(await installer.getJuliaVersionInfo())).sort()).toEqual(testVersions.sort())
+        })
+    })
+
+    describe('signature matching', () => {
         beforeEach(() => {
             nock('https://julialang-s3.julialang.org')
-            .get('/bin/versions.json')
-            .replyWithFile(200, path.join(fixtureDir, 'versions.json'))
+                .get(uri => !(uri.includes('versions.json'))) // Mock all requests to binaries
+                .reply(200, 'Malformed binary.', {'Content-Type': 'application/octet-stream'})
         })
-    
+
         afterEach(() => {
             nock.cleanAll()
             nock.enableNetConnect()
         })
-    
-        it('Extracts the list of available versions', async () => {
-            expect(await (await installer.getJuliaVersions(await installer.getJuliaVersionInfo())).sort()).toEqual(testVersions.sort())
+
+        const versionInfo = installer.getJuliaVersionInfo()
+
+        it('Throws an error if the signature of the downloaded file doesn\'t match the expected signature', async () => {
+            expect(installer.installJulia(versionInfo, '1.3.0', 'x64')).toThrow('Checksum of downloaded file does not match the expected checksum from versions.json')
         })
     })
 })
