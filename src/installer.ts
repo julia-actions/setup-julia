@@ -2,6 +2,7 @@ import * as core from '@actions/core'
 import * as exec from '@actions/exec'
 import * as tc from '@actions/tool-cache'
 
+import * as crypto from 'crypto'
 import * as fs from 'fs'
 import * as os from 'os'
 import * as path from 'path'
@@ -22,6 +23,25 @@ const archMap = {
 // Store information about the environment
 const osPlat = os.platform() // possible values: win32 (Windows), linux (Linux), darwin (macOS)
 core.debug(`platform: ${osPlat}`)
+
+/**
+ * @returns The SHA256 checksum of a given file.
+ */
+async function calculateChecksum(file: string): Promise<string> {
+    const hash = crypto.createHash('sha256')
+    const input = fs.createReadStream(file)
+
+    return new Promise((resolve, reject) => {
+        input.on('data', (chunk) => {
+            hash.update(chunk)
+        })
+
+        input.on('end', () => {
+            const digest = hash.digest('hex')
+            digest ? resolve(digest) : reject(new Error(`Could not calculate checksum of file ${file}: digest was empty.`))
+        })
+    })
+}
 
 /**
  * @returns The content of the downloaded versions.json file as object.
@@ -90,28 +110,47 @@ function getNightlyFileName(arch: string): string {
     return `julia-latest${versionExt}.${ext}`
 }
 
-export function getDownloadURL(versionInfo, version: string, arch: string): string {
-    // nightlies
+export function getFileInfo(versionInfo, version: string, arch: string) {
     if (version == 'nightly') {
-        const baseURL = 'https://julialangnightlies-s3.julialang.org/bin'
-        return `${baseURL}/${osMap[osPlat]}/${arch}/${getNightlyFileName(arch)}`
+        return null
     }
 
     for (let file of versionInfo[version].files) {
         if (file.os == osMap[osPlat] && file.arch == archMap[arch]) {
-            core.debug(file)
-            return file.url
+            return file
         }
     }
 
     throw `Could not find ${archMap[arch]}/${version} binaries`
 }
 
+export function getDownloadURL(fileInfo, version: string, arch: string): string {
+    // nightlies
+    if (version == 'nightly') {
+        const baseURL = 'https://julialangnightlies-s3.julialang.org/bin'
+        return `${baseURL}/${osMap[osPlat]}/${arch}/${getNightlyFileName(arch)}`
+    }
+
+    return fileInfo.url
+}
+
 export async function installJulia(versionInfo, version: string, arch: string): Promise<string> {
     // Download Julia
-    const downloadURL = getDownloadURL(versionInfo, version, arch)
+    const fileInfo = getFileInfo(versionInfo, version, arch)
+    const downloadURL = getDownloadURL(fileInfo, version, arch)
     core.debug(`downloading Julia from ${downloadURL}`)
     const juliaDownloadPath = await tc.downloadTool(downloadURL)
+
+    // Verify checksum
+    if (version != 'nightly') {
+        const checkSum = await calculateChecksum(juliaDownloadPath)
+        if (fileInfo.sha256 != checkSum) {
+            throw new Error(`Checksum of downloaded file does not match the expected checksum from versions.json.\nExpected: ${fileInfo.sha256}\nGot: ${checkSum}`)
+        }
+        core.debug(`Checksum of downloaded file matches expected checksum: ${checkSum}`)
+    } else {
+        core.debug('Skipping checksum check for nightly binaries.')
+    }
 
     const tempInstallDir = fs.mkdtempSync(`julia-${arch}-${version}-`)
 

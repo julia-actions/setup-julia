@@ -34,35 +34,35 @@ const toolDir = path.join(__dirname, 'runner', 'tools')
 const tempDir = path.join(__dirname, 'runner', 'temp')
 const fixtureDir = path.join(__dirname, 'fixtures')
 
-process.env['RUNNER_TOOL_CACHE'] = toolDir;
-process.env['RUNNER_TEMP'] = tempDir;
+process.env['RUNNER_TOOL_CACHE'] = toolDir
+process.env['RUNNER_TEMP'] = tempDir
 
 import * as installer from '../src/installer'
 
 describe('version matching tests', () => {
     describe('specific versions', () => {
-        it('Doesn\'t change the version when given a valid semver version', async () => {
-            expect(await installer.getJuliaVersion([], '1.0.5')).toEqual('1.0.5')
-            expect(await installer.getJuliaVersion(['v1.0.5', 'v1.0.6'], '1.0.5')).toEqual('1.0.5')
-            expect(await installer.getJuliaVersion(['v1.0.4', 'v1.0.5'], '1.0.5')).toEqual('1.0.5')
-            expect(await installer.getJuliaVersion(['v1.0.4'], '1.0.5')).toEqual('1.0.5')
-            expect(await installer.getJuliaVersion([], '1.3.0-alpha')).toEqual('1.3.0-alpha')
-            expect(await installer.getJuliaVersion(['v1.2.0', 'v1.3.0-alpha', 'v1.3.0-rc1', 'v1.3.0'], '1.3.0-alpha')).toEqual('1.3.0-alpha')
-            expect(await installer.getJuliaVersion([], '1.3.0-rc2')).toEqual('1.3.0-rc2')
+        it('Doesn\'t change the version when given a valid semver version', () => {
+            expect(installer.getJuliaVersion([], '1.0.5')).toEqual('1.0.5')
+            expect(installer.getJuliaVersion(['v1.0.5', 'v1.0.6'], '1.0.5')).toEqual('1.0.5')
+            expect(installer.getJuliaVersion(['v1.0.4', 'v1.0.5'], '1.0.5')).toEqual('1.0.5')
+            expect(installer.getJuliaVersion(['v1.0.4'], '1.0.5')).toEqual('1.0.5')
+            expect(installer.getJuliaVersion([], '1.3.0-alpha')).toEqual('1.3.0-alpha')
+            expect(installer.getJuliaVersion(['v1.2.0', 'v1.3.0-alpha', 'v1.3.0-rc1', 'v1.3.0'], '1.3.0-alpha')).toEqual('1.3.0-alpha')
+            expect(installer.getJuliaVersion([], '1.3.0-rc2')).toEqual('1.3.0-rc2')
         })
 
-        it('Doesn\'t change the version when given `nightly`', async () => {
-            expect(await installer.getJuliaVersion([], 'nightly')).toEqual('nightly')
-            expect(await installer.getJuliaVersion(testVersions, 'nightly')).toEqual('nightly')
+        it('Doesn\'t change the version when given `nightly`', () => {
+            expect(installer.getJuliaVersion([], 'nightly')).toEqual('nightly')
+            expect(installer.getJuliaVersion(testVersions, 'nightly')).toEqual('nightly')
         })
     })
 
     describe('version ranges', () => {
-        it('Chooses the highest available version that matches the input', async () => {
-            expect(await installer.getJuliaVersion(testVersions, '1')).toEqual('1.2.0')
-            expect(await installer.getJuliaVersion(testVersions, '1.0')).toEqual('1.0.5')
-            expect(await installer.getJuliaVersion(testVersions, '^1.3.0-rc1')).toEqual('1.3.0-rc4')
-            expect(await installer.getJuliaVersion(testVersions, '^1.2.0-rc1')).toEqual('1.2.0')
+        it('Chooses the highest available version that matches the input', () => {
+            expect(installer.getJuliaVersion(testVersions, '1')).toEqual('1.2.0')
+            expect(installer.getJuliaVersion(testVersions, '1.0')).toEqual('1.0.5')
+            expect(installer.getJuliaVersion(testVersions, '^1.3.0-rc1')).toEqual('1.3.0-rc4')
+            expect(installer.getJuliaVersion(testVersions, '^1.2.0-rc1')).toEqual('1.2.0')
         })
     })
 
@@ -96,16 +96,16 @@ describe('installer tests', () => {
     describe('versions.json parsing', () => {
         // Instead of downloading versions.json, use fixtures/versions.json
         beforeEach(() => {
-            nock('https://julialang-s3.julialang.org')
-            .get('/bin/versions.json')
-            .replyWithFile(200, path.join(fixtureDir, 'versions.json'))
+            nock('https://julialang-s3.julialang.org').persist()
+                .get('/bin/versions.json')
+                .replyWithFile(200, path.join(fixtureDir, 'versions.json'))
         })
-    
+
         afterEach(() => {
             nock.cleanAll()
             nock.enableNetConnect()
         })
-    
+
         it('Extracts the list of available versions', async () => {
             expect(await (await installer.getJuliaVersions(await installer.getJuliaVersionInfo())).sort()).toEqual(testVersions.sort())
         })
