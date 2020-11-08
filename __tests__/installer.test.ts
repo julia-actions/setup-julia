@@ -41,28 +41,28 @@ import * as installer from '../src/installer'
 
 describe('version matching tests', () => {
     describe('specific versions', () => {
-        it('Doesn\'t change the version when given a valid semver version', async () => {
-            expect(await installer.getJuliaVersion([], '1.0.5')).toEqual('1.0.5')
-            expect(await installer.getJuliaVersion(['v1.0.5', 'v1.0.6'], '1.0.5')).toEqual('1.0.5')
-            expect(await installer.getJuliaVersion(['v1.0.4', 'v1.0.5'], '1.0.5')).toEqual('1.0.5')
-            expect(await installer.getJuliaVersion(['v1.0.4'], '1.0.5')).toEqual('1.0.5')
-            expect(await installer.getJuliaVersion([], '1.3.0-alpha')).toEqual('1.3.0-alpha')
-            expect(await installer.getJuliaVersion(['v1.2.0', 'v1.3.0-alpha', 'v1.3.0-rc1', 'v1.3.0'], '1.3.0-alpha')).toEqual('1.3.0-alpha')
-            expect(await installer.getJuliaVersion([], '1.3.0-rc2')).toEqual('1.3.0-rc2')
+        it('Doesn\'t change the version when given a valid semver version', () => {
+            expect(installer.getJuliaVersion([], '1.0.5')).toEqual('1.0.5')
+            expect(installer.getJuliaVersion(['v1.0.5', 'v1.0.6'], '1.0.5')).toEqual('1.0.5')
+            expect(installer.getJuliaVersion(['v1.0.4', 'v1.0.5'], '1.0.5')).toEqual('1.0.5')
+            expect(installer.getJuliaVersion(['v1.0.4'], '1.0.5')).toEqual('1.0.5')
+            expect(installer.getJuliaVersion([], '1.3.0-alpha')).toEqual('1.3.0-alpha')
+            expect(installer.getJuliaVersion(['v1.2.0', 'v1.3.0-alpha', 'v1.3.0-rc1', 'v1.3.0'], '1.3.0-alpha')).toEqual('1.3.0-alpha')
+            expect(installer.getJuliaVersion([], '1.3.0-rc2')).toEqual('1.3.0-rc2')
         })
 
-        it('Doesn\'t change the version when given `nightly`', async () => {
-            expect(await installer.getJuliaVersion([], 'nightly')).toEqual('nightly')
-            expect(await installer.getJuliaVersion(testVersions, 'nightly')).toEqual('nightly')
+        it('Doesn\'t change the version when given `nightly`', () => {
+            expect(installer.getJuliaVersion([], 'nightly')).toEqual('nightly')
+            expect(installer.getJuliaVersion(testVersions, 'nightly')).toEqual('nightly')
         })
     })
 
     describe('version ranges', () => {
-        it('Chooses the highest available version that matches the input', async () => {
-            expect(await installer.getJuliaVersion(testVersions, '1')).toEqual('1.2.0')
-            expect(await installer.getJuliaVersion(testVersions, '1.0')).toEqual('1.0.5')
-            expect(await installer.getJuliaVersion(testVersions, '^1.3.0-rc1')).toEqual('1.3.0-rc4')
-            expect(await installer.getJuliaVersion(testVersions, '^1.2.0-rc1')).toEqual('1.2.0')
+        it('Chooses the highest available version that matches the input', () => {
+            expect(installer.getJuliaVersion(testVersions, '1')).toEqual('1.2.0')
+            expect(installer.getJuliaVersion(testVersions, '1.0')).toEqual('1.0.5')
+            expect(installer.getJuliaVersion(testVersions, '^1.3.0-rc1')).toEqual('1.3.0-rc4')
+            expect(installer.getJuliaVersion(testVersions, '^1.2.0-rc1')).toEqual('1.2.0')
         })
     })
 
@@ -134,7 +134,7 @@ describe('installer tests', () => {
         })
         
         it('Throws an error if the signature of the downloaded file doesn\'t match the expected signature', async () => {
-            expect(await installer.installJulia(versionInfo, '1.3.0', 'x64')).toThrowError('Checksum of downloaded file does not match the expected checksum from versions.json')
+            expect(await installer.installJulia(versionInfo, '1.1.0', 'x64')).toThrowError('Checksum of downloaded file does not match the expected checksum from versions.json.\nExpected: 80cfd013e526b5145ec3254920afd89bb459f1db7a2a3f21849125af20c05471\nGot: ffe3b3fa2c274b3a288ed9461b7a1878e810c2ca4ec1c8e1b180826844b108f7')
         })
     })
 })
