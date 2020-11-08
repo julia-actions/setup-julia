@@ -111,7 +111,13 @@ describe('installer tests', () => {
         })
     })
 
-    describe('signature matching', async () => {
+    describe('signature matching', () => {
+        let versionInfo
+
+        beforeAll(async () => {
+            versionInfo = await installer.getJuliaVersionInfo()
+        })
+
         beforeEach(() => {
             nock('https://julialang-s3.julialang.org').persist()
                 .get(uri => !(uri.includes('versions.json'))) // Mock all requests to binaries
@@ -126,9 +132,7 @@ describe('installer tests', () => {
             nock.cleanAll()
             nock.enableNetConnect()
         })
-
-        const versionInfo = await installer.getJuliaVersionInfo()
-
+        
         it('Throws an error if the signature of the downloaded file doesn\'t match the expected signature', async () => {
             expect(await installer.installJulia(versionInfo, '1.3.0', 'x64')).toThrowError('Checksum of downloaded file does not match the expected checksum from versions.json')
         })
