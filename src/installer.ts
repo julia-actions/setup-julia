@@ -25,32 +25,22 @@ const osPlat = os.platform() // possible values: win32 (Windows), linux (Linux),
 core.debug(`platform: ${osPlat}`)
 
 /**
- * Based on https://nodejs.org/api/crypto.html#crypto_crypto_createhash_algorithm_options
- * 
  * @returns The SHA256 checksum of a given file.
  */
-function calculateChecksum(file: string): string {
+async function calculateChecksum(file: string): Promise<string> {
     const hash = crypto.createHash('sha256')
     const input = fs.createReadStream(file)
 
-    let hashDigest: string = ''
+    return new Promise((resolve, reject) => {
+        input.on('data', (chunk) => {
+            hash.update(chunk)
+        })
 
-    input.on('readable', () => {
-        const data = input.read()
-        if (data) {
-            hash.update(data)
-        } else {
-            hashDigest = hash.digest('hex')
-        }
+        input.on('end', () => {
+            const digest = hash.digest('hex')
+            digest ? resolve(digest) : reject(new Error(`Could not calculate checksum of file ${file}: digest was empty.`))
+        })
     })
-
-    core.debug(`hashDigest: ${hashDigest}`)
-
-    if (!hashDigest) {
-        throw new Error(`Could not calculate checksum of file ${file}`)
-    }
-
-    return hashDigest
 }
 
 /**
@@ -144,7 +134,7 @@ export async function installJulia(versionInfo, version: string, arch: string): 
     const juliaDownloadPath = await tc.downloadTool(downloadURL)
 
     // Verify checksum
-    if (versionInfo[version].sha256 != calculateChecksum(juliaDownloadPath)) {
+    if (versionInfo[version].sha256 != await calculateChecksum(juliaDownloadPath)) {
         throw new Error('Checksum of downloaded file does not match the expected checksum from versions.json')
     }
 
