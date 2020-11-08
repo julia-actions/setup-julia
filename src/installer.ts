@@ -110,34 +110,42 @@ function getNightlyFileName(arch: string): string {
     return `julia-latest${versionExt}.${ext}`
 }
 
-export function getDownloadURL(versionInfo, version: string, arch: string): string {
-    // nightlies
-    if (version == 'nightly') {
-        const baseURL = 'https://julialangnightlies-s3.julialang.org/bin'
-        return `${baseURL}/${osMap[osPlat]}/${arch}/${getNightlyFileName(arch)}`
-    }
-
+export function getFileInfo(versionInfo, version: string, arch: string) {
     for (let file of versionInfo[version].files) {
         if (file.os == osMap[osPlat] && file.arch == archMap[arch]) {
-            core.debug(file)
-            return file.url
+            return file
         }
     }
 
     throw `Could not find ${archMap[arch]}/${version} binaries`
 }
 
+export function getDownloadURL(fileInfo, version: string, arch: string): string {
+    // nightlies
+    if (version == 'nightly') {
+        const baseURL = 'https://julialangnightlies-s3.julialang.org/bin'
+        return `${baseURL}/${osMap[osPlat]}/${arch}/${getNightlyFileName(arch)}`
+    }
+
+    return fileInfo.url
+}
+
 export async function installJulia(versionInfo, version: string, arch: string): Promise<string> {
     // Download Julia
-    const downloadURL = getDownloadURL(versionInfo, version, arch)
+    const fileInfo = getFileInfo(versionInfo, version, arch)
+    const downloadURL = getDownloadURL(fileInfo, version, arch)
     core.debug(`downloading Julia from ${downloadURL}`)
     const juliaDownloadPath = await tc.downloadTool(downloadURL)
 
     // Verify checksum
-    core.debug(versionInfo[version].sha256)
-    core.debug(await calculateChecksum(juliaDownloadPath))
-    if (versionInfo[version].sha256 != await calculateChecksum(juliaDownloadPath)) {
-        throw new Error('Checksum of downloaded file does not match the expected checksum from versions.json')
+    if (version != 'nightly') {
+        core.debug(fileInfo.sha256)
+        core.debug(await calculateChecksum(juliaDownloadPath))
+        if (fileInfo.sha256 != await calculateChecksum(juliaDownloadPath)) {
+            throw new Error('Checksum of downloaded file does not match the expected checksum from versions.json')
+        }
+    } else {
+        core.debug('Skipping checksum check for nightly binaries.')
     }
 
     const tempInstallDir = fs.mkdtempSync(`julia-${arch}-${version}-`)
