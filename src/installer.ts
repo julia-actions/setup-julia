@@ -20,7 +20,7 @@ const archMap = {
 }
 
 // Store information about the environment
-const osPlat = osMap[os.platform()] // possible values: win32 (Windows), linux (Linux), darwin (macOS)
+const osPlat = os.platform() // possible values: win32 (Windows), linux (Linux), darwin (macOS)
 core.debug(`platform: ${osPlat}`)
 
 /**
@@ -71,10 +71,10 @@ export function getJuliaVersion(availableReleases: string[], versionInput: strin
 function getNightlyFileName(arch: string): string {
     let versionExt: string, ext: string
 
-    if (osPlat == 'winnt') {
+    if (osPlat == 'win32') {
         versionExt = arch == 'x64' ? '-win64' : '-win32'
         ext = 'exe'
-    } else if (osPlat == 'mac') {
+    } else if (osPlat == 'darwin') {
         if (arch == 'x86') {
             throw new Error('32-bit Julia is not available on macOS')
         }
@@ -94,11 +94,11 @@ export async function getDownloadURL(versionInfo, version: string, arch: string)
     // nightlies
     if (version == 'nightly') {
         const baseURL = 'https://julialangnightlies-s3.julialang.org/bin'
-        return `${baseURL}/${osPlat}/${arch}/${getNightlyFileName(arch)}`
+        return `${baseURL}/${osMap[osPlat]}/${arch}/${getNightlyFileName(arch)}`
     }
 
     for (let file of versionInfo[version].files) {
-        if (file.os == osPlat && file.arch == archMap[arch]) {
+        if (file.os == osMap[osPlat] && file.arch == archMap[arch]) {
             core.debug(file)
             return file.url
         }
