@@ -49,9 +49,7 @@ You can either specify specific Julia versions or version ranges. If you specify
 
 Internally the action uses node's semver package to resolve version ranges. Its [documentation](https://github.com/npm/node-semver#advanced-range-syntax) contains more details on the version range syntax. You can test what version will be selected for a given input in this JavaScript [REPL](https://repl.it/@SaschaMann/setup-julia-version-logic).
 
-#### WARNING: Version ranges are experimental and potentially out of date
-
-Currently the list of available versions is hardcoded. You have to use the latest version of the action to be able to install the latest Julia versions. Once available we will use a list of versions provided on julialang.org.
+The available Julia versions are pulled from [`versions.json`](https://julialang-s3.julialang.org/bin/versions.json). This file is automatically updated once a day. Therefore it may take up to 24 hours until a newly released Julia version is available in the action.
 
 ### Matrix Testing
 
