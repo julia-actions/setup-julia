@@ -141,11 +141,11 @@ You can specify commits, branches or tags in your workflows as follows:
 
 ```yaml
 steps:
-  - uses: julia-actions/setup-julia@d26d1111976eae5f00db04f0515ab744ec9cd79e # commit SHA of the tagged 1.3.1 commit
-  - uses: julia-actions/setup-julia@master  # branch
+  - uses: julia-actions/setup-julia@d3ce119a16594ea9e5d7974813970c73b6ab9e94 # commit SHA of the tagged 1.4.1 commit
   - uses: julia-actions/setup-julia@latest  # latest version tag (may break existing workflows)
   - uses: julia-actions/setup-julia@v1      # major version tag
-  - uses: julia-actions/setup-julia@v0.1.0  # specific version tag
+  - uses: julia-actions/setup-julia@v1.4    # minor version tag
+  - uses: julia-actions/setup-julia@v1.4.1  # specific version tag
 ```
 
 If your workflow requires access to secrets, you should always pin it to a commit SHA instead of a tag.
