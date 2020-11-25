@@ -134,10 +134,15 @@ export function getDownloadURL(fileInfo, version: string, arch: string): string 
     return fileInfo.url
 }
 
-export async function installJulia(versionInfo, version: string, arch: string): Promise<string> {
+export async function installJulia(versionInfo, version: string, arch: string, urlOverride: string): Promise<string> {
     // Download Julia
     const fileInfo = getFileInfo(versionInfo, version, arch)
-    const downloadURL = getDownloadURL(fileInfo, version, arch)
+    let downloadURL: string;
+    if (urlOverride) {
+        downloadURL = urlOverride
+    } else {
+        downloadURL = getDownloadURL(fileInfo, version, arch)
+    }
     core.debug(`downloading Julia from ${downloadURL}`)
     const juliaDownloadPath = await tc.downloadTool(downloadURL)
 

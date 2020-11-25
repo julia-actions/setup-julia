@@ -1,7 +1,7 @@
 name: 'Setup Julia environment'
 description: 'Setup a Julia environment and add it to the PATH'
 author: 'Sascha Mann'
-inputs: 
+inputs:
   version:
     description: 'The Julia version to download (if necessary) and use. Example: 1.0.4'
     default: '1'
@@ -13,6 +13,10 @@ inputs:
     description: 'Display InteractiveUtils.versioninfo() after installing'
     required: false
     default: 'false'
+  url:
+    description: 'Download the Julia binaries from a specific URL'
+    required: false
+    default: ''
 outputs:
   julia-bindir:
     description: 'Path to the directory containing the Julia executable. Equivalent to JULIA_BINDIR: https://docs.julialang.org/en/v1/manual/environment-variables/#JULIA_BINDIR'

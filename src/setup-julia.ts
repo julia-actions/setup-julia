@@ -31,17 +31,20 @@ async function run() {
         // Inputs
         const versionInput = core.getInput('version')
         const arch = core.getInput('arch')
+        const urlOverride = core.getInput('url')
 
         // It can easily happen that, for example, a workflow file contains an input `version: ${{ matrix.julia-version }}`
         // while the strategy matrix only contains a key `${{ matrix.version }}`.
         // In that case, we want the action to fail, rather than trying to download julia from an URL that's missing parts and 404ing.
         // We _could_ fall back to the default but that means that builds silently do things differently than they're meant to, which
         // is worse than failing the build.
-        if (!versionInput) {
-            throw new Error('Version input must not be null')
-        }
-        if (!arch) {
-            throw new Error(`Arch input must not be null`)
+        if (!urlOverride) {
+            if (!versionInput) {
+                throw new Error('Version input must not be null')
+            }
+            if (!arch) {
+                throw new Error(`Arch input must not be null`)
+            }
         }
 
         const versionInfo = await installer.getJuliaVersionInfo()
@@ -51,14 +54,15 @@ async function run() {
 
         // Search in cache
         let juliaPath: string;
-        juliaPath = tc.find('julia', version, arch)
+        juliaPath = tc.find('julia', version.concat(urlOverride), arch)
+
 
         if (!juliaPath) {
             core.debug(`could not find Julia ${arch}/${version} in cache`)
-            const juliaInstallationPath = await installer.installJulia(versionInfo, version, arch)
+            const juliaInstallationPath = await installer.installJulia(versionInfo, version, arch, urlOverride)
 
             // Add it to cache
-            juliaPath = await tc.cacheDir(juliaInstallationPath, 'julia', version, arch)
+            juliaPath = await tc.cacheDir(juliaInstallationPath, 'julia', version.concat(urlOverride), arch)
             core.debug(`added Julia to cache: ${juliaPath}`)
 
             // Remove temporary dir
@@ -72,7 +76,7 @@ async function run() {
 
         // Set output
         core.setOutput('julia-bindir', path.join(juliaPath, 'bin'))
-        
+
         // Test if Julia has been installed
         exec.exec('julia', ['--version'])
 

@@ -1,0 +1,31 @@
+name: Example builds (nightly - override the URL)
+
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: '37 17 * * *'
+
+jobs:
+  test:
+    runs-on: 'ubuntu-latest'
+    strategy:
+      fail-fast: false
+    
+    steps:
+      - uses: actions/checkout@v1.0.0
+      
+      - name: "Install dependencies"
+        run: |
+          npm install
+          npm run build
+          npm run pack
+
+      - name: "Set up Julia (nightly - override the URL)"
+        uses: ./
+        with:
+          version: 'nightly'
+          arch: 'x64'
+          url: 'https://julialangnightlies-s3.julialang.org/bin/linux/x64/julia-latest-linux64.tar.gz'
+          show-versioninfo: 'true'
+      - run: julia --version
