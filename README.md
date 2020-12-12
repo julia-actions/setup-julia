@@ -152,6 +152,21 @@ If your workflow requires access to secrets, you should always pin it to a commi
 This will protect you in case a bad actor gains access to the setup-julia repo.
 You can find more information in [GitHub's security hardening guide](https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/security-hardening-for-github-actions#using-third-party-actions).
 
+## versioninfo
+
+By default, only a brief version identifier is printed in the run log. You can display the full `versioninfo` by adding `show-versioninfo`.
+Here's an example that prints this information just for `nightly`:
+
+```yaml
+    - uses: julia-actions/setup-julia@v1
+      with:
+        version: ${{ matrix.version }}
+        arch: ${{ matrix.arch }}
+        show-versioninfo: ${{ matrix.version == 'nightly' }}
+ ```
+ 
+You use `'true'` if you want it printed for all Julia versions.
+
 ## Debug logs
 
 You can enable [Step Debug Logs](https://github.com/actions/toolkit/blob/main/docs/action-debugging.md#step-debug-logs) for more detailed logs.
