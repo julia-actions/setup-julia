@@ -1,0 +1,33 @@
+name: Backup
+
+on:
+  schedule:
+    - cron: '5 4 * * 0'
+
+  workflow_dispatch:
+
+jobs:
+  backup:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Configure cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ${{ env.GITHUB_WORKSPACE }}
+            ~/.cache/restic
+          key: ${{ runner.os }}
+
+      - name: Install the correct Python version
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Run backup action
+        uses: julia-actions/restic-action@main
+        env: # Options: https://restic.readthedocs.io/en/latest/040_backup.html#environment-variables
+          RESTIC_REPOSITORY: b2:${{ secrets.B2_BUCKET }}:${{ github.repository }}
+          RESTIC_PASSWORD: ${{ secrets.RESTIC_PASSWORD }}
+          B2_ACCOUNT_ID: ${{ secrets.B2_ACCOUNT_ID }}
+          B2_ACCOUNT_KEY: ${{ secrets.B2_ACCOUNT_KEY }}
