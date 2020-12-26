@@ -48,6 +48,7 @@ async function run() {
         const availableReleases = await installer.getJuliaVersions(versionInfo)
         const version = installer.getJuliaVersion(availableReleases, versionInput)
         core.debug(`selected Julia version: ${arch}/${version}`)
+        core.setOutput('julia-version', version)
 
         // Search in cache
         let juliaPath: string;
