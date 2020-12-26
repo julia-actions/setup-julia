@@ -14,6 +14,8 @@ inputs:
     required: false
     default: 'false'
 outputs:
+  julia-version:
+    description: 'The installed Julia version. May vary from the version input if a version range was given as input.'
   julia-bindir:
     description: 'Path to the directory containing the Julia executable. Equivalent to JULIA_BINDIR: https://docs.julialang.org/en/v1/manual/environment-variables/#JULIA_BINDIR'
 runs:
