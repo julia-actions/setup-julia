@@ -57,8 +57,8 @@ outputs:
   # May vary from the version input if a version range was given as input.
   #
   # Example output: '1.5.3'
-  julia-version: ''
 
+  julia-version: ''
   # Path to the directory containing the Julia executable.
   # Equivalent to JULIA_BINDIR: https://docs.julialang.org/en/v1/manual/environment-variables/#JULIA_BINDIR
   #
