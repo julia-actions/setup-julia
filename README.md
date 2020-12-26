@@ -10,6 +10,7 @@ This action sets up a Julia environment for use in actions by downloading a spec
   - [Basic](#basic)
   - [Julia Versions](#julia-versions)
   - [Matrix Testing](#matrix-testing)
+  - [versioninfo](#versioninfo)
 - [Versioning](#versioning)
 - [Debug logs](#debug-logs)
 - [Third party information](#third-party-information)
@@ -129,6 +130,21 @@ jobs:
         shell: bash
 ```
 
+### versioninfo
+
+By default, only a brief version identifier is printed in the run log. You can display the full `versioninfo` by adding `show-versioninfo`.
+Here's an example that prints this information just for `nightly`:
+
+```yaml
+    - uses: julia-actions/setup-julia@v1
+      with:
+        version: ${{ matrix.version }}
+        arch: ${{ matrix.arch }}
+        show-versioninfo: ${{ matrix.version == 'nightly' }}
+ ```
+ 
+You use `'true'` if you want it printed for all Julia versions.
+
 ## Versioning
 
 This action follows [GitHub's advice](https://help.github.com/en/articles/about-actions#versioning-your-action) on versioning actions, with an additional `latest` tag.
@@ -151,21 +167,6 @@ steps:
 If your workflow requires access to secrets, you should always pin it to a commit SHA instead of a tag.
 This will protect you in case a bad actor gains access to the setup-julia repo.
 You can find more information in [GitHub's security hardening guide](https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/security-hardening-for-github-actions#using-third-party-actions).
-
-## versioninfo
-
-By default, only a brief version identifier is printed in the run log. You can display the full `versioninfo` by adding `show-versioninfo`.
-Here's an example that prints this information just for `nightly`:
-
-```yaml
-    - uses: julia-actions/setup-julia@v1
-      with:
-        version: ${{ matrix.version }}
-        arch: ${{ matrix.arch }}
-        show-versioninfo: ${{ matrix.version == 'nightly' }}
- ```
- 
-You use `'true'` if you want it printed for all Julia versions.
 
 ## Debug logs
 
