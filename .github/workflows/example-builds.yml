@@ -33,3 +33,7 @@ jobs:
           arch: ${{ matrix.julia-arch }}
           show-versioninfo: 'true'
       - run: julia --version
+      - run: time julia --compile=min -O0 -e 'using InteractiveUtils; versioninfo()'
+        shell: bash
+      - run: time julia -e 'using InteractiveUtils; versioninfo()'
+        shell: bash
