@@ -111,7 +111,7 @@ function getNightlyFileName(arch: string): string {
 }
 
 export function getFileInfo(versionInfo, version: string, arch: string) {
-    if (version == 'nightly') {
+    if (version.endsWith('nightly')) {
         return null
     }
 
@@ -168,7 +168,7 @@ export async function installJulia(versionInfo, version: string, arch: string): 
             await exec.exec('tar', ['xf', juliaDownloadPath, '--strip-components=1', '-C', tempInstallDir])
             return tempInstallDir
         case 'win32':
-            if (version == 'nightly' || semver.gtr(version, '1.3', {includePrerelease: true})) {
+            if (version.endsWith('nightly') || semver.gtr(version, '1.3', {includePrerelease: true})) {
                 // The installer changed in 1.4: https://github.com/JuliaLang/julia/blob/ef0c9108b12f3ae177c51037934351ffa703b0b5/NEWS.md#build-system-changes
                 await exec.exec('powershell', ['-Command', `Start-Process -FilePath ${juliaDownloadPath} -ArgumentList "/SILENT /dir=${path.join(process.cwd(), tempInstallDir)}" -NoNewWindow -Wait`])
             } else {
