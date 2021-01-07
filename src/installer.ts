@@ -66,13 +66,8 @@ export async function getJuliaVersions(versionInfo): Promise<string[]> {
 }
 
 export function getJuliaVersion(availableReleases: string[], versionInput: string): string {
-    if (semver.valid(versionInput) == versionInput) {
-        // versionInput is a valid version, use it directly
-        return versionInput
-    }
-
-    // nightlies
-    if (versionInput.endsWith('nightly')) {
+    if (semver.valid(versionInput) == versionInput || versionInput.endsWith('nightly')) {
+        // versionInput is a valid version or a nightly version, use it directly
         return versionInput
     }
 
