@@ -1,6 +1,9 @@
 name: Example builds
 
-on: [push, pull_request]
+on:
+  push:
+    branches: ['main', 'master', 'releases/*']
+  pull_request:
 
 jobs:
   test:

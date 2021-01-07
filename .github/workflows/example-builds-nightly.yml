@@ -2,6 +2,7 @@ name: Example builds (nightly)
 
 on:
   push:
+    branches: ['main', 'master', 'releases/*']
   pull_request:
   schedule:
     - cron: '37 17 * * *'
