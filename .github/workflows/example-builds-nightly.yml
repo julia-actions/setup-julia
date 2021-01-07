@@ -12,6 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        julia-version: [nightly, 1.6-nightly]
         julia-arch: [x64, x86]
         os: [ubuntu-latest, macOS-latest, windows-latest]
         # 32-bit Julia binaries are not available on macOS
@@ -28,10 +29,10 @@ jobs:
           npm run build
           npm run pack
 
-      - name: "Set up Julia (nightly)"
+      - name: "Set up Julia (${{ matrix.julia-version }})"
         uses: ./
         with:
-          version: nightly
+          version: ${{ matrix.julia-version }}
           arch: ${{ matrix.julia-arch }}
           show-versioninfo: 'true'
       - run: julia --version

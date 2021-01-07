@@ -72,8 +72,8 @@ export function getJuliaVersion(availableReleases: string[], versionInput: strin
     }
 
     // nightlies
-    if (versionInput == 'nightly') {
-        return 'nightly'
+    if (versionInput.endsWith('nightly')) {
+        return versionInput
     }
 
     // Use the highest available version that matches versionInput
@@ -125,10 +125,17 @@ export function getFileInfo(versionInfo, version: string, arch: string) {
 }
 
 export function getDownloadURL(fileInfo, version: string, arch: string): string {
+    const baseURL = `https://julialangnightlies-s3.julialang.org/bin/${osMap[osPlat]}/${arch}`
+
+    // release branch nightlies, e.g. 1.6-nightlies should return .../bin/linux/x64/1.6/julia-latest-linux64.tar.gz
+    const majorMinorMatches = /^(\d*.\d*)-nightly/.exec(version)
+    if (majorMinorMatches) {
+        return `${baseURL}/${majorMinorMatches[0]}/${getNightlyFileName(arch)}`
+    }
+
     // nightlies
     if (version == 'nightly') {
-        const baseURL = 'https://julialangnightlies-s3.julialang.org/bin'
-        return `${baseURL}/${osMap[osPlat]}/${arch}/${getNightlyFileName(arch)}`
+        return `${baseURL}/${getNightlyFileName(arch)}`
     }
 
     return fileInfo.url
