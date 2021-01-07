@@ -130,7 +130,7 @@ export function getDownloadURL(fileInfo, version: string, arch: string): string 
     // release branch nightlies, e.g. 1.6-nightlies should return .../bin/linux/x64/1.6/julia-latest-linux64.tar.gz
     const majorMinorMatches = /^(\d*.\d*)-nightly/.exec(version)
     if (majorMinorMatches) {
-        return `${baseURL}/${majorMinorMatches[0]}/${getNightlyFileName(arch)}`
+        return `${baseURL}/${majorMinorMatches[1]}/${getNightlyFileName(arch)}`
     }
 
     // nightlies
