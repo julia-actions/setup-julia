@@ -149,7 +149,7 @@ export async function installJulia(versionInfo, version: string, arch: string): 
     const juliaDownloadPath = await tc.downloadTool(downloadURL)
 
     // Verify checksum
-    if (version != 'nightly') {
+    if (!version.endsWith('nightly')) {
         const checkSum = await calculateChecksum(juliaDownloadPath)
         if (fileInfo.sha256 != checkSum) {
             throw new Error(`Checksum of downloaded file does not match the expected checksum from versions.json.\nExpected: ${fileInfo.sha256}\nGot: ${checkSum}`)
