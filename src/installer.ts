@@ -66,14 +66,9 @@ export async function getJuliaVersions(versionInfo): Promise<string[]> {
 }
 
 export function getJuliaVersion(availableReleases: string[], versionInput: string): string {
-    if (semver.valid(versionInput) == versionInput) {
-        // versionInput is a valid version, use it directly
+    if (semver.valid(versionInput) == versionInput || versionInput.endsWith('nightly')) {
+        // versionInput is a valid version or a nightly version, use it directly
         return versionInput
-    }
-
-    // nightlies
-    if (versionInput == 'nightly') {
-        return 'nightly'
     }
 
     // Use the highest available version that matches versionInput
@@ -111,7 +106,7 @@ function getNightlyFileName(arch: string): string {
 }
 
 export function getFileInfo(versionInfo, version: string, arch: string) {
-    if (version == 'nightly') {
+    if (version.endsWith('nightly')) {
         return null
     }
 
@@ -125,10 +120,17 @@ export function getFileInfo(versionInfo, version: string, arch: string) {
 }
 
 export function getDownloadURL(fileInfo, version: string, arch: string): string {
+    const baseURL = `https://julialangnightlies-s3.julialang.org/bin/${osMap[osPlat]}/${arch}`
+
+    // release branch nightlies, e.g. 1.6-nightlies should return .../bin/linux/x64/1.6/julia-latest-linux64.tar.gz
+    const majorMinorMatches = /^(\d*.\d*)-nightly/.exec(version)
+    if (majorMinorMatches) {
+        return `${baseURL}/${majorMinorMatches[1]}/${getNightlyFileName(arch)}`
+    }
+
     // nightlies
     if (version == 'nightly') {
-        const baseURL = 'https://julialangnightlies-s3.julialang.org/bin'
-        return `${baseURL}/${osMap[osPlat]}/${arch}/${getNightlyFileName(arch)}`
+        return `${baseURL}/${getNightlyFileName(arch)}`
     }
 
     return fileInfo.url
@@ -142,7 +144,7 @@ export async function installJulia(versionInfo, version: string, arch: string): 
     const juliaDownloadPath = await tc.downloadTool(downloadURL)
 
     // Verify checksum
-    if (version != 'nightly') {
+    if (!version.endsWith('nightly')) {
         const checkSum = await calculateChecksum(juliaDownloadPath)
         if (fileInfo.sha256 != checkSum) {
             throw new Error(`Checksum of downloaded file does not match the expected checksum from versions.json.\nExpected: ${fileInfo.sha256}\nGot: ${checkSum}`)
@@ -161,7 +163,7 @@ export async function installJulia(versionInfo, version: string, arch: string): 
             await exec.exec('tar', ['xf', juliaDownloadPath, '--strip-components=1', '-C', tempInstallDir])
             return tempInstallDir
         case 'win32':
-            if (version == 'nightly' || semver.gtr(version, '1.3', {includePrerelease: true})) {
+            if (version.endsWith('nightly') || semver.gtr(version, '1.3', {includePrerelease: true})) {
                 // The installer changed in 1.4: https://github.com/JuliaLang/julia/blob/ef0c9108b12f3ae177c51037934351ffa703b0b5/NEWS.md#build-system-changes
                 await exec.exec('powershell', ['-Command', `Start-Process -FilePath ${juliaDownloadPath} -ArgumentList "/SILENT /dir=${path.join(process.cwd(), tempInstallDir)}" -NoNewWindow -Wait`])
             } else {
