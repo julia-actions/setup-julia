@@ -178,3 +178,33 @@ export async function installJulia(versionInfo, version: string, arch: string): 
             throw new Error(`Platform ${osPlat} is not supported`)
     }
 }
+
+/**
+ * Test if Julia has been installed and print the version.
+ * 
+ * true => always show versioninfo
+ * false => only show on nightlies
+ * never => never show it anywhere
+ * 
+ * @param showVersionInfoInput 
+ */
+export async function showVersionInfo(showVersionInfoInput: string, version: string): Promise<number> {
+    // --compile=min -O0 reduces the time from ~1.8-1.9s to ~0.8-0.9s
+    switch (showVersionInfoInput) {
+        case 'true':
+            return exec.exec('julia', ['--compile=min', '-O0', '-e', 'using InteractiveUtils; versioninfo()'])
+    
+        case 'false':
+            if (version.endsWith('nightly')) {
+                return exec.exec('julia', ['--compile=min', '-O0', '-e', 'using InteractiveUtils; versioninfo()'])
+            } else {
+                return exec.exec('julia', ['--version'])
+            }
+        
+        case 'never':
+            return exec.exec('julia', ['--version'])
+
+        default:
+            throw new Error(`${showVersionInfoInput} is not a valid value for show-versioninfo. Supported values: true | false | never`)
+    }
+}

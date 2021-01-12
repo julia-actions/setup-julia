@@ -75,14 +75,8 @@ async function run() {
         core.setOutput('julia-bindir', path.join(juliaPath, 'bin'))
 
         // Test if Julia has been installed and print the version
-        if (core.getInput('show-versioninfo') == 'true') {
-            // If enabled, show the full version info
-            // --compile=min -O0 reduces the time from ~1.8-1.9s to ~0.8-0.9s
-            exec.exec('julia', ['--compile=min', '-O0', '-e', 'using InteractiveUtils; versioninfo()'])
-        } else {
-            // Otherwise only print julia --version to save time
-            exec.exec('julia', ['--version'])
-        }
+        const showVersionInfoInput = core.getInput('show-versioninfo')
+        await installer.showVersionInfo(showVersionInfoInput, version)
     } catch (error) {
         core.setFailed(error.message)
     }
