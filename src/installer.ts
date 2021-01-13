@@ -6,7 +6,7 @@ import * as crypto from 'crypto'
 import * as fs from 'fs'
 import * as os from 'os'
 import * as path from 'path'
-import * as retry from 'async-retry'
+import retry = require('async-retry')
 
 import * as semver from 'semver'
 
@@ -50,7 +50,7 @@ async function calculateChecksum(file: string): Promise<string> {
 export async function getJuliaVersionInfo(): Promise<object> {
     // Occasionally the connection is reset for unknown reasons
     // In those cases, retry the download
-    const versionsFile = await retry.retry(async (bail: Function) => {
+    const versionsFile = await retry(async (bail: Function) => {
         return await tc.downloadTool('https://julialang-s3.julialang.org/bin/versions.json')
     }, {
         onRetry: (err: Error) => {
@@ -153,7 +153,7 @@ export async function installJulia(versionInfo, version: string, arch: string): 
 
     // Occasionally the connection is reset for unknown reasons
     // In those cases, retry the download
-    const juliaDownloadPath = await retry.retry(async (bail: Function) => {
+    const juliaDownloadPath = await retry(async (bail: Function) => {
         return await tc.downloadTool(downloadURL)
     }, {
         onRetry: (err: Error) => {

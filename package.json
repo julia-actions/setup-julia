@@ -29,6 +29,7 @@
     "semver": "^6.3.0"
   },
   "devDependencies": {
+    "@types/async-retry": "^1.4.2",
     "@types/jest": "^24.0.13",
     "@types/node": "^12.12.7",
     "@types/semver": "^6.0.0",
