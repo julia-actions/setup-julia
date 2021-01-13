@@ -13,7 +13,6 @@ jobs:
       matrix:
         julia-version: ['1.0.5', '1', '^1.5.0-beta1']
         julia-arch: [x64, x86]
-        versioninfo: ['true', 'false', 'never']
         os: [ubuntu-latest, macOS-latest, windows-latest]
         # 32-bit Julia binaries are not available on macOS
         exclude:
@@ -35,6 +34,5 @@ jobs:
         with:
           version: ${{ matrix.julia-version }}
           arch: ${{ matrix.julia-arch }}
-          show-versioninfo: ${{ matrix.versioninfo }}
       - run: julia --version
       - run: julia --compile=min -O0 -e 'import InteractiveUtils; InteractiveUtils.versioninfo()'
