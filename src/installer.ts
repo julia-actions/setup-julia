@@ -142,6 +142,10 @@ export function getDownloadURL(fileInfo, version: string, arch: string): string 
         return `${baseURL}/${getNightlyFileName(arch)}`
     }
 
+    // Verify that fileInfo.url points at the official Julia download servers
+    if (!fileInfo.url.startsWith('https://julialang-s3.julialang.org/')) {
+        throw new Error(`versions.json points at a download location outside of Julia's download server: ${fileInfo.url}. Aborting for security reasons.`)
+    }
     return fileInfo.url
 }
 
