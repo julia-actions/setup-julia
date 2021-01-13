@@ -43,8 +43,18 @@ This action sets up a Julia environment for use in actions by downloading a spec
     # Default: x64
     arch: ''
 
-    # If true, display the output of InteractiveUtils.versioninfo() after installing.
-    # See "versioninfo" below for example usage.
+    # Set the display setting for printing InteractiveUtils.versioninfo() after installing.
+    #
+    # Starting Julia and running InteractiveUtils.versioninfo() takes a significant amount of time (1s or ~10% of the total build time in testing),
+    # so you may not want to run it in every build, in particular on paid runners, as this cost will add up quickly.
+    #
+    # See "versioninfo" below for example usage and further explanations.
+    #
+    # Supported values: true | false | never
+    #
+    # true: Always print versioninfo
+    # false: Only print versioninfo for nightly Julia
+    # never: Never print versioninfo
     #
     # Default: false
     show-versioninfo: ''
@@ -179,18 +189,13 @@ jobs:
 
 ### versioninfo
 
-By default, only a brief version identifier is printed in the run log. You can display the full `versioninfo` by adding `show-versioninfo`.
-Here's an example that prints this information just for `nightly`:
+By default, only the output of `julia --version` is printed as verification that Julia has been installed for stable versions of Julia.
+`InteractiveUtils.versioninfo()` is run by default for nightly builds.
 
-```yaml
-    - uses: julia-actions/setup-julia@v1
-      with:
-        version: ${{ matrix.version }}
-        arch: ${{ matrix.arch }}
-        show-versioninfo: ${{ matrix.version == 'nightly' }}
- ```
- 
-You use `'true'` if you want it printed for all Julia versions.
+Starting Julia and printing the full versioninfo takes a significant amount of time (1s or ~10% of the total build time in testing), so you may not want to run it in every build, in particular on paid runners as this cost will add up quickly.
+However, `julia --version` does not provide sufficient information to know which commit a nightly binary was built from, therefore it is useful to show the full versioninfo on nightly builds regardless.
+
+You can override this behaviour by changing the input to `never` if you never want to run `InteractiveUtils.versioninfo()` or to `true` if you always want to run `InteractiveUtils.versioninfo()`, even on stable Julia builds.
 
 ## Versioning
 
