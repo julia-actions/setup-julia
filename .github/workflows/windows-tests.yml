@@ -1,0 +1,44 @@
+name: Windows Benchmark
+
+on: [push]
+
+jobs:
+  installer:
+    name: Installer
+    runs-on: windows-latest
+
+    steps:
+      - name: Download
+        run: curl -O https://julialang-s3.julialang.org/bin/winnt/x64/1.5/julia-1.5.3-win64.exe
+        shell: bash
+
+      - name: Install
+        run: |
+          Start-Process -FilePath julia-1.5.3-win64.exe -ArgumentList "/SILENT /dir=C:\Julia" -NoNewWindow -Wait
+      
+      - name: Add to path
+        run: |
+          echo "C:\Julia\bin" >> $GITHUB_PATH
+        shell: bash
+      
+      - run: julia --version
+  
+  archive:
+    name: Archive
+    runs-on: windows-latest
+
+    steps:
+      - name: Download
+        run: curl -O https://julialang-s3.julialang.org/bin/winnt/x64/1.5/julia-1.5.3-win64.zip
+        shell: bash
+
+      - name: Install
+        run: |
+          [System.IO.Compression.ZipFile]::ExtractToDirectory('julia-1.5.3-win64.zip', 'C:\Julia')
+      
+      - name: Add to path
+        run: |
+          echo "C:\Julia\julia-1.5.3\bin" >> $GITHUB_PATH
+        shell: bash
+      
+      - run: julia --version
