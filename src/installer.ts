@@ -188,23 +188,32 @@ export async function installJulia(versionInfo, version: string, arch: string): 
  * 
  * @param showVersionInfoInput 
  */
-export async function showVersionInfo(showVersionInfoInput: string, version: string): Promise<number> {
+export async function showVersionInfo(showVersionInfoInput: string, version: string): Promise<void> {
     // --compile=min -O0 reduces the time from ~1.8-1.9s to ~0.8-0.9s
+    let exitCode: number
+
     switch (showVersionInfoInput) {
         case 'true':
-            return exec.exec('julia', ['--compile=min', '-O0', '-e', 'using InteractiveUtils; versioninfo()'])
+            exitCode = await exec.exec('julia', ['--compile=min', '-O0', '-e', 'using InteractiveUtils; versioninfo()'])
+            break
     
         case 'false':
             if (version.endsWith('nightly')) {
-                return exec.exec('julia', ['--compile=min', '-O0', '-e', 'using InteractiveUtils; versioninfo()'])
+                exitCode = await exec.exec('julia', ['--compile=min', '-O0', '-e', 'using InteractiveUtils; versioninfo()'])
             } else {
-                return exec.exec('julia', ['--version'])
+                exitCode = await exec.exec('julia', ['--version'])
             }
+            break
         
         case 'never':
-            return exec.exec('julia', ['--version'])
+            exitCode = await exec.exec('julia', ['--version'])
+            break
 
         default:
             throw new Error(`${showVersionInfoInput} is not a valid value for show-versioninfo. Supported values: true | false | never`)
+    }
+
+    if (exitCode !== 0) {
+        throw new Error(`Julia could not be installed properly. Exit code: ${exitCode}`)
     }
 }

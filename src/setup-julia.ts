@@ -76,10 +76,7 @@ async function run() {
 
         // Test if Julia has been installed and print the version
         const showVersionInfoInput = core.getInput('show-versioninfo')
-        const exitCode = await installer.showVersionInfo(showVersionInfoInput, version)
-        if (exitCode !== 0) {
-            throw new Error(`Julia could not be installed properly. Exit code: ${exitCode}`)
-        }
+        await installer.showVersionInfo(showVersionInfoInput, version)
     } catch (error) {
         core.setFailed(error.message)
     }
