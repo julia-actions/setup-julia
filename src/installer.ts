@@ -6,6 +6,7 @@ import * as crypto from 'crypto'
 import * as fs from 'fs'
 import * as os from 'os'
 import * as path from 'path'
+import { retry } from 'async-retry'
 
 import * as semver from 'semver'
 
@@ -47,7 +48,15 @@ async function calculateChecksum(file: string): Promise<string> {
  * @returns The content of the downloaded versions.json file as object.
  */
 export async function getJuliaVersionInfo(): Promise<object> {
-    const versionsFile = await tc.downloadTool('https://julialang-s3.julialang.org/bin/versions.json')
+    // Occasionally the connection is reset for unknown reasons
+    // In those cases, retry the download
+    const versionsFile = await retry(async (bail: Function) => {
+        return await tc.downloadTool('https://julialang-s3.julialang.org/bin/versions.json')
+    }, {
+        onRetry: (err: Error) => {
+            core.debug(`Download of versions.json failed, trying again. Error: ${err}`)
+        }
+    })
 
     return JSON.parse(fs.readFileSync(versionsFile).toString())
 }
@@ -141,7 +150,17 @@ export async function installJulia(versionInfo, version: string, arch: string): 
     const fileInfo = getFileInfo(versionInfo, version, arch)
     const downloadURL = getDownloadURL(fileInfo, version, arch)
     core.debug(`downloading Julia from ${downloadURL}`)
-    const juliaDownloadPath = await tc.downloadTool(downloadURL)
+
+    // Occasionally the connection is reset for unknown reasons
+    // In those cases, retry the download
+    const juliaDownloadPath = await retry(async (bail: Function) => {
+        return await tc.downloadTool(downloadURL)
+    }, {
+        onRetry: (err: Error) => {
+            core.debug(`Download of ${downloadURL} failed, trying again. Error: ${err}`)
+        }
+    })
+
 
     // Verify checksum
     if (!version.endsWith('nightly')) {
