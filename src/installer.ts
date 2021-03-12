@@ -119,11 +119,15 @@ export function getFileInfo(versionInfo, version: string, arch: string) {
         return null
     }
 
+    core.debug(versionInfo[version])
+
     for (let file of versionInfo[version].files) {
         if (file.os == osMap[osPlat] && file.arch == archMap[arch]) {
             return file
         }
     }
+
+    // This is never reached apparently.
 
     throw `Could not find ${archMap[arch]}/${version} binaries`
 }
