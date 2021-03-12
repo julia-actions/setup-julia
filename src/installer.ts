@@ -152,8 +152,9 @@ export function getDownloadURL(fileInfo, version: string, arch: string): string 
 export async function installJulia(versionInfo, version: string, arch: string): Promise<string> {
     // Download Julia
     const fileInfo = getFileInfo(versionInfo, version, arch)
+    core.debug(`File info: ${fileInfo}`)
     const downloadURL = getDownloadURL(fileInfo, version, arch)
-    core.debug(`downloading Julia from ${downloadURL}`)
+    core.debug(`Downloading Julia from ${downloadURL}`)
 
     // Occasionally the connection is reset for unknown reasons
     // In those cases, retry the download
