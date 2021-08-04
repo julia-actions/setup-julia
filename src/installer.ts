@@ -115,8 +115,14 @@ function getNightlyFileName(arch: string): string {
 }
 
 export function getFileInfo(versionInfo, version: string, arch: string) {
+    const err = `Could not find ${archMap[arch]}/${version} binaries`
+
     if (version.endsWith('nightly')) {
         return null
+    }
+
+    if (!versionInfo[version]) {
+       throw err
     }
 
     for (let file of versionInfo[version].files) {
@@ -125,7 +131,7 @@ export function getFileInfo(versionInfo, version: string, arch: string) {
         }
     }
 
-    throw `Could not find ${archMap[arch]}/${version} binaries`
+    throw err
 }
 
 export function getDownloadURL(fileInfo, version: string, arch: string): string {
@@ -204,12 +210,12 @@ export async function installJulia(versionInfo, version: string, arch: string): 
 
 /**
  * Test if Julia has been installed and print the version.
- * 
+ *
  * true => always show versioninfo
  * false => only show on nightlies
  * never => never show it anywhere
- * 
- * @param showVersionInfoInput 
+ *
+ * @param showVersionInfoInput
  */
 export async function showVersionInfo(showVersionInfoInput: string, version: string): Promise<void> {
     // --compile=min -O0 reduces the time from ~1.8-1.9s to ~0.8-0.9s
@@ -219,7 +225,7 @@ export async function showVersionInfo(showVersionInfoInput: string, version: str
         case 'true':
             exitCode = await exec.exec('julia', ['--compile=min', '-O0', '-e', 'using InteractiveUtils; versioninfo()'])
             break
-    
+
         case 'false':
             if (version.endsWith('nightly')) {
                 exitCode = await exec.exec('julia', ['--compile=min', '-O0', '-e', 'using InteractiveUtils; versioninfo()'])
@@ -227,7 +233,7 @@ export async function showVersionInfo(showVersionInfoInput: string, version: str
                 exitCode = await exec.exec('julia', ['--version'])
             }
             break
-        
+
         case 'never':
             exitCode = await exec.exec('julia', ['--version'])
             break
