@@ -1,4 +1,14 @@
 import * as core from '@actions/core'
+
+// If we want to override the `RUNNER_TOOL_CACHE` environment variable, we need
+// to do it before we load ``@actions/tool-cache`
+const tool_cache_input_original = core.getInput('tool-cache')
+const tool_cache_input_trimmed = tool_cache_input_original.trim()
+if (tool_cache_input_trimmed.length > 0) {
+    process.env['RUNNER_TOOL_CACHE'] = tool_cache_input_trimmed
+    console.log('Overriding RUNNER_TOOL_CACHE -> ', process.env['RUNNER_TOOL_CACHE'])
+}
+
 import * as exec from '@actions/exec'
 import * as tc from '@actions/tool-cache'
 
