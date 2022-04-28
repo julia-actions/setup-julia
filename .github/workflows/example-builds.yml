@@ -29,11 +29,17 @@ jobs:
           npm run build
           npm run pack
 
+      - run: mkdir -p ${{ github.workspace }}/dilumtestcache # TODO: delete this line
       - name: "Set up Julia"
         id: setup-julia
         uses: ./
         with:
           version: ${{ matrix.julia-version }}
           arch: ${{ matrix.julia-arch }}
+        env:
+           # TODO: delete this line
+          RUNNER_TOOL_CACHE: ${{ github.workspace }}/dilumtestcache
+      - run: which julia # TODO: delete this line
+      - run: which -a julia # TODO: delete this line
       - run: julia --version
       - run: julia --compile=min -O0 -e 'import InteractiveUtils; InteractiveUtils.versioninfo()'
