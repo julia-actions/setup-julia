@@ -19,7 +19,7 @@ outputs:
   julia-bindir:
     description: 'Path to the directory containing the Julia executable. Equivalent to JULIA_BINDIR: https://docs.julialang.org/en/v1/manual/environment-variables/#JULIA_BINDIR'
 runs:
-  using: 'node12'
+  using: 'node16'
   main: 'dist/index.js'
 branding:
   icon: 'download'
