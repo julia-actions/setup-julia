@@ -38,7 +38,11 @@ This action sets up a Julia environment for use in actions by downloading a spec
 
     # The architecture of the Julia binaries.
     #
-    # Supported values: x64 | x86
+    # Please note that installing aarch64 binaries only makes sense on self-hosted aarch64 runners.
+    # We currently don't run test builds on that architecture, so we cannot guarantee that the input won't break randomly,
+    # although there is no reason why it would.
+    #
+    # Supported values: x64 | x86 | aarch64 (untested)
     #
     # Default: x64
     arch: ''
