@@ -203,6 +203,10 @@ export async function installJulia(versionInfo, version: string, arch: string): 
         case 'darwin':
             await exec.exec('hdiutil', ['attach', juliaDownloadPath])
             await exec.exec('/bin/bash', ['-c', `cp -a /Volumes/Julia-*/Julia-*.app/Contents/Resources/julia ${tempInstallDir}`])
+
+            // Unmount dmg file again to avoid issues on self-hosted runners
+            await exec.exec('hdiutil', ['unmount', juliaDownloadPath])
+
             return path.join(tempInstallDir, 'julia')
         default:
             throw new Error(`Platform ${osPlat} is not supported`)
