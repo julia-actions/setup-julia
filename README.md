@@ -1,5 +1,7 @@
 # setup-julia Action
 
+hello world
+
 [![CodeQL](https://github.com/julia-actions/setup-julia/workflows/CodeQL/badge.svg)](https://securitylab.github.com/tools/codeql)
 [![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=julia-actions/setup-julia)](https://dependabot.com)
 
