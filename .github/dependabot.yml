@@ -5,3 +5,11 @@ updates:
   schedule:
     interval: daily
   open-pull-requests-limit: 10
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    labels:
+      - "dependencies"
+      - "javascript"
+    open-pull-requests-limit: 1
