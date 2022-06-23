@@ -44,6 +44,8 @@ This action sets up a Julia environment for use in actions by downloading a spec
     #
     # Supported values: x64 | x86 | aarch64 (untested)
     #
+    # Note: you can use X64, X86, and ARM64 as synonyms for x64, x86, and aarch64, respectively.
+    #
     # Default: x64
     arch: ''
 
