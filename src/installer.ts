@@ -19,7 +19,8 @@ const osMap = {
 const archMap = {
     'x86': 'i686',
     'x64': 'x86_64',
-    'aarch64': 'aarch64'
+    'aarch64': 'aarch64',
+    'ARM64': 'aarch64'
 }
 
 // Store information about the environment
