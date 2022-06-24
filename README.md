@@ -46,7 +46,7 @@ This action sets up a Julia environment for use in actions by downloading a spec
     #
     # Note: you can use X64, X86, and ARM64 as synonyms for x64, x86, and aarch64, respectively.
     #
-    # Default: x64
+    # Defaults to the architecture of the runner executing the job.
     arch: ''
 
     # Set the display setting for printing InteractiveUtils.versioninfo() after installing.
@@ -129,7 +129,7 @@ jobs:
       matrix:
         julia-version: ['1.0', '1.2.0', '^1.3.0-rc1']
         os: [ubuntu-latest, windows-latest, macOS-latest]
-    
+
     steps:
       - uses: actions/checkout@v1.0.0
       - name: "Set up Julia"
@@ -155,7 +155,7 @@ jobs:
         exclude:
           - os: macOS-latest
             julia-arch: x86
-    
+
     steps:
       - uses: actions/checkout@v1.0.0
       - name: "Set up Julia"
@@ -182,7 +182,7 @@ jobs:
           - os: windows-latest
             julia-version: ['1.0.4']
             julia-arch: x86
-    
+
     steps:
       - uses: actions/checkout@v1.0.0
       - name: "Set up Julia"

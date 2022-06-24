@@ -1,0 +1,33 @@
+name: Example builds (default arch)
+
+on:
+  push:
+    branches: ['main', 'master', 'releases/*']
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        julia-version: ['1']
+        os: [ubuntu-latest, macOS-latest, windows-latest]
+
+    steps:
+      - uses: actions/checkout@v1.0.0
+
+      - name: "Install dependencies"
+        run: |
+          npm install --legacy-peer-deps
+          npm run build
+          npm run pack
+
+      - name: "Set up Julia"
+        id: setup-julia
+        uses: ./
+        with:
+          version: ${{ matrix.julia-version }}
+      - run: julia --version
+      - run: julia --compile=min -O0 -e 'import InteractiveUtils; InteractiveUtils.versioninfo()'
