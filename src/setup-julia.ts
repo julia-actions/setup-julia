@@ -8,6 +8,15 @@ import * as path from 'path'
 
 import * as installer from './installer'
 
+const archSynonyms = {
+    'x86': 'x86',
+    'X86': 'x86',
+    'x64': 'x64',
+    'X64': 'x64',
+    'aarch64': 'aarch64',
+    'ARM64': 'aarch64'
+}
+
 async function run() {
     try {
         // Debugging info
@@ -30,7 +39,7 @@ async function run() {
 
         // Inputs
         const versionInput = core.getInput('version')
-        const arch = core.getInput('arch')
+        const originalArchInput = core.getInput('arch')
 
         // It can easily happen that, for example, a workflow file contains an input `version: ${{ matrix.julia-version }}`
         // while the strategy matrix only contains a key `${{ matrix.version }}`.
@@ -40,9 +49,11 @@ async function run() {
         if (!versionInput) {
             throw new Error('Version input must not be null')
         }
-        if (!arch) {
+        if (!originalArchInput) {
             throw new Error(`Arch input must not be null`)
         }
+
+        const arch = archSynonyms[originalArchInput]
 
         const versionInfo = await installer.getJuliaVersionInfo()
         const availableReleases = await installer.getJuliaVersions(versionInfo)

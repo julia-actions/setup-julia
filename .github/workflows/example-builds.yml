@@ -1,5 +1,11 @@
 name: Example builds
 
+concurrency:
+  # Skip intermediate builds: all builds except for builds on the `master`, `main`, or `release-*` branches
+  # Cancel intermediate builds: only pull request builds
+  group: ${{ github.workflow }}-${{ github.ref }}-${{ github.ref != 'refs/heads/master' || github.ref != 'refs/heads/main' || startsWith(github.ref, 'refs/heads/release-') || github.run_number }}
+  cancel-in-progress: ${{ startsWith(github.ref, 'refs/pull/') }}
+
 on:
   push:
     branches: ['main', 'master', 'releases/*']
@@ -9,6 +15,7 @@ on:
 jobs:
   test:
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 60
     strategy:
       fail-fast: false
       matrix:
@@ -19,7 +26,7 @@ jobs:
         exclude:
           - os: macOS-latest
             julia-arch: x86
-    
+
     steps:
       - uses: actions/checkout@v1.0.0
 

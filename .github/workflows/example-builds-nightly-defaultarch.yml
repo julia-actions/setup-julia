@@ -1,4 +1,4 @@
-name: Example builds (default arch)
+name: Example builds (nightly, default arch)
 
 concurrency:
   # Skip intermediate builds: all builds except for builds on the `master`, `main`, or `release-*` branches
@@ -10,7 +10,6 @@ on:
   push:
     branches: ['main', 'master', 'releases/*']
   pull_request:
-  workflow_dispatch:
 
 jobs:
   test:
@@ -19,7 +18,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        julia-version: ['1']
+        julia-version: [nightly, 1.8-nightly]
         os: [ubuntu-latest, macOS-latest, windows-latest]
 
     steps:
@@ -31,8 +30,7 @@ jobs:
           npm run build
           npm run pack
 
-      - name: "Set up Julia"
-        id: setup-julia
+      - name: "Set up Julia (${{ matrix.julia-version }})"
         uses: ./
         with:
           version: ${{ matrix.julia-version }}
