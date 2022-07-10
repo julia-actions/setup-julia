@@ -21,7 +21,7 @@ jobs:
       matrix:
         julia-version: ['1.8.0-rc2', '1.8-nightly']
         julia-arch: [x64, x86]
-        os: [macOS-latest]
+        os: ['macOS-latest', 'macos-12']
         # 32-bit Julia binaries are not available on macOS
         exclude:
           - os: macOS-latest
