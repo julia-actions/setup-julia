@@ -93,30 +93,58 @@ export function getJuliaVersion(availableReleases: string[], versionInput: strin
     return version
 }
 
+function getDesiredFileExts(): [string, boolean, string] {
+    let fileExt1: string
+    let hasFileExt2: boolean
+    let fileExt2: string
+
+    if (osPlat == 'win32') {
+        fileExt1 = 'exe'
+        hasFileExt2 = false
+        fileExt2 = ''
+    } else if (osPlat == 'darwin') {
+        fileExt1 = 'tar.gz'
+        hasFileExt2 = true
+        fileExt2 = 'dmg'
+    } else if (osPlat === 'linux') {
+        fileExt1 = 'tar.gz'
+        hasFileExt2 = false
+        fileExt2 = ''
+    } else {
+        throw new Error(`Platform ${osPlat} is not supported`)
+    }
+
+    return [fileExt1, hasFileExt2, fileExt2]
+}
+
 function getNightlyFileName(arch: string): string {
-    let versionExt: string, ext: string
+    let versionExt: string
+    let fileExt1: string
+    [fileExt1, , ] = getDesiredFileExts()
 
     if (osPlat == 'win32') {
         versionExt = arch == 'x64' ? '-win64' : '-win32'
-        ext = 'exe'
     } else if (osPlat == 'darwin') {
         if (arch == 'x86') {
             throw new Error('32-bit Julia is not available on macOS')
         }
         versionExt = '-mac64'
-        ext = 'dmg'
     } else if (osPlat === 'linux') {
         versionExt = arch == 'x64' ? '-linux64' : '-linux32'
-        ext = 'tar.gz'
     } else {
         throw new Error(`Platform ${osPlat} is not supported`)
     }
 
-    return `julia-latest${versionExt}.${ext}`
+    return `julia-latest${versionExt}.${fileExt1}`
 }
 
 export function getFileInfo(versionInfo, version: string, arch: string) {
     const err = `Could not find ${archMap[arch]}/${version} binaries`
+
+    let fileExt1: string
+    let hasFileExt2: boolean
+    let fileExt2: string
+    [fileExt1, hasFileExt2, fileExt2] = getDesiredFileExts()
 
     if (version.endsWith('nightly')) {
         return null
@@ -128,7 +156,20 @@ export function getFileInfo(versionInfo, version: string, arch: string) {
 
     for (let file of versionInfo[version].files) {
         if (file.os == osMap[osPlat] && file.arch == archMap[arch]) {
-            return file
+            if (file.extension == fileExt1) {
+                return file
+            }
+        }
+    }
+
+    if (hasFileExt2) {
+        core.debug(`Could not find ${fileExt1}; trying to find ${fileExt2} instead`)
+        for (let file of versionInfo[version].files) {
+            if (file.os == osMap[osPlat] && file.arch == archMap[arch]) {
+                if (file.extension == fileExt2) {
+                    return file
+                }
+            }
         }
     }
 
@@ -172,7 +213,6 @@ export async function installJulia(versionInfo, version: string, arch: string): 
         }
     })
 
-
     // Verify checksum
     if (!version.endsWith('nightly')) {
         const checkSum = await calculateChecksum(juliaDownloadPath)
@@ -201,9 +241,16 @@ export async function installJulia(versionInfo, version: string, arch: string): 
             }
             return tempInstallDir
         case 'darwin':
-            await exec.exec('hdiutil', ['attach', juliaDownloadPath])
-            await exec.exec('/bin/bash', ['-c', `cp -a /Volumes/Julia-*/Julia-*.app/Contents/Resources/julia ${tempInstallDir}`])
-            return path.join(tempInstallDir, 'julia')
+            if (fileInfo !== null && fileInfo.extension == 'dmg') {
+                core.debug(`Support for .dmg files is deprecated and may be removed in a future release`)
+                await exec.exec('hdiutil', ['attach', juliaDownloadPath])
+                await exec.exec('/bin/bash', ['-c', `cp -a /Volumes/Julia-*/Julia-*.app/Contents/Resources/julia ${tempInstallDir}`])
+                return path.join(tempInstallDir, 'julia')
+            } else {
+                // tc.extractTar doesn't support stripping components, so we have to call tar manually
+                await exec.exec('tar', ['xf', juliaDownloadPath, '--strip-components=1', '-C', tempInstallDir])
+                return tempInstallDir
+            }
         default:
             throw new Error(`Platform ${osPlat} is not supported`)
     }
