@@ -39,6 +39,7 @@ async function run() {
 
         // Inputs
         const versionInput = core.getInput('version')
+        const includePrereleases = core.getInput('include-prereleases') == 'true'
         const originalArchInput = core.getInput('arch')
 
         // It can easily happen that, for example, a workflow file contains an input `version: ${{ matrix.julia-version }}`
@@ -57,7 +58,7 @@ async function run() {
 
         const versionInfo = await installer.getJuliaVersionInfo()
         const availableReleases = await installer.getJuliaVersions(versionInfo)
-        const version = installer.getJuliaVersion(availableReleases, versionInput)
+        const version = installer.getJuliaVersion(availableReleases, versionInput, includePrereleases)
         core.debug(`selected Julia version: ${arch}/${version}`)
         core.setOutput('julia-version', version)
 

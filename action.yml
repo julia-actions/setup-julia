@@ -5,6 +5,10 @@ inputs:
   version:
     description: 'The Julia version to download (if necessary) and use. Example: 1.0.4'
     default: '1'
+  include-prereleases:
+    description: 'Include prereleases when matching the Julia version to available versions.'
+    required: false
+    default: 'false'
   arch:
     description: 'Architecture of the Julia binaries. Defaults to the architecture of the runner executing the job.'
     required: false

@@ -75,14 +75,14 @@ export async function getJuliaVersions(versionInfo): Promise<string[]> {
     return versions
 }
 
-export function getJuliaVersion(availableReleases: string[], versionInput: string): string {
+export function getJuliaVersion(availableReleases: string[], versionInput: string, includePrerelease: boolean = false): string {
     if (semver.valid(versionInput) == versionInput || versionInput.endsWith('nightly')) {
         // versionInput is a valid version or a nightly version, use it directly
         return versionInput
     }
 
     // Use the highest available version that matches versionInput
-    let version = semver.maxSatisfying(availableReleases, versionInput)
+    let version = semver.maxSatisfying(availableReleases, versionInput, {includePrerelease})
     if (version == null) {
         throw new Error(`Could not find a Julia version that matches ${versionInput}`)
     }
