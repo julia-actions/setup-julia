@@ -126,6 +126,9 @@ These behave slightly differently.
 For example, `^1.3.0-rc1` would match `1.3.0-rc2` but would **not** match `1.4.0-rc1` once released.
 2. If `include-preleases` is set to true, **all** pre-releases of all versions will be included in the version matching. In this case, `^1.3.0-rc1` would match `1.4.0-rc1` once released.
 
+**Example:** Without `include-prereleases: true`, the version `^1.3.0-rc1` would match `1.3.0-rc1`, `1.3.0-rc2`, `1.3.0`, `1.4.0` once they are released.
+With `include-prereleases: true`, it would match `1.3.0-rc1`, `1.3.0-rc2`, `1.3.0`, `1.4.0-rc1`, `1.4.0`.
+
 If you want to run tests against the latest tagged version, no matter what version that is, you can use
 
 ```yaml
