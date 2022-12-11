@@ -5,7 +5,7 @@ inputs:
   version:
     description: 'The Julia version to download (if necessary) and use. Example: 1.0.4'
     default: '1'
-  include-prereleases:
+  include-all-prereleases:
     description: 'Include prereleases when matching the Julia version to available versions.'
     required: false
     default: 'false'

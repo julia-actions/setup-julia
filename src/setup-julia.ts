@@ -39,7 +39,7 @@ async function run() {
 
         // Inputs
         const versionInput = core.getInput('version')
-        const includePrereleases = core.getInput('include-prereleases') == 'true'
+        const includePrereleases = core.getInput('include-all-prereleases') == 'true'
         const originalArchInput = core.getInput('arch')
 
         // It can easily happen that, for example, a workflow file contains an input `version: ${{ matrix.julia-version }}`

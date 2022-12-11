@@ -118,7 +118,7 @@ Internally the action uses node's semver package to resolve version ranges. Its 
 There are two methods of including pre-releases in version matching:
 
 1. Including the pre-release tag in the version itself, e.g. `^1.3.0-rc1`.
-2. Setting the input `include-prereleases` to `true`.
+2. Setting the input `include-all-prereleases` to `true`.
 
 These behave slightly differently.
 
@@ -126,8 +126,8 @@ These behave slightly differently.
 For example, `^1.3.0-rc1` would match `1.3.0-rc2` but would **not** match `1.4.0-rc1` once released.
 2. If `include-preleases` is set to true, **all** pre-releases of all versions will be included in the version matching. In this case, `^1.3.0-rc1` would match `1.4.0-rc1` once released.
 
-**Example:** Without `include-prereleases: true`, the version `^1.3.0-rc1` would match `1.3.0-rc1`, `1.3.0-rc2`, `1.3.0`, `1.4.0` once they are released.
-With `include-prereleases: true`, it would match `1.3.0-rc1`, `1.3.0-rc2`, `1.3.0`, `1.4.0-rc1`, `1.4.0`.
+**Example:** Without `include-all-prereleases: true`, the version `^1.3.0-rc1` would match `1.3.0-rc1`, `1.3.0-rc2`, `1.3.0`, `1.4.0` once they are released.
+With `include-all-prereleases: true`, it would match `1.3.0-rc1`, `1.3.0-rc2`, `1.3.0`, `1.4.0-rc1`, `1.4.0`.
 
 If you want to run tests against the latest tagged version, no matter what version that is, you can use
 
@@ -135,7 +135,7 @@ If you want to run tests against the latest tagged version, no matter what versi
 - uses: julia-actions/setup-julia@v1
   with:
     version: '1'
-    include-prereleases: true
+    include-all-prereleases: true
 ```
 
 #### Recently released versions
