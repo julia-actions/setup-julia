@@ -66,6 +66,14 @@ describe('version matching tests', () => {
         })
     })
 
+    describe('include-prereleases', () => {
+        it('Chooses the highest available version that matches the input including prereleases', () => {
+            expect(installer.getJuliaVersion(testVersions, '^1.2.0-0', true)).toEqual('1.3.0-rc4')
+            expect(installer.getJuliaVersion(testVersions, '1', true)).toEqual('1.3.0-rc4')
+            expect(installer.getJuliaVersion(testVersions, '^1.2.0-0', false)).toEqual('1.2.0')
+        })
+    })
+
     describe('node-semver behaviour', () => {
         describe('Windows installer change', () => {
             it('Correctly understands >1.4.0', () => {
