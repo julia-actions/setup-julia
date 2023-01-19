@@ -140,7 +140,7 @@ If you want to run tests against the latest tagged version, no matter what versi
 
 #### Recently released versions
 
-The available Julia versions are pulled from [`versions.json`](https://julialang-s3.julialang.org/bin/versions.json). This file is automatically updated once a day. Therefore it may take up to 24 hours until a newly released Julia version is available in the action.
+The available Julia versions are pulled from [`versions.json`](https://julialang-s3.julialang.org/bin/versions.json).
 
 ### Matrix Testing
 
