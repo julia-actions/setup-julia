@@ -76,7 +76,7 @@ async function run() {
             core.debug(`added Julia to cache: ${juliaPath}`)
 
             // Remove temporary dir
-            fs.rmdirSync(juliaInstallationPath, {recursive: true})
+            fs.rmSync(juliaInstallationPath, {recursive: true})
         } else {
             core.debug(`using cached version of Julia: ${juliaPath}`)
         }
@@ -91,7 +91,7 @@ async function run() {
         const showVersionInfoInput = core.getInput('show-versioninfo')
         await installer.showVersionInfo(showVersionInfoInput, version)
     } catch (error) {
-        core.setFailed(error.message)
+        core.setFailed((error as Error).message)
     }
 }
 
