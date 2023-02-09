@@ -91,7 +91,7 @@ async function run() {
         const showVersionInfoInput = core.getInput('show-versioninfo')
         await installer.showVersionInfo(showVersionInfoInput, version)
     } catch (error) {
-        core.setFailed(error.message)
+        core.setFailed((error as Error).message)
     }
 }
 
