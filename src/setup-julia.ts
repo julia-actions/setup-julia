@@ -14,7 +14,8 @@ const archSynonyms = {
     'x64': 'x64',
     'X64': 'x64',
     'aarch64': 'aarch64',
-    'ARM64': 'aarch64'
+    'ARM64': 'aarch64',
+    'arm64': 'aarch64'
 }
 
 async function run() {
