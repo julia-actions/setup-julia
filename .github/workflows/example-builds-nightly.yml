@@ -29,7 +29,7 @@ jobs:
             julia-arch: x86
 
     steps:
-      - uses: actions/checkout@v1.0.0
+      - uses: actions/checkout@v3
 
       - name: "Install dependencies"
         run: |
