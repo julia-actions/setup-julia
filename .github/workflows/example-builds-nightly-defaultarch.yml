@@ -18,7 +18,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        julia-version: [nightly, 1.8-nightly]
+        julia-version: [nightly, 1.9-nightly]
         os: [ubuntu-latest, macOS-latest, windows-latest]
 
     steps:
