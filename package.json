@@ -30,7 +30,7 @@
   },
   "devDependencies": {
     "@types/async-retry": "^1.4.5",
-    "@types/jest": "^29.5.0",
+    "@types/jest": "^29.5.1",
     "@types/node": "^18.14.2",
     "@types/retry": "^0.12.2",
     "@types/semver": "^7.3.13",
