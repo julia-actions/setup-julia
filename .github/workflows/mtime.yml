@@ -1,0 +1,62 @@
+name: mtime
+on:
+  pull_request:
+  # push:
+permissions:
+  contents: read
+jobs:
+  job-1:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        julia-version:
+          - '1.8.5'
+          - '1.9.2'
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+      - run: sleep 3
+      - run: rm -rfv ~/.julia
+      - uses: julia-actions/setup-julia@v1.9.2
+        with:
+          version: '${{ matrix.julia-version }}'
+      - run: |
+          MAJMIN = "$(Base.VERSION.major).$(Base.VERSION.minor)"
+          file = joinpath(dirname(Sys.BINDIR), "share", "julia", "stdlib", "v$(MAJMIN)", "MbedTLS_jll", "src", "MbedTLS_jll.jl")
+
+          # Print mtime
+          # On macOS, use `stat -f %m`
+          # On Linux, use `stat -c %Y`
+          run(`stat -c %Y $(file)`)
+        shell: julia --startup-file=no --color=yes {0}
+  job-2:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: [job-1]
+    strategy:
+      fail-fast: false
+      matrix:
+        julia-version:
+          - '1.8.5'
+          - '1.9.2'
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+      - run: sleep 3
+      - run: rm -rfv ~/.julia
+      - uses: julia-actions/setup-julia@v1.9.2
+        with:
+          version: '${{ matrix.julia-version }}'
+      - run: |
+          MAJMIN = "$(Base.VERSION.major).$(Base.VERSION.minor)"
+          file = joinpath(dirname(Sys.BINDIR), "share", "julia", "stdlib", "v$(MAJMIN)", "MbedTLS_jll", "src", "MbedTLS_jll.jl")
+
+          # Print mtime
+          # On macOS, use `stat -f %m`
+          # On Linux, use `stat -c %Y`
+          run(`stat -c %Y $(file)`)
+        shell: julia --startup-file=no --color=yes {0}
