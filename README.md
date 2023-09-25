@@ -1,7 +1,6 @@
 # setup-julia Action
 
 [![CodeQL](https://github.com/julia-actions/setup-julia/workflows/CodeQL/badge.svg)](https://securitylab.github.com/tools/codeql)
-[![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=julia-actions/setup-julia)](https://dependabot.com)
 
 This action sets up a Julia environment for use in actions by downloading a specified version of Julia and adding it to PATH.
 
