@@ -24,11 +24,14 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+
       - uses: actions/setup-node@v3
+        if: ${{ ! startsWith(github.ref, 'refs/heads/releases') }}
         with:
           node-version: 16
 
       - name: "Install dependencies"
+        if: ${{ ! startsWith(github.ref, 'refs/heads/releases') }}
         run: |
           npm install
           npm run build
