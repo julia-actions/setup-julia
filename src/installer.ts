@@ -54,6 +54,7 @@ export async function getJuliaVersionInfo(): Promise<object> {
     const versionsFile = await retry(async (bail: Function) => {
         return await tc.downloadTool('https://julialang-s3.julialang.org/bin/versions.json')
     }, {
+        retries: 5,
         onRetry: (err: Error) => {
             core.debug(`Download of versions.json failed, trying again. Error: ${err}`)
         }
@@ -208,6 +209,7 @@ export async function installJulia(versionInfo, version: string, arch: string): 
     const juliaDownloadPath = await retry(async (bail: Function) => {
         return await tc.downloadTool(downloadURL)
     }, {
+        retries: 5,
         onRetry: (err: Error) => {
             core.debug(`Download of ${downloadURL} failed, trying again. Error: ${err}`)
         }
