@@ -56,7 +56,7 @@ export async function getJuliaVersionInfo(): Promise<object> {
     }, {
         retries: 5,
         onRetry: (err: Error) => {
-            core.debug(`Download of versions.json failed, trying again. Error: ${err}`)
+            core.info(`Download of versions.json failed, trying again. Error: ${err}`)
         }
     })
 
@@ -211,7 +211,7 @@ export async function installJulia(versionInfo, version: string, arch: string): 
     }, {
         retries: 5,
         onRetry: (err: Error) => {
-            core.debug(`Download of ${downloadURL} failed, trying again. Error: ${err}`)
+            core.info(`Download of ${downloadURL} failed, trying again. Error: ${err}`)
         }
     })
 
