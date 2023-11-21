@@ -100,9 +100,9 @@ function getDesiredFileExts(): [string, boolean, string] {
     let fileExt2: string
 
     if (osPlat == 'win32') {
-        fileExt1 = 'exe'
-        hasFileExt2 = false
-        fileExt2 = ''
+        fileExt1 = 'tar.gz'
+        hasFileExt2 = true
+        fileExt2 = 'exe'
     } else if (osPlat == 'darwin') {
         fileExt1 = 'tar.gz'
         hasFileExt2 = true
@@ -235,11 +235,16 @@ export async function installJulia(versionInfo, version: string, arch: string): 
             await exec.exec('tar', ['xf', juliaDownloadPath, '--strip-components=1', '-C', tempInstallDir])
             return tempInstallDir
         case 'win32':
-            if (version.endsWith('nightly') || semver.gtr(version, '1.3', {includePrerelease: true})) {
-                // The installer changed in 1.4: https://github.com/JuliaLang/julia/blob/ef0c9108b12f3ae177c51037934351ffa703b0b5/NEWS.md#build-system-changes
-                await exec.exec('powershell', ['-Command', `Start-Process -FilePath ${juliaDownloadPath} -ArgumentList "/SILENT /dir=${path.join(process.cwd(), tempInstallDir)}" -NoNewWindow -Wait`])
+            if (fileInfo !== null && fileInfo.extension == 'exe') {
+                if (version.endsWith('nightly') || semver.gtr(version, '1.3', {includePrerelease: true})) {
+                    // The installer changed in 1.4: https://github.com/JuliaLang/julia/blob/ef0c9108b12f3ae177c51037934351ffa703b0b5/NEWS.md#build-system-changes
+                    await exec.exec('powershell', ['-Command', `Start-Process -FilePath ${juliaDownloadPath} -ArgumentList "/SILENT /dir=${path.join(process.cwd(), tempInstallDir)}" -NoNewWindow -Wait`])
+                } else {
+                    await exec.exec('powershell', ['-Command', `Start-Process -FilePath ${juliaDownloadPath} -ArgumentList "/S /D=${path.join(process.cwd(), tempInstallDir)}" -NoNewWindow -Wait`])
+                }
             } else {
-                await exec.exec('powershell', ['-Command', `Start-Process -FilePath ${juliaDownloadPath} -ArgumentList "/S /D=${path.join(process.cwd(), tempInstallDir)}" -NoNewWindow -Wait`])
+                // This is the more common path. Using .tar.gz is much faster
+                await exec.exec('powershell', ['-Command', `tar xf ${juliaDownloadPath} --strip-components=1 -C ${tempInstallDir}`])
             }
             return tempInstallDir
         case 'darwin':
