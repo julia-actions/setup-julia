@@ -29,9 +29,9 @@ jobs:
             julia-arch: x86
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         if: ${{ ! startsWith(github.ref, 'refs/heads/releases') }}
         with:
           node-version: 16
