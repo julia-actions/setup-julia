@@ -29,7 +29,7 @@
     "semver": "^7.5.4"
   },
   "devDependencies": {
-    "@types/async-retry": "^1.4.5",
+    "@types/async-retry": "^1.4.8",
     "@types/jest": "^29.5.11",
     "@types/node": "^20.10.3",
     "@types/retry": "^0.12.5",
