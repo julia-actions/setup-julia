@@ -44,4 +44,3 @@ jobs:
           version: ${{ matrix.julia-version }}
       - run: julia --version
       - run: julia --compile=min -O0 -e 'import InteractiveUtils; InteractiveUtils.versioninfo()'
-      - run: julia -E 'stat(joinpath(dirname(Sys.BINDIR), "share", "julia", "stdlib", "v1.10", "MbedTLS_jll", "src", "MbedTLS_jll.jl"))'
