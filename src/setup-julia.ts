@@ -70,6 +70,7 @@ async function run() {
         if (!juliaPath) {
             core.debug(`could not find Julia ${arch}/${version} in cache`)
 
+            // https://github.com/julia-actions/setup-julia/pull/196
             // we want julia to be installed with unmodified file mtimes
             // but tc.cacheDir uses `cp` which destroys mtime
             // and `tc` provides no API to get the tool directory alone
