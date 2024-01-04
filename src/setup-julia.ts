@@ -75,8 +75,7 @@ async function run() {
             // and `tc` provides no API to get the tool directory alone
             // so hack it by installing a dummy julia file then use the path it returns
             // and extract the archives directly to that location
-            const tempDummyDir = fs.mkdtempSync('julia-dummy')
-            fs.writeFileSync(path.join(tempDummyDir, 'dummy'), 'empty');
+            const tempDummyDir = fs.mkdtempSync('julia-dummy-')
             juliaPath = await tc.cacheDir(tempDummyDir, 'julia', version, arch)
             await installer.installJulia(juliaPath, versionInfo, version, arch)
 
