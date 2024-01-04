@@ -69,14 +69,21 @@ async function run() {
 
         if (!juliaPath) {
             core.debug(`could not find Julia ${arch}/${version} in cache`)
-            const juliaInstallationPath = await installer.installJulia(versionInfo, version, arch)
 
-            // Add it to cache
-            juliaPath = await tc.cacheDir(juliaInstallationPath, 'julia', version, arch)
+            // we want julia to be installed with unmodified file mtimes
+            // but tc.cacheDir uses `cp` which destroys mtime
+            // and `tc` provides no API to get the tool directory alone
+            // so hack it by installing a dummy julia file then use the path it returns
+            // and extract the archives directly to that location
+            const tempDummyDir = fs.mkdtempSync('julia-dummy')
+            fs.writeFileSync(path.join(tempDummyDir, 'dummy'), 'empty');
+            juliaPath = await tc.cacheDir(tempDummyDir, 'julia', version, arch)
+            await installer.installJulia(juliaPath, versionInfo, version, arch)
+
             core.debug(`added Julia to cache: ${juliaPath}`)
 
-            // Remove temporary dir
-            fs.rmSync(juliaInstallationPath, {recursive: true})
+            // Remove temporary dummy dir
+            fs.rmSync(tempDummyDir, {recursive: true})
         } else {
             core.debug(`using cached version of Julia: ${juliaPath}`)
         }

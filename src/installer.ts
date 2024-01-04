@@ -198,7 +198,7 @@ export function getDownloadURL(fileInfo, version: string, arch: string): string 
     return fileInfo.url
 }
 
-export async function installJulia(versionInfo, version: string, arch: string): Promise<string> {
+export async function installJulia(dest: string, versionInfo, version: string, arch: string): Promise<string> {
     // Download Julia
     const fileInfo = getFileInfo(versionInfo, version, arch)
     const downloadURL = getDownloadURL(fileInfo, version, arch)
@@ -226,37 +226,35 @@ export async function installJulia(versionInfo, version: string, arch: string): 
         core.debug('Skipping checksum check for nightly binaries.')
     }
 
-    const tempInstallDir = fs.mkdtempSync(`julia-${arch}-${version}-`)
-
     // Install it
     switch (osPlat) {
         case 'linux':
             // tc.extractTar doesn't support stripping components, so we have to call tar manually
-            await exec.exec('tar', ['xf', juliaDownloadPath, '--strip-components=1', '-C', tempInstallDir])
-            return tempInstallDir
+            await exec.exec('tar', ['xf', juliaDownloadPath, '--strip-components=1', '-C', dest])
+            return dest
         case 'win32':
             if (fileInfo !== null && fileInfo.extension == 'exe') {
                 if (version.endsWith('nightly') || semver.gtr(version, '1.3', {includePrerelease: true})) {
                     // The installer changed in 1.4: https://github.com/JuliaLang/julia/blob/ef0c9108b12f3ae177c51037934351ffa703b0b5/NEWS.md#build-system-changes
-                    await exec.exec('powershell', ['-Command', `Start-Process -FilePath ${juliaDownloadPath} -ArgumentList "/SILENT /dir=${path.join(process.cwd(), tempInstallDir)}" -NoNewWindow -Wait`])
+                    await exec.exec('powershell', ['-Command', `Start-Process -FilePath ${juliaDownloadPath} -ArgumentList "/SILENT /dir=${path.join(process.cwd(), dest)}" -NoNewWindow -Wait`])
                 } else {
-                    await exec.exec('powershell', ['-Command', `Start-Process -FilePath ${juliaDownloadPath} -ArgumentList "/S /D=${path.join(process.cwd(), tempInstallDir)}" -NoNewWindow -Wait`])
+                    await exec.exec('powershell', ['-Command', `Start-Process -FilePath ${juliaDownloadPath} -ArgumentList "/S /D=${path.join(process.cwd(), dest)}" -NoNewWindow -Wait`])
                 }
             } else {
                 // This is the more common path. Using .tar.gz is much faster
-                await exec.exec('powershell', ['-Command', `tar xf ${juliaDownloadPath} --strip-components=1 -C ${tempInstallDir}`])
+                await exec.exec('powershell', ['-Command', `tar xf ${juliaDownloadPath} --strip-components=1 -C ${dest}`])
             }
-            return tempInstallDir
+            return dest
         case 'darwin':
             if (fileInfo !== null && fileInfo.extension == 'dmg') {
                 core.debug(`Support for .dmg files is deprecated and may be removed in a future release`)
                 await exec.exec('hdiutil', ['attach', juliaDownloadPath])
-                await exec.exec('/bin/bash', ['-c', `cp -a /Volumes/Julia-*/Julia-*.app/Contents/Resources/julia ${tempInstallDir}`])
-                return path.join(tempInstallDir, 'julia')
+                await exec.exec('/bin/bash', ['-c', `cp -a /Volumes/Julia-*/Julia-*.app/Contents/Resources/julia ${dest}`])
+                return path.join(dest, 'julia')
             } else {
                 // tc.extractTar doesn't support stripping components, so we have to call tar manually
-                await exec.exec('tar', ['xf', juliaDownloadPath, '--strip-components=1', '-C', tempInstallDir])
-                return tempInstallDir
+                await exec.exec('tar', ['xf', juliaDownloadPath, '--strip-components=1', '-C', dest])
+                return dest
             }
         default:
             throw new Error(`Platform ${osPlat} is not supported`)
