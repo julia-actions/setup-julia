@@ -51,16 +51,4 @@ jobs:
       - run: julia --version
       - run: julia --compile=min -O0 -e 'import InteractiveUtils; InteractiveUtils.versioninfo()'
       - name: "Check that the correct julia is used and that archive mtimes are maintained"
-        run: |
-          if !occursin("hostedtoolcache", Sys.BINDIR)
-            error("the wrong julia is being used: $Sys.BINDIR")
-          end
-          if VERSION > v"1.7.0-0" # pkgdir was introduced here, and before then mtime wasn't a problem so just skip
-            using Pkg
-            src = pkgdir(Pkg, "src", "Pkg.jl")
-            # mtime is when it's compacted, ctime is when the file is extracted
-            if !<(mtime(src), ctime(src))
-              error("source mtime ($(mtime(src))) is not earlier than ctime ($(ctime(src)))")
-            end
-          end
-        shell: julia --startup-file=no --color=yes {0}
+        run: julia --startup-file=no --color=yes ./.github/scripts/common-tests.jl
