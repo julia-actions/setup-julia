@@ -45,4 +45,4 @@ jobs:
       - run: julia --version
       - run: julia --compile=min -O0 -e 'import InteractiveUtils; InteractiveUtils.versioninfo()'
       - name: "Check that the correct julia is used and that archive mtimes are maintained"
-        run: julia --startup-file=no --color=yes ./.github/workflows/common-tests.jl
+        run: julia --startup-file=no --color=yes ./.github/scripts/common-tests.jl
