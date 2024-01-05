@@ -9,7 +9,7 @@ import * as path from 'path'
 import retry = require('async-retry')
 
 import * as semver from 'semver'
-import "toml";
+import * as toml from 'toml'
 
 // Translations between actions input and Julia arch names
 const osMap = {
@@ -89,7 +89,7 @@ function getProjectJuliaCompatVersions(projectInput: string): Promise<string[]> 
     } else {
         for (let projectFilename in ["JuliaProject.toml", "Project.toml"]) {
             let p = path.join(projectInput, projectFilename)
-            if (fs.statSync(projectFile).isFile()) {
+            if (fs.statSync(p).isFile()) {
                 projectFile = p
                 break
             }
@@ -108,8 +108,8 @@ function getProjectJuliaCompatVersions(projectInput: string): Promise<string[]> 
     return compatVersions
 }
 
-export function getJuliaVersion(availableReleases: string[], versionInput: string, includePrerelease: boolean = false, projectInput: string = undefined): string {
-    let version: string
+export function getJuliaVersion(availableReleases: string[], versionInput: string, includePrerelease: boolean = false, projectInput: string = "."): string {
+    let version: string | null
 
     if (semver.valid(versionInput) == versionInput || versionInput.endsWith('nightly')) {
         // versionInput is a valid version or a nightly version, use it directly
@@ -118,7 +118,7 @@ export function getJuliaVersion(availableReleases: string[], versionInput: strin
         // Resolve "MIN" to the minimum supported Julia version compatible with the project file
         let versionRanges = getProjectJuliaCompatVersions(projectInput)
         let minVersions = versionRanges.map(v => semver.minSatisfying(availableReleases, v, {includePrerelease}))
-        version = semver.sort(minCompatVersions.filter(v => v !== null))[0]
+        version = semver.sort(minVersions.filter(v => v !== null))[0]
     } else {
         // Use the highest available version that matches versionInput
         version = semver.maxSatisfying(availableReleases, versionInput, {includePrerelease})
