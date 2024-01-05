@@ -9,6 +9,7 @@ import * as path from 'path'
 import retry = require('async-retry')
 
 import * as semver from 'semver'
+import "toml";
 
 // Translations between actions input and Julia arch names
 const osMap = {
@@ -76,15 +77,54 @@ export async function getJuliaVersions(versionInfo): Promise<string[]> {
     return versions
 }
 
-export function getJuliaVersion(availableReleases: string[], versionInput: string, includePrerelease: boolean = false): string {
-    if (semver.valid(versionInput) == versionInput || versionInput.endsWith('nightly')) {
-        // versionInput is a valid version or a nightly version, use it directly
-        return versionInput
+/**
+ * @returns An array of version ranges compatible with the Julia project
+ */
+function getProjectJuliaCompatVersions(projectInput: string): Promise<string[]> {
+    let compatVersions: string[] = []
+    let projectFile: string
+
+    if (fs.statSync(projectInput).isFile()) {
+        projectFile = projectInput
+    } else {
+        for (let projectFilename in ["JuliaProject.toml", "Project.toml"]) {
+            let p = path.join(projectInput, projectFilename)
+            if (fs.statSync(projectFile).isFile()) {
+                projectFile = p
+                break
+            }
+        }
     }
 
-    // Use the highest available version that matches versionInput
-    let version = semver.maxSatisfying(availableReleases, versionInput, {includePrerelease})
-    if (version == null) {
+    if (!projectFile) {
+        throw new Error(`Unable to locate project file with project input: ${projectInput}`)
+    }
+
+    const meta = toml.parse(fs.readFileSync(projectFile))
+    for (let versionRange in meta.compat?.julia?.split(",")) {
+        compatVersions.push(versionRange.trim())
+    }
+
+    return compatVersions
+}
+
+export function getJuliaVersion(availableReleases: string[], versionInput: string, includePrerelease: boolean = false, projectInput: string = undefined): string {
+    let version: string
+
+    if (semver.valid(versionInput) == versionInput || versionInput.endsWith('nightly')) {
+        // versionInput is a valid version or a nightly version, use it directly
+        version = versionInput
+    } else if (versionInput == "MIN") {
+        // Resolve "MIN" to the minimum supported Julia version compatible with the project file
+        let versionRanges = getProjectJuliaCompatVersions(projectInput)
+        let minVersions = versionRanges.map(v => semver.minSatisfying(availableReleases, v, {includePrerelease}))
+        version = semver.sort(minCompatVersions.filter(v => v !== null))[0]
+    } else {
+        // Use the highest available version that matches versionInput
+        version = semver.maxSatisfying(availableReleases, versionInput, {includePrerelease})
+    }
+
+    if (!version) {
         throw new Error(`Could not find a Julia version that matches ${versionInput}`)
     }
 
