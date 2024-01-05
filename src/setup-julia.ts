@@ -72,12 +72,12 @@ async function run() {
 
             // https://github.com/julia-actions/setup-julia/pull/196
             // we want julia to be installed with unmodified file mtimes
-            // but tc.cacheDir uses `cp` which destroys mtime
+            // but `tc.cacheDir` uses `cp` internally which destroys mtime
             // and `tc` provides no API to get the tool directory alone
-            // so hack it by installing a dummy julia file then use the path it returns
+            // so hack it by installing a empty directory then use the path it returns
             // and extract the archives directly to that location
-            const tempDummyDir = fs.mkdtempSync('julia-dummy-')
-            juliaPath = await tc.cacheDir(tempDummyDir, 'julia', version, arch)
+            const emptyDir = fs.mkdtempSync('empty')
+            juliaPath = await tc.cacheDir(emptyDir, 'julia', version, arch)
             await installer.installJulia(juliaPath, versionInfo, version, arch)
 
             core.debug(`added Julia to cache: ${juliaPath}`)
