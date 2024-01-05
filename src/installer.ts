@@ -80,9 +80,14 @@ export async function getJuliaVersions(versionInfo): Promise<string[]> {
 /**
  * @returns An array of version ranges compatible with the Julia project
  */
-function getProjectJuliaCompatVersions(projectInput: string): string[] {
+function getProjectJuliaCompatVersions(projectInput: string = ""): string[] {
     let compatVersions: string[] = []
     let projectFile: string | undefined = undefined
+
+    // Default value for projectInput
+    if (!projectInput) {
+        projectInput = process.env.JULIA_PROJECT || "."
+    }
 
     if (fs.statSync(projectInput).isFile()) {
         projectFile = projectInput
@@ -108,7 +113,7 @@ function getProjectJuliaCompatVersions(projectInput: string): string[] {
     return compatVersions
 }
 
-export function getJuliaVersion(availableReleases: string[], versionInput: string, includePrerelease: boolean = false, projectInput: string = "."): string {
+export function getJuliaVersion(availableReleases: string[], versionInput: string, includePrerelease: boolean = false, projectInput: string = ""): string {
     let version: string | null
 
     if (semver.valid(versionInput) == versionInput || versionInput.endsWith('nightly')) {

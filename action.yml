@@ -20,7 +20,7 @@ inputs:
   project:
     description: 'The path to the project directory or file to use when resolving some versions (e.g. MIN)'
     required: false
-    default: '.'
+    default: ''  # Special value which fallsback to using JULIA_PROJECT if defined, otherwise "."
 outputs:
   julia-version:
     description: 'The installed Julia version. May vary from the version input if a version range was given as input.'
