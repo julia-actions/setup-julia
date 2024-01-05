@@ -82,8 +82,8 @@ async function run() {
 
             core.debug(`added Julia to cache: ${juliaPath}`)
 
-            // Remove temporary dummy dir
-            fs.rmSync(tempDummyDir, {recursive: true})
+            // Remove empty dir
+            fs.rmSync(emptyDir)
         } else {
             core.debug(`using cached version of Julia: ${juliaPath}`)
         }
