@@ -80,9 +80,9 @@ export async function getJuliaVersions(versionInfo): Promise<string[]> {
 /**
  * @returns An array of version ranges compatible with the Julia project
  */
-function getProjectJuliaCompatVersions(projectInput: string): Promise<string[]> {
+function getProjectJuliaCompatVersions(projectInput: string): string[] {
     let compatVersions: string[] = []
-    let projectFile: string
+    let projectFile: string | undefined = undefined
 
     if (fs.statSync(projectInput).isFile()) {
         projectFile = projectInput
@@ -100,7 +100,7 @@ function getProjectJuliaCompatVersions(projectInput: string): Promise<string[]> 
         throw new Error(`Unable to locate project file with project input: ${projectInput}`)
     }
 
-    const meta = toml.parse(fs.readFileSync(projectFile))
+    let meta = toml.parse(fs.readFileSync(projectFile).toString())
     for (let versionRange in meta.compat?.julia?.split(",")) {
         compatVersions.push(versionRange.trim())
     }
@@ -118,7 +118,7 @@ export function getJuliaVersion(availableReleases: string[], versionInput: strin
         // Resolve "MIN" to the minimum supported Julia version compatible with the project file
         let versionRanges = getProjectJuliaCompatVersions(projectInput)
         let minVersions = versionRanges.map(v => semver.minSatisfying(availableReleases, v, {includePrerelease}))
-        version = semver.sort(minVersions.filter(v => v !== null))[0]
+        version = semver.sort(minVersions.filter((v): v is string => v !== null))[0]
     } else {
         // Use the highest available version that matches versionInput
         version = semver.maxSatisfying(availableReleases, versionInput, {includePrerelease})
