@@ -82,8 +82,8 @@ async function run() {
 
             core.debug(`added Julia to cache: ${juliaPath}`)
 
-            // Remove empty dir. Has to be recursive as it's a dir, even though it's empty
-            fs.rmSync(emptyDir, { recursive: true })
+            // Remove empty dir
+            fs.rmdirSync(emptyDir)
         } else {
             core.debug(`using cached version of Julia: ${juliaPath}`)
         }
