@@ -77,10 +77,33 @@ export async function getJuliaVersions(versionInfo): Promise<string[]> {
     return versions
 }
 
+export function getProjectFile(projectInput: string = ""): string | null {
+    let projectFile: string | null = undefined
+
+    // Default value for projectInput
+    if (!projectInput) {
+        projectInput = process.env.JULIA_PROJECT || "."
+    }
+
+    if (fs.existsSync(projectInput) && fs.lstatSync(projectInput).isFile()) {
+        projectFile = projectInput
+    } else {
+        for (let projectFilename of ["JuliaProject.toml", "Project.toml"]) {
+            let p = path.join(projectInput, projectFilename)
+            if (fs.existsSync(p) && fs.lstatSync(p).isFile()) {
+                projectFile = p
+                break
+            }
+        }
+    }
+
+    return projectFile
+}
+
 /**
  * @returns An array of version ranges compatible with the Julia project
  */
-function getProjectJuliaCompatVersions(projectInput: string = ""): string[] {
+export function getProjectJuliaCompatVersions(projectInput: string = ""): string[] {
     let compatVersions: string[] = []
     let projectFile: string | undefined = undefined
 
@@ -89,12 +112,12 @@ function getProjectJuliaCompatVersions(projectInput: string = ""): string[] {
         projectInput = process.env.JULIA_PROJECT || "."
     }
 
-    if (fs.statSync(projectInput).isFile()) {
+    if (fs.existsSync(projectInput) && fs.lstatSync(projectInput).isFile()) {
         projectFile = projectInput
     } else {
-        for (let projectFilename in ["JuliaProject.toml", "Project.toml"]) {
+        for (let projectFilename of ["JuliaProject.toml", "Project.toml"]) {
             let p = path.join(projectInput, projectFilename)
-            if (fs.statSync(p).isFile()) {
+            if (fs.existsSync(p) && fs.lstatSync(p).isFile()) {
                 projectFile = p
                 break
             }
@@ -106,7 +129,7 @@ function getProjectJuliaCompatVersions(projectInput: string = ""): string[] {
     }
 
     let meta = toml.parse(fs.readFileSync(projectFile).toString())
-    for (let versionRange in meta.compat?.julia?.split(",")) {
+    for (let versionRange of meta.compat?.julia?.split(",")) {
         compatVersions.push(versionRange.trim())
     }
 

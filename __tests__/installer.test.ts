@@ -2,6 +2,7 @@
 // Check README.md for licence information.
 
 import * as path from 'path'
+import * as fs from 'fs'
 
 import * as io from '@actions/io'
 
@@ -37,7 +38,149 @@ const fixtureDir = path.join(__dirname, 'fixtures')
 process.env['RUNNER_TOOL_CACHE'] = toolDir
 process.env['RUNNER_TEMP'] = tempDir
 
+const fsify = require('fsify')({
+    cwd: tempDir
+})
+
 import * as installer from '../src/installer'
+
+function genProjectToml(juliaVersions: Array<string> | undefined = undefined) {
+    const tomlLines = ["[compat]"]
+
+    if (typeof juliaVersions !== "undefined") {
+        tomlLines.push(`julia = "${juliaVersions.join(", ")}"`)
+    }
+
+    return tomlLines.join("\n")
+}
+
+describe('getProjectJuliaCompatVersions tests', () => {
+    beforeEach(async () => {
+        await io.rmRF(tempDir)
+        await io.mkdirP(tempDir)
+    }, 100000)
+
+    afterEach(async () => {
+        try {
+            await io.rmRF(tempDir)
+        } catch {
+            console.log('Failed to remove test directories')
+        }
+    }, 100000)
+
+    it('Can determine Julia compat entries from a file', () => {
+        const compat = ["1", ">=1.1", "^1.2"]
+        var structure = [
+            {
+                type: fsify.FILE,
+                name: "Project.toml",
+                contents: genProjectToml(compat)
+            },
+        ]
+
+        fsify(structure).then((structure) => {
+            return installer.getProjectJuliaCompatVersions(structure[0].name)
+        }).then((output) => {
+            expect(output).toEqual(compat)
+        })
+    })
+
+    it("Throws when project file is missing", () => {
+        expect(() => installer.getProjectJuliaCompatVersions("DNE.toml")).toThrow("Unable to locate project file")
+    })
+
+    it("Can determine Julia compat entries from project directory with a Project.toml", () => {
+        const structure = [
+            {
+                type: fsify.DIRECTORY,
+                name: "Package",
+                contents: [
+                    {
+                        type: fsify.FILE,
+                        name: "Project.toml",
+                        contents: genProjectToml(["1"])
+                    }
+                ]
+            },
+        ]
+
+        fsify(structure).then((structure) => {
+            expect(structure[0].name)
+            return installer.getProjectJuliaCompatVersions(structure[0].name)
+        }).then((output) => {
+            expect(output).toEqual(["1"])
+        })
+    })
+
+    it("Can determine Julia compat entries from project directory with a JuliaProject.toml", () => {
+        const structure = [
+            {
+                type: fsify.DIRECTORY,
+                name: "Package",
+                contents: [
+                    {
+                        type: fsify.FILE,
+                        name: "JuliaProject.toml",
+                        contents: genProjectToml(["2"])
+                    }
+                ]
+            },
+        ]
+
+        fsify(structure).then((structure) => {
+            return installer.getProjectJuliaCompatVersions(structure[0].name)
+        }).then((output) => {
+            expect(output).toEqual(["2"])
+        })
+    })
+
+    it("Can determine Julia compat entries from project directory with both a Project.toml and JuliaProject.toml", () => {
+        const structure = [
+            {
+                type: fsify.DIRECTORY,
+                name: "Package",
+                contents: [
+                    {
+                        type: fsify.FILE,
+                        name: "JuliaProject.toml",
+                        contents: genProjectToml(["3"])
+                    },
+                    {
+                        type: fsify.FILE,
+                        name: "Project.toml",
+                        contents: genProjectToml(["4"])
+                    }
+                ]
+            },
+        ]
+
+        fsify(structure).then((structure) => {
+            return installer.getProjectJuliaCompatVersions(structure[0].name)
+        }).then((output) => {
+            expect(output).toEqual(["3"])
+        })
+    })
+
+    it("Throws when project directory is missing a project file", () => {
+        const structure = [
+            {
+                type: fsify.DIRECTORY,
+                name: "Package",
+                contents: []
+            },
+        ]
+
+        fsify(structure).then((structure) => {
+            return () => installer.getProjectJuliaCompatVersions(structure[0].name)
+        }).then((f) => {
+            expect(f).toThrow("Unable to locate project file")
+        })
+    })
+
+    it("Throws when project file not specified", () => {
+        expect(() => installer.getProjectJuliaCompatVersions()).toThrow("Unable to locate project file")
+    })
+})
 
 describe('version matching tests', () => {
     describe('specific versions', () => {
@@ -81,6 +224,38 @@ describe('version matching tests', () => {
                 expect(semver.gtr('1.4.0-DEV', '1.3', {includePrerelease: true})).toBeTruthy()
                 expect(semver.gtr('1.3.1', '1.3', {includePrerelease: true})).toBeFalsy()
                 expect(semver.gtr('1.3.2-rc1', '1.3', {includePrerelease: true})).toBeFalsy()
+            })
+        })
+    })
+
+    describe('MIN version', () => {
+        beforeEach(async () => {
+            await io.rmRF(tempDir)
+            await fs.promises.mkdir(tempDir)
+        }, 100000)
+
+        afterEach(async () => {
+            try {
+                await io.rmRF(tempDir)
+            } catch {
+                console.log('Failed to remove test directories')
+            }
+        }, 100000)
+
+
+        it('Correctly understands 1.7', () => {
+            const structure = [
+                {
+                    type: fsify.FILE,
+                    name: "Project.toml",
+                    contents: genProjectToml(["1.7"])
+                }
+            ]
+
+            fsify(structure).then((structure) => {
+                return installer.getJuliaVersion(["1.6.7", "1.7.1"], "MIN", false, structure[0].name)
+            }).then((output) => {
+                expect(output).toEqual("1.7.1")
             })
         })
     })
