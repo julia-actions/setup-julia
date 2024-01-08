@@ -133,7 +133,12 @@ export function getJuliaVersion(availableReleases: string[], versionInput: strin
         let minVersion = semver.sort(minVersions.filter((v): v is string => v !== null))[0]
 
         // Determine the latest version associated with this minor release
-        let latestPatchVersion = semver.maxSatisfying(availableReleases, `~${minVersion}`, {includePrerelease})
+        let latestPatchVersion: string | null = null
+        if (includePrerelease && semver.prerelease(minVersion)) {
+            let range = `>=${semver.inc(minVersion, "patch")}-0 <${semver.inc(minVersion, "prepatch")}`
+            console.log(`range: ${range}`)
+            latestPatchVersion = semver.maxSatisfying(availableReleases, range, {includePrerelease})
+        }
         console.log(`availableReleases: ${availableReleases}\njuliaCompatVersions: ${juliaCompatVersions}\nlatestPatchVersion: ${latestPatchVersion}\nminVersion: ${minVersion}`)
         version = latestPatchVersion || minVersion
     } else {
