@@ -2,7 +2,6 @@
 // Check README.md for licence information.
 
 import * as path from 'path'
-import * as fs from 'fs'
 
 import * as io from '@actions/io'
 
@@ -124,21 +123,22 @@ describe('version matching tests', () => {
     })
 
     describe('julia compat versions', () => {
-        it('Understands MIN', () => {
+        it('Understands project-min', () => {
+            const v = "project-min"
             let versions = ["1.6.7", "1.7.1-rc1", "1.7.1-rc2", "1.7.1", "1.8.0"]
-            expect(installer.getJuliaVersion(versions, "MIN", false, ["^1.7"])).toEqual("1.7.1")
-            expect(installer.getJuliaVersion(versions, "MIN", true, ["^1.7"])).toEqual("1.7.1")
+            expect(installer.getJuliaVersion(versions, v, false, ["^1.7"])).toEqual("1.7.1")
+            expect(installer.getJuliaVersion(versions, v, true, ["^1.7"])).toEqual("1.7.1")
 
             versions = ["1.6.7", "1.7.1-rc1", "1.7.1-rc2", "1.7.1", "1.7.2", "1.8.0"]
-            expect(installer.getJuliaVersion(versions, "MIN", false, ["^1.7"])).toEqual("1.7.2")
-            expect(installer.getJuliaVersion(versions, "MIN", true, ["^1.7"])).toEqual("1.7.2")
+            expect(installer.getJuliaVersion(versions, v, false, ["^1.7"])).toEqual("1.7.2")
+            expect(installer.getJuliaVersion(versions, v, true, ["^1.7"])).toEqual("1.7.2")
 
             versions = ["1.6.7", "1.7.3-rc1", "1.7.3-rc2", "1.8.0"]
-            expect(installer.getJuliaVersion(versions, "MIN", false, ["^1.7"])).toEqual("1.8.0")
-            expect(installer.getJuliaVersion(versions, "MIN", true, ["^1.7"])).toEqual("1.7.3-rc2")
+            expect(installer.getJuliaVersion(versions, v, false, ["^1.7"])).toEqual("1.8.0")
+            expect(installer.getJuliaVersion(versions, v, true, ["^1.7"])).toEqual("1.7.3-rc2")
 
-            expect(installer.getJuliaVersion(versions, "MIN", true, [""])).toEqual("1.6.7")
-            expect(() => installer.getJuliaVersion(versions, "MIN", true, [])).toThrow("Julia project file does not specify a compat for Julia")
+            expect(installer.getJuliaVersion(versions, v, true, [""])).toEqual("1.6.7")
+            expect(() => installer.getJuliaVersion(versions, v, true, [])).toThrow("Julia project file does not specify a compat for Julia")
         })
     })
 })

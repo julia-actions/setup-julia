@@ -124,10 +124,10 @@ export function getJuliaVersion(availableReleases: string[], versionInput: strin
     if (semver.valid(versionInput) == versionInput || versionInput.endsWith('nightly')) {
         // versionInput is a valid version or a nightly version, use it directly
         version = versionInput
-    } else if (versionInput == "MIN") {
+    } else if (versionInput == "project-min") {
         // Resolve "MIN" to the minimum supported Julia version compatible with the project file
         if (!juliaCompatVersions.length) {
-            throw new Error('Unable to use version "MIN" when the Julia project file does not specify a compat for Julia')
+            throw new Error('Unable to use version "project-min" when the Julia project file does not specify a compat for Julia')
         }
         let minVersions = juliaCompatVersions.map(v => semver.minSatisfying(availableReleases, v, {includePrerelease}))
         let minVersion = semver.sort(minVersions.filter((v): v is string => v !== null))[0]
