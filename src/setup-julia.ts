@@ -58,9 +58,16 @@ async function run() {
 
         const arch = archSynonyms[originalArchInput]
 
+        // Determine the Julia compat ranges as specified by the Project.toml only for special versions that require them.
+        let juliaCompatVersions: Array<string> = [];
+        if (versionInput === "MIN") {
+            const projectFile = installer.getProjectFile(projectInput)
+            juliaCompatVersions = installer.readJuliaCompatVersions(fs.readFileSync(projectFile).toString())
+        }
+
         const versionInfo = await installer.getJuliaVersionInfo()
         const availableReleases = await installer.getJuliaVersions(versionInfo)
-        const version = installer.getJuliaVersion(availableReleases, versionInput, includePrereleases, projectInput)
+        const version = installer.getJuliaVersion(availableReleases, versionInput, includePrereleases, juliaCompatVersions)
         core.debug(`selected Julia version: ${arch}/${version}`)
         core.setOutput('julia-version', version)
 

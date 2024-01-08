@@ -77,35 +77,8 @@ export async function getJuliaVersions(versionInfo): Promise<string[]> {
     return versions
 }
 
-export function getProjectFile(projectInput: string = ""): string | null {
-    let projectFile: string | null = undefined
-
-    // Default value for projectInput
-    if (!projectInput) {
-        projectInput = process.env.JULIA_PROJECT || "."
-    }
-
-    if (fs.existsSync(projectInput) && fs.lstatSync(projectInput).isFile()) {
-        projectFile = projectInput
-    } else {
-        for (let projectFilename of ["JuliaProject.toml", "Project.toml"]) {
-            let p = path.join(projectInput, projectFilename)
-            if (fs.existsSync(p) && fs.lstatSync(p).isFile()) {
-                projectFile = p
-                break
-            }
-        }
-    }
-
-    return projectFile
-}
-
-/**
- * @returns An array of version ranges compatible with the Julia project
- */
-export function getProjectJuliaCompatVersions(projectInput: string = ""): string[] {
-    let compatVersions: string[] = []
-    let projectFile: string | undefined = undefined
+export function getProjectFile(projectInput: string = ""): string {
+    let projectFile: string = ""
 
     // Default value for projectInput
     if (!projectInput) {
@@ -128,15 +101,24 @@ export function getProjectJuliaCompatVersions(projectInput: string = ""): string
         throw new Error(`Unable to locate project file with project input: ${projectInput}`)
     }
 
-    let meta = toml.parse(fs.readFileSync(projectFile).toString())
-    for (let versionRange of meta.compat?.julia?.split(",")) {
-        compatVersions.push(versionRange.trim())
+    return projectFile
+}
+
+/**
+ * @returns An array of version ranges compatible with the Julia project
+ */
+export function readJuliaCompatVersions(projectFileContent: string): string[] {
+    let compatVersions: string[] = []
+
+    let meta = toml.parse(projectFileContent)
+    for (let versionRange of meta.compat?.julia?.split(",") || []) {
+        compatVersions.push(versionRange.trim().replace(/^(?=\d)/, "^"))
     }
 
     return compatVersions
 }
 
-export function getJuliaVersion(availableReleases: string[], versionInput: string, includePrerelease: boolean = false, projectInput: string = ""): string {
+export function getJuliaVersion(availableReleases: string[], versionInput: string, includePrerelease: boolean = false, juliaCompatVersions: string[] = []): string {
     let version: string | null
 
     if (semver.valid(versionInput) == versionInput || versionInput.endsWith('nightly')) {
@@ -144,9 +126,16 @@ export function getJuliaVersion(availableReleases: string[], versionInput: strin
         version = versionInput
     } else if (versionInput == "MIN") {
         // Resolve "MIN" to the minimum supported Julia version compatible with the project file
-        let versionRanges = getProjectJuliaCompatVersions(projectInput)
-        let minVersions = versionRanges.map(v => semver.minSatisfying(availableReleases, v, {includePrerelease}))
-        version = semver.sort(minVersions.filter((v): v is string => v !== null))[0]
+        if (!juliaCompatVersions.length) {
+            throw new Error('Unable to use version "MIN" when the Julia project file does not specify a compat for Julia')
+        }
+        let minVersions = juliaCompatVersions.map(v => semver.minSatisfying(availableReleases, v, {includePrerelease}))
+        let minVersion = semver.sort(minVersions.filter((v): v is string => v !== null))[0]
+
+        // Determine the latest version associated with this minor release
+        let latestPatchVersion = semver.maxSatisfying(availableReleases, `~${minVersion}`, {includePrerelease})
+        console.log(`availableReleases: ${availableReleases}\njuliaCompatVersions: ${juliaCompatVersions}\nlatestPatchVersion: ${latestPatchVersion}\nminVersion: ${minVersion}`)
+        version = latestPatchVersion || minVersion
     } else {
         // Use the highest available version that matches versionInput
         version = semver.maxSatisfying(availableReleases, versionInput, {includePrerelease})
