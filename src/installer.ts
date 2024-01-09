@@ -107,10 +107,18 @@ export function getProjectFile(projectInput: string = ""): string {
 export function validJuliaRange(range: string): string | null {
     range = range.trim()
 
+    // Empty ranges aren't supported in Julia
+    if (!range) {
+        return null
+    }
+
     // NPM's semver doesn't understand unicode characters such as `≥` so we'll convert to alternatives
     range = range.replace("≥", ">=").replace("≤", "<=")
 
-    if (!semver.validRange(range) || range.replace(/\s+/g, " ").split(/(?<![>=<≥~^]| -) (?!- )/).length > 1) {
+    // Cleanup whitespace. Julia only allows whitespace between the specifier and version with certain specifiers
+    range = range.replace(/\s+/g, " ").replace(/(?<=(>|>=|≥|<)) (?=\d)/g, "")
+
+    if (!semver.validRange(range) || range.split(/(?<! -) (?!- )/).length > 1) {
         return null
     } else if (range.search(/^\d/) === 0 && !range.includes(" ")) {
         // Compat version is just a basic version number (e.g. 1.2.3). Since Julia's Pkg.jl's uses caret
@@ -133,8 +141,12 @@ export function readJuliaCompatVersions(projectFileContent: string): string[] {
 
     let meta = toml.parse(projectFileContent)
     for (let versionRange of meta.compat?.julia?.split(",") || []) {
-        versionRange = validJuliaRange(versionRange)
+        versionRange = versionRange.trim()
+        if (!versionRange) {
+            continue
+        }
 
+        versionRange = validJuliaRange(versionRange)
         if (!versionRange) {
             throw new Error(`Invalid version range found in Julia compat: ${versionRange}`)
         }

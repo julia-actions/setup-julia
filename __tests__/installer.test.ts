@@ -57,18 +57,51 @@ describe("getProjectFile tests", () => {
 })
 
 describe("validJuliaRange tests", () => {
-    it('X', () => {
+    it('Handles default caret specifier', () => {
         expect(installer.validJuliaRange("1")).toEqual("^1")
         expect(installer.validJuliaRange("1.2")).toEqual("^1.2")
         expect(installer.validJuliaRange("1.2.3")).toEqual("^1.2.3")
+
+        // TODO: Pkg.jl currently does not support pre-release entries in compat so ideally this would fail
+        expect(installer.validJuliaRange("1.2.3-rc1")).toEqual("^1.2.3-rc1")
+    })
+
+    it('Handle surrounding whitespace', () => {
+        expect(installer.validJuliaRange(" 1")).toEqual("^1")
+        expect(installer.validJuliaRange("1 ")).toEqual("^1")
+        expect(installer.validJuliaRange(" 1 ")).toEqual("^1")
+    })
+
+    it('Handles version ranges with specifiers', () => {
         expect(installer.validJuliaRange("^1.2.3")).toEqual("^1.2.3")
         expect(installer.validJuliaRange("~1.2.3")).toEqual("~1.2.3")
         expect(installer.validJuliaRange("=1.2.3")).toEqual("=1.2.3")
-        expect(installer.validJuliaRange(">= 1.2.3")).toEqual(">= 1.2.3")
-        expect(installer.validJuliaRange("≥ 1.2.3")).toEqual(">= 1.2.3")
-        expect(installer.validJuliaRange("< 1.2.3")).toEqual("< 1.2.3")
-        expect(installer.validJuliaRange("1.2.3 - 4.5.6")).toEqual("1.2.3 - 4.5.6")
+        expect(installer.validJuliaRange(">=1.2.3")).toEqual(">=1.2.3")
+        expect(installer.validJuliaRange("≥1.2.3")).toEqual(">=1.2.3")
+        expect(installer.validJuliaRange("<1.2.3")).toEqual("<1.2.3")
+    })
 
+    it('Handles whitespace after specifiers', () => {
+        expect(installer.validJuliaRange("^ 1.2.3")).toBeNull()
+        expect(installer.validJuliaRange("~ 1.2.3")).toBeNull()
+        expect(installer.validJuliaRange("= 1.2.3")).toBeNull()
+        expect(installer.validJuliaRange(">= 1.2.3")).toEqual(">=1.2.3")
+        expect(installer.validJuliaRange("≥ 1.2.3")).toEqual(">=1.2.3")
+        expect(installer.validJuliaRange("< 1.2.3")).toEqual("<1.2.3")
+    })
+
+    it('Handles hypen ranges', () => {
+        expect(installer.validJuliaRange("1.2.3 - 4.5.6")).toEqual("1.2.3 - 4.5.6")
+        expect(installer.validJuliaRange("1.2.3-rc1 - 4.5.6")).toEqual("1.2.3-rc1 - 4.5.6")
+        expect(installer.validJuliaRange("1.2.3-rc1-4.5.6")).toEqual("^1.2.3-rc1-4.5.6")  // A version number and not a hypen range
+        expect(installer.validJuliaRange("1.2.3-rc1 -4.5.6")).toBeNull()
+        expect(installer.validJuliaRange("1.2.3-rc1- 4.5.6")).toBeNull()  // Whitespace separate version ranges
+    })
+
+    it('Returns null with whitespace separated version ranges', () => {
+        expect(installer.validJuliaRange("")).toBeNull()
+        expect(installer.validJuliaRange("1 2 3")).toBeNull()
+        expect(installer.validJuliaRange("1- 2")).toBeNull()
         expect(installer.validJuliaRange("<1 <1")).toBeNull()
         expect(installer.validJuliaRange("< 1 < 1")).toBeNull()
         expect(installer.validJuliaRange("<  1 <  1")).toBeNull()
@@ -77,50 +110,12 @@ describe("validJuliaRange tests", () => {
 
 describe("readJuliaCompatVersions tests", () => {
     it('Can determine Julia compat entries', () => {
-        const toml = '[compat]\njulia = "1, ^1.1, ~1.2, >=1.3, >= 1.4, <1.5, < 1.6, 1.7 - 1.8"'
-        expect(installer.readJuliaCompatVersions(toml)).toEqual(["^1", "^1.1", "~1.2", ">=1.3", ">= 1.4", "<1.5", "< 1.6", "1.7 - 1.8"])
+        const toml = '[compat]\njulia = "1, ^1.1, ~1.2, >=1.3, 1.4 - 1.5"'
+        expect(installer.readJuliaCompatVersions(toml)).toEqual(["^1", "^1.1", "~1.2", ">=1.3", "1.4 - 1.5"])
     })
 
-    it('Handle surrounding whitespace', () => {
-        const toml = '[compat]\njulia = " 1,2 , 3 ,"'
-        expect(installer.readJuliaCompatVersions(toml)).toEqual(["^1", "^2", "^3"])
-    })
-
-    it('Throws with whitespace separated version ranges', () => {
+    it('Throws with invalid version ranges', () => {
         var toml = '[compat]\njulia = "1 2 3"'
-        expect(() => installer.readJuliaCompatVersions(toml)).toThrow("Invalid version range")
-
-        // TODO: Ideally would fail. Invalid in Julia
-        toml = '[compat]\njulia = "1- 2"'
-        expect(installer.readJuliaCompatVersions(toml)).toThrow("1- 2")
-    })
-
-    it('Handles default caret specifier', () => {
-        var toml = '[compat]\njulia = "1"'
-        expect(installer.readJuliaCompatVersions(toml)).toEqual(["^1"])
-
-        // Pkg.jl currently does not support pre-release entries in compat but NPM's semver does so
-        // we'll test them here.
-        toml = '[compat]\njulia = "1.2.3-rc1"'
-        expect(installer.readJuliaCompatVersions(toml)).toEqual(["^1.2.3-rc1"])
-    })
-
-    it('Handles hypen ranges', () => {
-        var toml = '[compat]\njulia = "1.2.3 - 4.5.6"'
-        expect(installer.readJuliaCompatVersions(toml)).toEqual(["1.2.3 - 4.5.6"])
-
-        toml = '[compat]\njulia = "1.2.3-rc1 - 4.5.6"'
-        expect(installer.readJuliaCompatVersions(toml)).toEqual(["1.2.3-rc1 - 4.5.6"])
-
-        // A version number and not a hypen range
-        toml = '[compat]\njulia = "1.2.3-rc1-4.5.6"'
-        expect(installer.readJuliaCompatVersions(toml)).toEqual(["^1.2.3-rc1-4.5.6"])
-
-        toml = '[compat]\njulia = "1.2.3-rc1 -4.5.6"'
-        expect(() => installer.readJuliaCompatVersions(toml)).toThrow("Invalid version range")
-
-        // A whitespace separated version range
-        toml = '[compat]\njulia = "1.2.3-rc1- 4.5.6"'
         expect(() => installer.readJuliaCompatVersions(toml)).toThrow("Invalid version range")
     })
 
