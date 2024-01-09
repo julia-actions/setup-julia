@@ -115,7 +115,7 @@ export function readJuliaCompatVersions(projectFileContent: string): string[] {
         compatVersions.push(versionRange.trim().replace(/^(?=\d)/, "^"))
     }
 
-    return compatVersions
+    return compatVersions.filter(v => v)
 }
 
 export function getJuliaVersion(availableReleases: string[], versionInput: string, includePrerelease: boolean = false, juliaCompatVersions: string[] = []): string {

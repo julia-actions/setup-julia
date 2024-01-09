@@ -2,7 +2,6 @@
 // Check README.md for licence information.
 
 import * as path from 'path'
-import * as fs from 'fs'
 
 import * as io from '@actions/io'
 
@@ -40,16 +39,6 @@ process.env['RUNNER_TEMP'] = tempDir
 
 import * as installer from '../src/installer'
 
-function genProjectToml(juliaVersions: Array<string> | undefined = undefined) {
-    const tomlLines = ["[compat]"]
-
-    if (typeof juliaVersions !== "undefined") {
-        tomlLines.push(`julia = "${juliaVersions.join(", ")}"`)
-    }
-
-    return tomlLines.join("\n")
-}
-
 describe("getProjectFile tests", () => {
     it("Can determine project file is missing", () => {
         expect(() => installer.getProjectFile("DNE.toml")).toThrow("Unable to locate project file")
@@ -67,13 +56,25 @@ describe("getProjectFile tests", () => {
 })
 
 describe("readJuliaCompatVersions tests", () => {
-    it('Can determine Julia compat entries from a file', () => {
+    it('Can determine Julia compat entries', () => {
+        // Note: Julia's Pkg.jl uses caret as the default specifier (e.g. `1.2.3 == ^1.2.3`) where as
+        // NPM's semver uses tilde as the default specifier (e.g. `1.2.3 == 1.2.x == ~1.2.3`). In order
+        // to ensure the Julia default is respected we'll be sure to add the caret specify where needed.
+        // https://pkgdocs.julialang.org/v1/compatibility/#Version-specifier-format
+        // https://github.com/npm/node-semver#x-ranges-12x-1x-12-
         const toml = '[compat]\njulia = "1, >=1.1, ^1.2, ~1.3"'
         expect(installer.readJuliaCompatVersions(toml)).toEqual(["^1", ">=1.1", "^1.2", "~1.3"])
     })
 
+    it('Handle whitespace', () => {
+        const toml = '[compat]\njulia = " 1,2 , 3 ,"'
+        expect(installer.readJuliaCompatVersions(toml)).toEqual(["^1", "^2", "^3"])
+    })
+
     it('Handle missing compat entries', () => {
         expect(installer.readJuliaCompatVersions("")).toEqual([])
+        expect(installer.readJuliaCompatVersions("[compat]")).toEqual([])
+        expect(installer.readJuliaCompatVersions("[compat]\njulia = \"\"")).toEqual([])
     })
 })
 
@@ -134,9 +135,8 @@ describe('version matching tests', () => {
             expect(installer.getJuliaVersion(versions, "MIN", true, ["^1.7"])).toEqual("1.7.3-rc1")
 
             // NPM's semver package treats "1.7" as "~1.7" instead of "^1.7" like Julia
-            expect(installer.getJuliaVersion(versions, "MIN", false, ["1.7"])).toThrow("Could not find a Julia version")
+            expect(() => installer.getJuliaVersion(versions, "MIN", false, ["1.7"])).toThrow("Could not find a Julia version that matches")
 
-            expect(installer.getJuliaVersion(versions, "MIN", true, [""])).toEqual("1.6.7")
             expect(() => installer.getJuliaVersion(versions, "MIN", true, [])).toThrow("Julia project file does not specify a compat for Julia")
         })
     })
