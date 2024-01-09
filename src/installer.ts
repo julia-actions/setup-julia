@@ -130,17 +130,8 @@ export function getJuliaVersion(availableReleases: string[], versionInput: strin
             throw new Error('Unable to use version "project-min" when the Julia project file does not specify a compat for Julia')
         }
         let minVersions = juliaCompatVersions.map(v => semver.minSatisfying(availableReleases, v, {includePrerelease}))
-        let minVersion = semver.sort(minVersions.filter((v): v is string => v !== null))[0]
-
-        // Determine the latest version associated with this minor release
-        let latestPatchVersion: string | null = null
-        if (includePrerelease && semver.prerelease(minVersion)) {
-            let range = `>=${semver.inc(minVersion, "patch")}-0 <${semver.inc(minVersion, "prepatch")}`
-            console.log(`range: ${range}`)
-            latestPatchVersion = semver.maxSatisfying(availableReleases, range, {includePrerelease})
-        }
-        console.log(`availableReleases: ${availableReleases}\njuliaCompatVersions: ${juliaCompatVersions}\nlatestPatchVersion: ${latestPatchVersion}\nminVersion: ${minVersion}`)
-        version = latestPatchVersion || minVersion
+        version = semver.sort(minVersions.filter((v): v is string => v !== null))[0]
+        console.log(`availableReleases: ${availableReleases}\njuliaCompatVersions: ${juliaCompatVersions}\nversion: ${version}`)
     } else {
         // Use the highest available version that matches versionInput
         version = semver.maxSatisfying(availableReleases, versionInput, {includePrerelease})
