@@ -106,6 +106,11 @@ describe("validJuliaRange tests", () => {
         expect(installer.validJuliaRange("< 1 < 1")).toBeNull()
         expect(installer.validJuliaRange("<  1 <  1")).toBeNull()
     })
+
+    it('Returns null with invalid specifiers', () => {
+        expect(installer.validJuliaRange("<=1.2.3")).toBeNull()
+        expect(installer.validJuliaRange("≤1.2.3")).toBeNull()
+    })
 })
 
 describe("readJuliaCompatVersions tests", () => {

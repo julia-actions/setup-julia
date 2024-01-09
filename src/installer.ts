@@ -118,7 +118,7 @@ export function validJuliaRange(range: string): string | null {
     // Cleanup whitespace. Julia only allows whitespace between the specifier and version with certain specifiers
     range = range.replace(/\s+/g, " ").replace(/(?<=(>|>=|≥|<)) (?=\d)/g, "")
 
-    if (!semver.validRange(range) || range.split(/(?<! -) (?!- )/).length > 1) {
+    if (!semver.validRange(range) || range.split(/(?<! -) (?!- )/).length > 1 || range.startsWith("<=")) {
         return null
     } else if (range.search(/^\d/) === 0 && !range.includes(" ")) {
         // Compat version is just a basic version number (e.g. 1.2.3). Since Julia's Pkg.jl's uses caret
