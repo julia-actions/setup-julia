@@ -62,8 +62,8 @@ describe("readJuliaCompatVersions tests", () => {
         // to ensure the Julia default is respected we'll be sure to add the caret specify where needed.
         // https://pkgdocs.julialang.org/v1/compatibility/#Version-specifier-format
         // https://github.com/npm/node-semver#x-ranges-12x-1x-12-
-        const toml = '[compat]\njulia = "1, >=1.1, ^1.2, ~1.3"'
-        expect(installer.readJuliaCompatVersions(toml)).toEqual(["^1", ">=1.1", "^1.2", "~1.3"])
+        const toml = '[compat]\njulia = "1, ^1.1, ~1.2, >=1.3, >= 1.4, <1.5, < 1.6, 1.7 - 1.8"'
+        expect(installer.readJuliaCompatVersions(toml)).toEqual(["^1", "^1.1", "~1.2", ">=1.3", ">= 1.4", "<1.5", "< 1.6", "1.7 - 1.8"])
     })
 
     it('Handle whitespace', () => {
@@ -133,6 +133,17 @@ describe('version matching tests', () => {
             versions = ["1.6.7", "1.7.3-rc1", "1.7.3-rc2", "1.8.0"]
             expect(installer.getJuliaVersion(versions, "MIN", false, ["^1.7"])).toEqual("1.8.0")
             expect(installer.getJuliaVersion(versions, "MIN", true, ["^1.7"])).toEqual("1.7.3-rc1")
+
+            expect(installer.getJuliaVersion(versions, "MIN", false, ["~1.7", "~1.8", "~1.9"])).toEqual("1.8.0")
+            expect(installer.getJuliaVersion(versions, "MIN", true, ["~1.7", "~1.8", "~1.9"])).toEqual("1.7.3-rc1")
+            expect(installer.getJuliaVersion(versions, "MIN", false, ["~1.8", "~1.7", "~1.9"])).toEqual("1.8.0")
+            expect(installer.getJuliaVersion(versions, "MIN", true, ["~1.8", "~1.7", "~1.9"])).toEqual("1.7.3-rc1")
+
+            expect(installer.getJuliaVersion(versions, "MIN", false, ["1.7 - 1.9"])).toEqual("1.8.0")
+            expect(installer.getJuliaVersion(versions, "MIN", true, ["1.7 - 1.9"])).toEqual("1.7.3-rc1")
+
+            expect(installer.getJuliaVersion(versions, "MIN", true, ["< 1.9.0"])).toEqual("1.6.7")
+            expect(installer.getJuliaVersion(versions, "MIN", true, [">= 1.6.0"])).toEqual("1.6.7")
 
             // NPM's semver package treats "1.7" as "~1.7" instead of "^1.7" like Julia
             expect(() => installer.getJuliaVersion(versions, "MIN", false, ["1.7"])).toThrow("Could not find a Julia version that matches")

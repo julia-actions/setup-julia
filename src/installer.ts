@@ -131,7 +131,6 @@ export function getJuliaVersion(availableReleases: string[], versionInput: strin
         }
         let minVersions = juliaCompatVersions.map(v => semver.minSatisfying(availableReleases, v, {includePrerelease}))
         version = semver.sort(minVersions.filter((v): v is string => v !== null))[0]
-        console.log(`availableReleases: ${availableReleases}\njuliaCompatVersions: ${juliaCompatVersions}\nversion: ${version}`)
     } else {
         // Use the highest available version that matches versionInput
         version = semver.maxSatisfying(availableReleases, versionInput, {includePrerelease})
