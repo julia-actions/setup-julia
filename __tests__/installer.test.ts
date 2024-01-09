@@ -38,6 +38,7 @@ process.env['RUNNER_TOOL_CACHE'] = toolDir
 process.env['RUNNER_TEMP'] = tempDir
 
 import * as installer from '../src/installer'
+import exp from 'constants'
 
 describe("getProjectFile tests", () => {
     it("Can determine project file is missing", () => {
@@ -55,20 +56,72 @@ describe("getProjectFile tests", () => {
     })
 })
 
+describe("validJuliaRange tests", () => {
+    it('X', () => {
+        expect(installer.validJuliaRange("1")).toEqual("^1")
+        expect(installer.validJuliaRange("1.2")).toEqual("^1.2")
+        expect(installer.validJuliaRange("1.2.3")).toEqual("^1.2.3")
+        expect(installer.validJuliaRange("^1.2.3")).toEqual("^1.2.3")
+        expect(installer.validJuliaRange("~1.2.3")).toEqual("~1.2.3")
+        expect(installer.validJuliaRange("=1.2.3")).toEqual("=1.2.3")
+        expect(installer.validJuliaRange(">= 1.2.3")).toEqual(">= 1.2.3")
+        expect(installer.validJuliaRange("≥ 1.2.3")).toEqual(">= 1.2.3")
+        expect(installer.validJuliaRange("< 1.2.3")).toEqual("< 1.2.3")
+        expect(installer.validJuliaRange("1.2.3 - 4.5.6")).toEqual("1.2.3 - 4.5.6")
+
+        expect(installer.validJuliaRange("<1 <1")).toBeNull()
+        expect(installer.validJuliaRange("< 1 < 1")).toBeNull()
+        expect(installer.validJuliaRange("<  1 <  1")).toBeNull()
+    })
+})
+
 describe("readJuliaCompatVersions tests", () => {
     it('Can determine Julia compat entries', () => {
-        // Note: Julia's Pkg.jl uses caret as the default specifier (e.g. `1.2.3 == ^1.2.3`) where as
-        // NPM's semver uses tilde as the default specifier (e.g. `1.2.3 == 1.2.x == ~1.2.3`). In order
-        // to ensure the Julia default is respected we'll be sure to add the caret specify where needed.
-        // https://pkgdocs.julialang.org/v1/compatibility/#Version-specifier-format
-        // https://github.com/npm/node-semver#x-ranges-12x-1x-12-
         const toml = '[compat]\njulia = "1, ^1.1, ~1.2, >=1.3, >= 1.4, <1.5, < 1.6, 1.7 - 1.8"'
         expect(installer.readJuliaCompatVersions(toml)).toEqual(["^1", "^1.1", "~1.2", ">=1.3", ">= 1.4", "<1.5", "< 1.6", "1.7 - 1.8"])
     })
 
-    it('Handle whitespace', () => {
+    it('Handle surrounding whitespace', () => {
         const toml = '[compat]\njulia = " 1,2 , 3 ,"'
         expect(installer.readJuliaCompatVersions(toml)).toEqual(["^1", "^2", "^3"])
+    })
+
+    it('Throws with whitespace separated version ranges', () => {
+        var toml = '[compat]\njulia = "1 2 3"'
+        expect(() => installer.readJuliaCompatVersions(toml)).toThrow("Invalid version range")
+
+        // TODO: Ideally would fail. Invalid in Julia
+        toml = '[compat]\njulia = "1- 2"'
+        expect(installer.readJuliaCompatVersions(toml)).toThrow("1- 2")
+    })
+
+    it('Handles default caret specifier', () => {
+        var toml = '[compat]\njulia = "1"'
+        expect(installer.readJuliaCompatVersions(toml)).toEqual(["^1"])
+
+        // Pkg.jl currently does not support pre-release entries in compat but NPM's semver does so
+        // we'll test them here.
+        toml = '[compat]\njulia = "1.2.3-rc1"'
+        expect(installer.readJuliaCompatVersions(toml)).toEqual(["^1.2.3-rc1"])
+    })
+
+    it('Handles hypen ranges', () => {
+        var toml = '[compat]\njulia = "1.2.3 - 4.5.6"'
+        expect(installer.readJuliaCompatVersions(toml)).toEqual(["1.2.3 - 4.5.6"])
+
+        toml = '[compat]\njulia = "1.2.3-rc1 - 4.5.6"'
+        expect(installer.readJuliaCompatVersions(toml)).toEqual(["1.2.3-rc1 - 4.5.6"])
+
+        // A version number and not a hypen range
+        toml = '[compat]\njulia = "1.2.3-rc1-4.5.6"'
+        expect(installer.readJuliaCompatVersions(toml)).toEqual(["^1.2.3-rc1-4.5.6"])
+
+        toml = '[compat]\njulia = "1.2.3-rc1 -4.5.6"'
+        expect(() => installer.readJuliaCompatVersions(toml)).toThrow("Invalid version range")
+
+        // A whitespace separated version range
+        toml = '[compat]\njulia = "1.2.3-rc1- 4.5.6"'
+        expect(() => installer.readJuliaCompatVersions(toml)).toThrow("Invalid version range")
     })
 
     it('Handle missing compat entries', () => {

@@ -104,6 +104,27 @@ export function getProjectFile(projectInput: string = ""): string {
     return projectFile
 }
 
+export function validJuliaRange(range: string): string | null {
+    range = range.trim()
+
+    // NPM's semver doesn't understand unicode characters such as `≥` so we'll convert to alternatives
+    range = range.replace("≥", ">=").replace("≤", "<=")
+
+    if (!semver.validRange(range) || range.replace(/\s+/g, " ").split(/(?<![>=<≥~^]| -) (?!- )/).length > 1) {
+        return null
+    } else if (range.search(/^\d/) === 0 && !range.includes(" ")) {
+        // Compat version is just a basic version number (e.g. 1.2.3). Since Julia's Pkg.jl's uses caret
+        // as the default specifier (e.g. `1.2.3 == ^1.2.3`) and NPM's semver uses tilde as the default
+        // specifier (e.g. `1.2.3 == 1.2.x == ~1.2.3`) we will introduce the caret specifier to ensure the
+        // orignal intent is respected.
+        // https://pkgdocs.julialang.org/v1/compatibility/#Version-specifier-format
+        // https://github.com/npm/node-semver#x-ranges-12x-1x-12-
+        range = "^" + range
+    }
+
+    return range
+}
+
 /**
  * @returns An array of version ranges compatible with the Julia project
  */
@@ -112,10 +133,16 @@ export function readJuliaCompatVersions(projectFileContent: string): string[] {
 
     let meta = toml.parse(projectFileContent)
     for (let versionRange of meta.compat?.julia?.split(",") || []) {
-        compatVersions.push(versionRange.trim().replace(/^(?=\d)/, "^"))
+        versionRange = validJuliaRange(versionRange)
+
+        if (!versionRange) {
+            throw new Error(`Invalid version range found in Julia compat: ${versionRange}`)
+        }
+
+        compatVersions.push(versionRange)
     }
 
-    return compatVersions.filter(v => v)
+    return compatVersions
 }
 
 export function getJuliaVersion(availableReleases: string[], versionInput: string, includePrerelease: boolean = false, juliaCompatVersions: string[] = []): string {
