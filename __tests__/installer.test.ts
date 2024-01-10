@@ -38,6 +38,105 @@ process.env['RUNNER_TOOL_CACHE'] = toolDir
 process.env['RUNNER_TEMP'] = tempDir
 
 import * as installer from '../src/installer'
+import exp from 'constants'
+
+describe("getProjectFile tests", () => {
+    it("Can determine project file is missing", () => {
+        expect(() => installer.getProjectFile("DNE.toml")).toThrow("Unable to locate project file")
+        expect(() => installer.getProjectFile(fixtureDir)).toThrow("Unable to locate project file")
+    })
+
+    it('Can determine project file from a directory', () => {
+        expect(installer.getProjectFile(path.join(fixtureDir, "PkgA"))).toEqual(path.join(fixtureDir, "PkgA", "Project.toml"))
+        expect(installer.getProjectFile(path.join(fixtureDir, "PkgB"))).toEqual(path.join(fixtureDir, "PkgB", "JuliaProject.toml"))
+    })
+
+    it("Prefers using JuliaProject.toml over Project.toml", () => {
+        expect(installer.getProjectFile(path.join(fixtureDir, "PkgC"))).toEqual(path.join(fixtureDir, "PkgC", "JuliaProject.toml"))
+    })
+})
+
+describe("validJuliaCompatRange tests", () => {
+    it('Handles default caret specifier', () => {
+        expect(installer.validJuliaCompatRange("1")).toEqual(semver.validRange("^1"))
+        expect(installer.validJuliaCompatRange("1.2")).toEqual(semver.validRange("^1.2"))
+        expect(installer.validJuliaCompatRange("1.2.3")).toEqual(semver.validRange("^1.2.3"))
+
+        // TODO: Pkg.jl currently does not support pre-release entries in compat so ideally this would fail
+        expect(installer.validJuliaCompatRange("1.2.3-rc1")).toEqual(semver.validRange("^1.2.3-rc1"))
+    })
+
+    it('Handle surrounding whitespace', () => {
+        expect(installer.validJuliaCompatRange(" 1")).toEqual(semver.validRange("^1"))
+        expect(installer.validJuliaCompatRange("1 ")).toEqual(semver.validRange("^1"))
+        expect(installer.validJuliaCompatRange(" 1 ")).toEqual(semver.validRange("^1"))
+    })
+
+    it('Handles version ranges with specifiers', () => {
+        expect(installer.validJuliaCompatRange("^1.2.3")).toEqual(semver.validRange("^1.2.3"))
+        expect(installer.validJuliaCompatRange("~1.2.3")).toEqual(semver.validRange("~1.2.3"))
+        expect(installer.validJuliaCompatRange("=1.2.3")).toEqual(semver.validRange("=1.2.3"))
+        expect(installer.validJuliaCompatRange(">=1.2.3")).toEqual(">=1.2.3")
+        expect(installer.validJuliaCompatRange("≥1.2.3")).toEqual(">=1.2.3")
+        expect(installer.validJuliaCompatRange("<1.2.3")).toEqual("<1.2.3")
+    })
+
+    it('Handles whitespace after specifiers', () => {
+        expect(installer.validJuliaCompatRange("^ 1.2.3")).toBeNull()
+        expect(installer.validJuliaCompatRange("~ 1.2.3")).toBeNull()
+        expect(installer.validJuliaCompatRange("= 1.2.3")).toBeNull()
+        expect(installer.validJuliaCompatRange(">= 1.2.3")).toEqual(">=1.2.3")
+        expect(installer.validJuliaCompatRange("≥ 1.2.3")).toEqual(">=1.2.3")
+        expect(installer.validJuliaCompatRange("< 1.2.3")).toEqual("<1.2.3")
+    })
+
+    it('Handles hypen ranges', () => {
+        expect(installer.validJuliaCompatRange("1.2.3 - 4.5.6")).toEqual(semver.validRange("1.2.3 - 4.5.6"))
+        expect(installer.validJuliaCompatRange("1.2.3-rc1 - 4.5.6")).toEqual(semver.validRange("1.2.3-rc1 - 4.5.6"))
+        expect(installer.validJuliaCompatRange("1.2.3-rc1-4.5.6")).toEqual(semver.validRange("^1.2.3-rc1-4.5.6"))  // A version number and not a hypen range
+        expect(installer.validJuliaCompatRange("1.2.3-rc1 -4.5.6")).toBeNull()
+        expect(installer.validJuliaCompatRange("1.2.3-rc1- 4.5.6")).toBeNull()  // Whitespace separate version ranges
+    })
+
+    it("Returns null AND operator on version ranges", () => {
+        expect(installer.validJuliaCompatRange("")).toBeNull()
+        expect(installer.validJuliaCompatRange("1 2 3")).toBeNull()
+        expect(installer.validJuliaCompatRange("1- 2")).toBeNull()
+        expect(installer.validJuliaCompatRange("<1 <1")).toBeNull()
+        expect(installer.validJuliaCompatRange("< 1 < 1")).toBeNull()
+        expect(installer.validJuliaCompatRange("<  1 <  1")).toBeNull()
+    })
+
+    it('Returns null with invalid specifiers', () => {
+        expect(installer.validJuliaCompatRange("<=1.2.3")).toBeNull()
+        expect(installer.validJuliaCompatRange("≤1.2.3")).toBeNull()
+        expect(installer.validJuliaCompatRange("*")).toBeNull()
+    })
+
+    it("Handles OR operator on version ranges", () => {
+        expect(installer.validJuliaCompatRange("1, 2, 3")).toEqual(semver.validRange("^1 || ^2 || ^3"))
+        expect(installer.validJuliaCompatRange("1, 2 - 3, ≥ 4")).toEqual(semver.validRange("^1 || >=2 <=3 || >=4"))
+        expect(installer.validJuliaCompatRange(",")).toBeNull()
+    })
+})
+
+describe("readJuliaCompatRange tests", () => {
+    it('Can determine Julia compat entries', () => {
+        const toml = '[compat]\njulia = "1, ^1.1, ~1.2, >=1.3, 1.4 - 1.5"'
+        expect(installer.readJuliaCompatRange(toml)).toEqual(semver.validRange("^1 || ^1.1 || ~1.2 || >=1.3 || 1.4 - 1.5"))
+    })
+
+    it('Throws with invalid version ranges', () => {
+        expect(() => installer.readJuliaCompatRange('[compat]\njulia = ""')).toThrow("Invalid version range")
+        expect(() => installer.readJuliaCompatRange('[compat]\njulia = "1 2 3"')).toThrow("Invalid version range")
+    })
+
+    it('Handle missing compat entries', () => {
+        expect(installer.readJuliaCompatRange("")).toEqual("*")
+        expect(installer.readJuliaCompatRange("[compat]")).toEqual("*")
+
+    })
+})
 
 describe('version matching tests', () => {
     describe('specific versions', () => {
@@ -82,6 +181,34 @@ describe('version matching tests', () => {
                 expect(semver.gtr('1.3.1', '1.3', {includePrerelease: true})).toBeFalsy()
                 expect(semver.gtr('1.3.2-rc1', '1.3', {includePrerelease: true})).toBeFalsy()
             })
+        })
+    })
+
+    describe('julia compat versions', () => {
+        it('Understands MIN', () => {
+            let versions = ["1.6.7", "1.7.1-rc1", "1.7.1-rc2", "1.7.1", "1.7.2", "1.8.0"]
+            expect(installer.getJuliaVersion(versions, "MIN", false, "^1.7")).toEqual("1.7.1")
+            expect(installer.getJuliaVersion(versions, "MIN", true, "^1.7")).toEqual("1.7.1-rc1")
+
+            versions = ["1.6.7", "1.7.3-rc1", "1.7.3-rc2", "1.8.0"]
+            expect(installer.getJuliaVersion(versions, "MIN", false, "^1.7")).toEqual("1.8.0")
+            expect(installer.getJuliaVersion(versions, "MIN", true, "^1.7")).toEqual("1.7.3-rc1")
+
+            expect(installer.getJuliaVersion(versions, "MIN", false, "~1.7 || ~1.8 || ~1.9")).toEqual("1.8.0")
+            expect(installer.getJuliaVersion(versions, "MIN", true, "~1.7 || ~1.8 || ~1.9")).toEqual("1.7.3-rc1")
+            expect(installer.getJuliaVersion(versions, "MIN", false, "~1.8 || ~1.7 || ~1.9")).toEqual("1.8.0")
+            expect(installer.getJuliaVersion(versions, "MIN", true, "~1.8 || ~1.7 || ~1.9")).toEqual("1.7.3-rc1")
+
+            expect(installer.getJuliaVersion(versions, "MIN", false, "1.7 - 1.9")).toEqual("1.8.0")
+            expect(installer.getJuliaVersion(versions, "MIN", true, "1.7 - 1.9")).toEqual("1.7.3-rc1")
+
+            expect(installer.getJuliaVersion(versions, "MIN", true, "< 1.9.0")).toEqual("1.6.7")
+            expect(installer.getJuliaVersion(versions, "MIN", true, ">= 1.6.0")).toEqual("1.6.7")
+
+            // NPM's semver package treats "1.7" as "~1.7" instead of "^1.7" like Julia
+            expect(() => installer.getJuliaVersion(versions, "MIN", false, "1.7")).toThrow("Could not find a Julia version that matches")
+
+            expect(() => installer.getJuliaVersion(versions, "MIN", true, "")).toThrow("Julia project file does not specify a compat for Julia")
         })
     })
 })
