@@ -89,7 +89,7 @@ steps:
 - uses: actions/checkout@v1.0.0
 - uses: julia-actions/setup-julia@v1
   with:
-    version: 1.0.4
+    version: '1.10'
 - run: julia -e 'println("Hello, World!")'
 ```
 
@@ -103,14 +103,14 @@ You can either specify specific Julia versions or version ranges. If you specify
 
 #### Examples
 
-- `1.2.0` is a valid semver version. The action will try to download exactly this version. If it's not available, the build step will fail.
-- `1.0` is a version range that will match the highest available Julia version that starts with `1.0`, e.g. `1.0.5`, excluding pre-releases.
-- `^1.3.0-rc1` is a **caret** version range that includes pre-releases of `1.3.0` starting at `rc1`. It matches all versions `≥ 1.3.0-rc1` and `< 2.0.0`.
-- `~1.3.0-rc1` is a **tilde** version range that includes pre-releases of `1.3.0` starting at `rc1`. It matches all versions `≥ 1.3.0-rc1` and `< 1.4.0`.
-- `^1.3.0-0` is a **caret** version range that includes _all_ pre-releases of `1.3.0`. It matches all versions `≥ 1.3.0-` and `< 2.0.0`.
-- `~1.3.0-0` is a **tilde** version range that includes _all_ pre-releases of `1.3.0`. It matches all versions `≥ 1.3.0-` and `< 1.4.0`.
-- `nightly` will install the latest nightly build.
-- `1.7-nightly` will install the latest nightly build for the upcoming 1.7 release. This version will only be available during certain phases of the Julia release cycle.
+- `'1.2.0'` is a valid semver version. The action will try to download exactly this version. If it's not available, the build step will fail.
+- `'1.0'` is a version range that will match the highest available Julia version that starts with `1.0`, e.g. `1.0.5`, excluding pre-releases.
+- `'^1.3.0-rc1'` is a **caret** version range that includes pre-releases of `1.3.0` starting at `rc1`. It matches all versions `≥ 1.3.0-rc1` and `< 2.0.0`.
+- `'~1.3.0-rc1'` is a **tilde** version range that includes pre-releases of `1.3.0` starting at `rc1`. It matches all versions `≥ 1.3.0-rc1` and `< 1.4.0`.
+- `'^1.3.0-0'` is a **caret** version range that includes _all_ pre-releases of `1.3.0`. It matches all versions `≥ 1.3.0-` and `< 2.0.0`.
+- `'~1.3.0-0'` is a **tilde** version range that includes _all_ pre-releases of `1.3.0`. It matches all versions `≥ 1.3.0-` and `< 1.4.0`.
+- `'nightly'` will install the latest nightly build.
+- `'1.7-nightly'` will install the latest nightly build for the upcoming 1.7 release. This version will only be available during certain phases of the Julia release cycle.
 
 Internally the action uses node's semver package to resolve version ranges. Its [documentation](https://github.com/npm/node-semver#advanced-range-syntax) contains more details on the version range syntax. You can test what version will be selected for a given input in this JavaScript [REPL](https://repl.it/@SaschaMann/setup-julia-version-logic).
 
@@ -118,7 +118,7 @@ Internally the action uses node's semver package to resolve version ranges. Its 
 
 There are two methods of including pre-releases in version matching:
 
-1. Including the pre-release tag in the version itself, e.g. `^1.3.0-rc1`.
+1. Including the pre-release tag in the version itself, e.g. `'^1.3.0-rc1'`.
 2. Setting the input `include-all-prereleases` to `true`.
 
 These behave slightly differently.
