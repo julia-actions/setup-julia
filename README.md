@@ -89,7 +89,7 @@ steps:
 - uses: actions/checkout@v1.0.0
 - uses: julia-actions/setup-julia@v1
   with:
-    version: '1.0.4'
+    version: '1.10'
 - run: julia -e 'println("Hello, World!")'
 ```
 
