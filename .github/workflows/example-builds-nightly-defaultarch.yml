@@ -19,7 +19,7 @@ jobs:
       fail-fast: false
       matrix:
         julia-version: [nightly, 1.10-nightly]
-        os: [ubuntu-latest, macOS-latest, windows-latest]
+        os: [ubuntu-latest, macOS-latest, windows-latest, macOS-14]
 
     steps:
       - uses: actions/checkout@v4
