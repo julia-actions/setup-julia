@@ -40,6 +40,8 @@ async function run() {
 
         // Inputs
         const versionInput = core.getInput('version')
+        core.debug(`getInput version: ${versionInput} type: ${typeof versionInput}`)
+        core.debug(`env version: ${process.env[`INPUT_VERSION`]} type: ${typeof process.env[`INPUT_VERSION`]}`)
         const includePrereleases = core.getInput('include-all-prereleases') == 'true'
         const originalArchInput = core.getInput('arch')
 
