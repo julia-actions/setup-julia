@@ -19,7 +19,14 @@ jobs:
       fail-fast: false
       matrix:
         julia-version: [nightly, 1.10-nightly]
-        os: [ubuntu-latest, macOS-latest, windows-latest]
+        os:
+          - ubuntu-latest
+          - windows-latest
+          - macos-11 # Intel
+          - macos-12 # Intel
+          - macos-13 # Intel
+          - macos-14 # Apple Silicon
+          - macos-latest # Currently Intel, but will probably point to Apple Silicon in the future
 
     steps:
       - uses: actions/checkout@v4
