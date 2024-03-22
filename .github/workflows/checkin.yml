@@ -1,5 +1,8 @@
 name: "PR Checks"
-on: [pull_request, push]
+on:
+  push:
+  pull_request:
+  merge_group: # Needed for GitHub Merge Queue
 
 concurrency:
   # Skip intermediate builds: all builds except for builds on the `master`, `main`, or `release-*` branches
