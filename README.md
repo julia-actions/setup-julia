@@ -254,6 +254,27 @@ If your workflow requires access to secrets, you should always pin it to a commi
 This will protect you in case a bad actor gains access to the setup-julia repo.
 You can find more information in [GitHub's security hardening guide](https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/security-hardening-for-github-actions#using-third-party-actions).
 
+## Using Dependabot version updates to keep your GitHub Actions up to date
+
+We highly recommend that you set up Dependabot version updates on your repo to keep your GitHub Actions up to date.
+
+To set up Dependabot version updates, create a file named `.github/dependabot.yml` in your repo with the following contents:
+
+```yaml
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    open-pull-requests-limit: 99
+    labels:
+      - "dependencies"
+      - "github-actions"
+```
+
+For more details on Dependabot version updates, see the [GitHub Dependabot documentation](https://docs.github.com/en/code-security/dependabot/dependabot-version-updates).
+
 ## Debug logs
 
 You can enable [Step Debug Logs](https://github.com/actions/toolkit/blob/main/docs/action-debugging.md#step-debug-logs) for more detailed logs.
