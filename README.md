@@ -110,6 +110,7 @@ You can either specify specific Julia versions or version ranges. If you specify
 - `'^1.3.0-0'` is a **caret** version range that includes _all_ pre-releases of `1.3.0`. It matches all versions `≥ 1.3.0-` and `< 2.0.0`.
 - `'~1.3.0-0'` is a **tilde** version range that includes _all_ pre-releases of `1.3.0`. It matches all versions `≥ 1.3.0-` and `< 1.4.0`.
 - `'lts'` will install the latest LTS build.
+- `'pre'` will install the latest prerelease build.
 - `'nightly'` will install the latest nightly build.
 - `'1.7-nightly'` will install the latest nightly build for the upcoming 1.7 release. This version will only be available during certain phases of the Julia release cycle.
 

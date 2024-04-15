@@ -61,6 +61,10 @@ describe('version matching tests', () => {
             expect(installer.getJuliaVersion(testVersions, 'lts')).toEqual(installer.getJuliaVersion(testVersions, '1.6'))
             expect(installer.getJuliaVersion(testVersions, 'lts')).toEqual('1.6.7')
         })
+
+        it('pre', () => {
+            expect(installer.getJuliaVersion(testVersions, 'pre')).toEqual('1.11.0-beta1')
+        })
     })
 
     describe('version ranges', () => {
