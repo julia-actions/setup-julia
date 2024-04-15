@@ -4,30 +4,30 @@
 import * as path from 'path'
 
 import * as io from '@actions/io'
-
-import nock = require('nock')
 import * as semver from 'semver'
 
+import nock = require('nock')
+
 const testVersions = [
-    '0.1.2',       '0.2.0',           '0.2.1',          '0.3.0',
-    '0.3.1',       '0.3.10',          '0.3.11',         '0.3.12',
-    '0.3.2',       '0.3.3',           '0.3.4',          '0.3.5',
-    '0.3.6',       '0.3.7',           '0.3.8',          '0.3.9',
-    '0.4.0',       '0.4.0-rc1',       '0.4.0-rc2',      '0.4.0-rc3',
-    '0.4.0-rc4',   '0.4.1',           '0.4.2',          '0.4.3',
-    '0.4.4',       '0.4.5',           '0.4.6',          '0.4.7',
-    '0.5.0',       '0.5.0-rc0',       '0.5.0-rc1',      '0.5.0-rc2',
-    '0.5.0-rc3',   '0.5.0-rc4',       '0.5.1',          '0.5.2',
-    '0.6.0',       '0.6.0-pre.alpha', '0.6.0-pre.beta', '0.6.0-rc1',
-    '0.6.0-rc2',   '0.6.0-rc3',       '0.6.1',          '0.6.2',
-    '0.6.3',       '0.6.4',           '0.7.0',          '0.7.0-alpha',
-    '0.7.0-beta',  '0.7.0-beta2',     '0.7.0-rc1',      '0.7.0-rc2',
-    '0.7.0-rc3',   '1.0.0',           '1.0.0-rc1',      '1.0.1',
-    '1.0.2',       '1.0.3',           '1.0.4',          '1.0.5',
-    '1.1.0',       '1.1.0-rc1',       '1.1.0-rc2',      '1.1.1',
-    '1.2.0',       '1.2.0-rc1',       '1.2.0-rc2',      '1.2.0-rc3',
-    '1.3.0-alpha', '1.3.0-rc1',       '1.3.0-rc2',      '1.3.0-rc3',
-    '1.3.0-rc4'
+    '0.1.2',
+    '0.2.0', '0.2.1',
+    '0.3.0', '0.3.1', '0.3.10', '0.3.11', '0.3.12', '0.3.2', '0.3.3', '0.3.4', '0.3.5', '0.3.6', '0.3.7', '0.3.8', '0.3.9',
+    '0.4.0', '0.4.0-rc1', '0.4.0-rc2', '0.4.0-rc3', '0.4.0-rc4', '0.4.1', '0.4.2', '0.4.3', '0.4.4', '0.4.5', '0.4.6', '0.4.7',
+    '0.5.0', '0.5.0-rc0', '0.5.0-rc1', '0.5.0-rc2', '0.5.0-rc3', '0.5.0-rc4', '0.5.1', '0.5.2',
+    '0.6.0', '0.6.0-pre.alpha', '0.6.0-pre.beta', '0.6.0-rc1', '0.6.0-rc2', '0.6.0-rc3', '0.6.1', '0.6.2', '0.6.3', '0.6.4',
+    '0.7.0', '0.7.0-alpha', '0.7.0-beta', '0.7.0-beta2', '0.7.0-rc1', '0.7.0-rc2', '0.7.0-rc3',
+    '1.0.0', '1.0.0-rc1', '1.0.1', '1.0.2', '1.0.3', '1.0.4', '1.0.5',
+    '1.1.0', '1.1.0-rc1', '1.1.0-rc2', '1.1.1',
+    '1.2.0', '1.2.0-rc1', '1.2.0-rc2', '1.2.0-rc3',
+    '1.3.0', '1.3.0-alpha', '1.3.0-rc1', '1.3.0-rc2', '1.3.0-rc3', '1.3.0-rc4', '1.3.0-rc5', '1.3.1',
+    '1.4.0', '1.4.0-rc1', '1.4.0-rc2', '1.4.1', '1.4.2',
+    '1.5.0', '1.5.0-beta1', '1.5.0-rc1', '1.5.0-rc2', '1.5.1', '1.5.2', '1.5.3', '1.5.4',
+    '1.6.0', '1.6.0-beta1', '1.6.0-rc1', '1.6.0-rc2', '1.6.0-rc3', '1.6.1', '1.6.2', '1.6.3', '1.6.4', '1.6.5', '1.6.6', '1.6.7',
+    '1.7.0', '1.7.0-beta1', '1.7.0-beta2', '1.7.0-beta3', '1.7.0-beta4', '1.7.0-rc1', '1.7.0-rc2', '1.7.0-rc3', '1.7.1', '1.7.2', '1.7.3',
+    '1.8.0', '1.8.0-beta1', '1.8.0-beta2', '1.8.0-beta3', '1.8.0-rc1', '1.8.0-rc2', '1.8.0-rc3', '1.8.0-rc4', '1.8.1', '1.8.2', '1.8.3', '1.8.4', '1.8.5',
+    '1.9.0', '1.9.0-alpha1', '1.9.0-beta1', '1.9.0-beta2', '1.9.0-beta3', '1.9.0-beta4', '1.9.0-rc1', '1.9.0-rc2', '1.9.0-rc3', '1.9.1', '1.9.2', '1.9.3', '1.9.4',
+    '1.10.0', '1.10.0-alpha1', '1.10.0-beta1', '1.10.0-beta2', '1.10.0-beta3', '1.10.0-rc1', '1.10.0-rc2', '1.10.0-rc3', '1.10.1', '1.10.2',
+    '1.11.0-alpha1', '1.11.0-alpha2', '1.11.0-beta1'
 ]
 
 const toolDir = path.join(__dirname, 'runner', 'tools')
@@ -59,18 +59,19 @@ describe('version matching tests', () => {
 
     describe('version ranges', () => {
         it('Chooses the highest available version that matches the input', () => {
-            expect(installer.getJuliaVersion(testVersions, '1')).toEqual('1.2.0')
+            expect(installer.getJuliaVersion(testVersions, '1')).toEqual('1.10.2')
             expect(installer.getJuliaVersion(testVersions, '1.0')).toEqual('1.0.5')
-            expect(installer.getJuliaVersion(testVersions, '^1.3.0-rc1')).toEqual('1.3.0-rc4')
-            expect(installer.getJuliaVersion(testVersions, '^1.2.0-rc1')).toEqual('1.2.0')
+            expect(installer.getJuliaVersion(testVersions, '^1.3.0-rc1')).toEqual('1.10.2')
+            expect(installer.getJuliaVersion(testVersions, '^1.2.0-rc1')).toEqual('1.10.2')
+            expect(installer.getJuliaVersion(testVersions, '^1.10.0-rc1')).toEqual('1.10.2')
         })
     })
 
     describe('include-prereleases', () => {
         it('Chooses the highest available version that matches the input including prereleases', () => {
-            expect(installer.getJuliaVersion(testVersions, '^1.2.0-0', true)).toEqual('1.3.0-rc4')
-            expect(installer.getJuliaVersion(testVersions, '1', true)).toEqual('1.3.0-rc4')
-            expect(installer.getJuliaVersion(testVersions, '^1.2.0-0', false)).toEqual('1.2.0')
+            expect(installer.getJuliaVersion(testVersions, '^1.2.0-0', true)).toEqual('1.11.0-beta1')
+            expect(installer.getJuliaVersion(testVersions, '1', true)).toEqual('1.11.0-beta1')
+            expect(installer.getJuliaVersion(testVersions, '^1.2.0-0', false)).toEqual('1.10.2')
         })
     })
 
