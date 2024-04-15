@@ -10,6 +10,8 @@ import retry = require('async-retry')
 
 import * as semver from 'semver'
 
+const LTS_VERSION = '1.6'
+
 // Translations between actions input and Julia arch names
 const osMap = {
     'win32': 'winnt',
@@ -80,6 +82,11 @@ export function getJuliaVersion(availableReleases: string[], versionInput: strin
     if (semver.valid(versionInput) == versionInput || versionInput.endsWith('nightly')) {
         // versionInput is a valid version or a nightly version, use it directly
         return versionInput
+    }
+
+    if (versionInput == 'lts') {
+        return getJuliaVersion(availableReleases, LTS_VERSION, false)
+    }
     }
 
     // Use the highest available version that matches versionInput

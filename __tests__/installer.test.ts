@@ -55,6 +55,12 @@ describe('version matching tests', () => {
             expect(installer.getJuliaVersion([], 'nightly')).toEqual('nightly')
             expect(installer.getJuliaVersion(testVersions, 'nightly')).toEqual('nightly')
         })
+
+        it('LTS', () => {
+            // Update test when LTS is updated
+            expect(installer.getJuliaVersion(testVersions, 'lts')).toEqual(installer.getJuliaVersion(testVersions, '1.6'))
+            expect(installer.getJuliaVersion(testVersions, 'lts')).toEqual('1.6.7')
+        })
     })
 
     describe('version ranges', () => {
