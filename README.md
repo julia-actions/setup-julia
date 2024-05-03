@@ -22,7 +22,7 @@ This action sets up a Julia environment for use in actions by downloading a spec
 ### Inputs
 
 ```yaml
-- uses: julia-actions/setup-julia@v1
+- uses: julia-actions/setup-julia@v2
   with:
     # The Julia version that will be installed and added as `julia` to the PATH.
     # See "Julia Versions" below for a list of valid values.
@@ -86,8 +86,8 @@ outputs:
 
 ```yaml
 steps:
-- uses: actions/checkout@v1.0.0
-- uses: julia-actions/setup-julia@v1
+- uses: actions/checkout@v4
+- uses: julia-actions/setup-julia@v2
   with:
     version: '1.10'
 - run: julia -e 'println("Hello, World!")'
@@ -133,7 +133,7 @@ With `include-all-prereleases: true`, it would match `1.3.0-rc1`, `1.3.0-rc2`, `
 If you want to run tests against the latest tagged version, no matter what version that is, you can use
 
 ```yaml
-- uses: julia-actions/setup-julia@v1
+- uses: julia-actions/setup-julia@v2
   with:
     version: '1'
     include-all-prereleases: true
@@ -159,9 +159,9 @@ jobs:
         os: [ubuntu-latest, windows-latest, macOS-latest]
 
     steps:
-      - uses: actions/checkout@v1.0.0
+      - uses: actions/checkout@v4
       - name: "Set up Julia"
-        uses: julia-actions/setup-julia@v1
+        uses: julia-actions/setup-julia@v2
         with:
           version: ${{ matrix.julia-version }}
       - run: julia -e 'println("Hello, World!")'
@@ -185,9 +185,9 @@ jobs:
             julia-arch: x86
 
     steps:
-      - uses: actions/checkout@v1.0.0
+      - uses: actions/checkout@v4
       - name: "Set up Julia"
-        uses: julia-actions/setup-julia@v1
+        uses: julia-actions/setup-julia@v2
         with:
           version: ${{ matrix.julia-version }}
           arch: ${{ matrix.julia-arch }}
@@ -212,9 +212,9 @@ jobs:
             julia-arch: x86
 
     steps:
-      - uses: actions/checkout@v1.0.0
+      - uses: actions/checkout@v4
       - name: "Set up Julia"
-        uses: julia-actions/setup-julia@v1
+        uses: julia-actions/setup-julia@v2
         with:
           version: ${{ matrix.julia-version }}
       - run: julia -e 'println("Hello, World!")'
@@ -237,22 +237,43 @@ This action follows [GitHub's advice](https://help.github.com/en/articles/about-
 
 If you don't want to deal with updating the version of the action, similiarly to how Travis CI handles it, use `latest` or major version branches. [Dependabot](https://dependabot.com/) can also be used to automatically create Pull Requests to update actions used in your workflows.
 
-It's unlikely, but not impossible, that there will be breaking changes post-v1.0.0 unless a new major version of Julia is introduced.
+It's unlikely, but not impossible, that there will be breaking changes post-v2.0.0 unless a new major version of Julia is introduced.
 
 You can specify commits, branches or tags in your workflows as follows:
 
 ```yaml
 steps:
-  - uses: julia-actions/setup-julia@d3ce119a16594ea9e5d7974813970c73b6ab9e94 # commit SHA of the tagged 1.4.1 commit
+  - uses: julia-actions/setup-julia@f2258781c657ad9b4b88072c5eeaf9ec8c370874 # commit SHA of the tagged 2.0.0 commit
   - uses: julia-actions/setup-julia@latest  # latest version tag (may break existing workflows)
-  - uses: julia-actions/setup-julia@v1      # major version tag
-  - uses: julia-actions/setup-julia@v1.4    # minor version tag
-  - uses: julia-actions/setup-julia@v1.4.1  # specific version tag
+  - uses: julia-actions/setup-julia@v2      # major version tag
+  - uses: julia-actions/setup-julia@v2.0    # minor version tag
+  - uses: julia-actions/setup-julia@v2.0.0  # specific version tag
 ```
 
 If your workflow requires access to secrets, you should always pin it to a commit SHA instead of a tag.
 This will protect you in case a bad actor gains access to the setup-julia repo.
 You can find more information in [GitHub's security hardening guide](https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/security-hardening-for-github-actions#using-third-party-actions).
+
+## Using Dependabot version updates to keep your GitHub Actions up to date
+
+We highly recommend that you set up Dependabot version updates on your repo to keep your GitHub Actions up to date.
+
+To set up Dependabot version updates, create a file named `.github/dependabot.yml` in your repo with the following contents:
+
+```yaml
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    open-pull-requests-limit: 99
+    labels:
+      - "dependencies"
+      - "github-actions"
+```
+
+For more details on Dependabot version updates, see the [GitHub Dependabot documentation](https://docs.github.com/en/code-security/dependabot/dependabot-version-updates).
 
 ## Debug logs
 
