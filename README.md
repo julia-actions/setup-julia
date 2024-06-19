@@ -283,3 +283,7 @@ Note that when debug logs are enabled, a request will be sent to `https://httpbi
 ## Third party information
 Parts of this software have been derived from other open source software.
 See [THIRD_PARTY_NOTICE.md](THIRD_PARTY_NOTICE.md) for details.
+
+## Contributing to this repo
+
+Please see the README in the [`devdocs/`](devdocs/) folder.
