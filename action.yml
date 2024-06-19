@@ -1,7 +1,7 @@
 name: 'Setup Julia environment'
 description: 'Setup a Julia environment and add it to the PATH'
 author: 'Sascha Mann'
-inputs: 
+inputs:
   version:
     description: 'The Julia version to download (if necessary) and use. Example: 1.0.4'
     default: '1'
@@ -17,6 +17,10 @@ inputs:
     description: 'Display InteractiveUtils.versioninfo() after installing'
     required: false
     default: 'false'
+  tar:
+    description: '[private internal]. Custom tar command to use. This is not part of the public API of this action.'
+    required: false
+    default: ''
 outputs:
   julia-version:
     description: 'The installed Julia version. May vary from the version input if a version range was given as input.'
