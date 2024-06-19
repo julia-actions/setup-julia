@@ -33,7 +33,7 @@ jobs:
       - uses: actions/setup-node@v4
         if: ${{ ! startsWith(github.ref, 'refs/heads/releases') }}
         with:
-          node-version: 16
+          node-version-file: '.tool-versions'
 
       - name: "Install dependencies"
         if: ${{ ! startsWith(github.ref, 'refs/heads/releases') }}
