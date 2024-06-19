@@ -264,6 +264,7 @@ export async function installJulia(dest: string, versionInfo, version: string, a
             } else {
                 // This is the more common path. Using .tar.gz is much faster
                 // don't use the Git bash provided tar. Issue #205
+                // https://github.com/julia-actions/setup-julia/issues/205
                 await exec.exec('powershell', ['-Command', `& "$env:WINDIR/System32/tar" xf ${juliaDownloadPath} --strip-components=1 -C ${dest}`])
             }
             return dest
