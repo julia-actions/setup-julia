@@ -57,7 +57,17 @@ git add .gitignore
 git commit -m "Remove the dist/ line from the gitignore file"
 ```
 
-## Step 5: Run the `build-release.sh` script
+## Step 5: Make sure you have the necessary dependencies
+
+The `build-release.sh` script requires the following dependencies:
+
+1. Bash
+2. `curl`
+3. `git`
+4. `jq`
+5. `sed`
+
+## Step 6: Run the `build-release.sh` script
 
 ```bash
 ls -l bin/build-release.sh
@@ -69,7 +79,7 @@ ls -l bin/build-release.sh
 
 Wait a minute or two. The script will build everything and will create a new release branch named `releases/vMAJOR.MINOR.PATCH`.
 
-## Step 6: Push ONLY the `releases/vMAJOR.MINOR.PATCH` branch
+## Step 7: Push ONLY the `releases/vMAJOR.MINOR.PATCH` branch
 
 Only push the `releases/` branch. Do NOT push any tags yet.
 
@@ -81,7 +91,7 @@ Now you need to go to https://github.com/julia-actions/setup-julia/tree/releases
 
 Do NOT proceed to the next step until CI is all green on the `releases/vMAJOR.MINOR.PATCH` branch.
 
-## Step 7: Push the tags (only after CI is all green)
+## Step 8: Push the tags (only after CI is all green)
 
 Once CI is all green on the `releases/vMAJOR.MINOR.PATCH` branch, you can push the tags.
 
@@ -91,11 +101,11 @@ You need to force-push.
 git push --tags --force
 ```
 
-## Step 8: Use the GitHub web UI to create a new GitHub Release
+## Step 9: Use the GitHub web UI to create a new GitHub Release
 
 Go to https://github.com/julia-actions/setup-julia/releases  and create a new release for the now-existant `vMAJOR.MINOR.PATCH` tag using the GitHub web interface.
 
-## Step 9: Clean up your local repo
+## Step 10: Clean up your local repo
 
 ```bash
 git submodule deinit --force .
@@ -105,7 +115,7 @@ git checkout master
 git reset --hard origin/master
 ```
 
-## Step 10: Delete your local repo
+## Step 11: Delete your local repo
 
 ```bash
 cd ..
