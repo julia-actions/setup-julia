@@ -43,7 +43,9 @@ vim package.json
 # to the new version number that you set.
 
 git add package.json
-git commit -m "Bump version number to MAJOR.MINOR.PATCH"
+
+# No need to commit yet.
+# The release script will run `git commit`.
 ```
 
 ## Step 4: Remove the `dist/` line from the `.gitignore` file
@@ -54,7 +56,9 @@ vim .gitignore
 # Save your changes in Vim. Then exit Vim.
 
 git add .gitignore
-git commit -m "Remove the dist/ line from the gitignore file"
+
+# No need to commit yet.
+# The release script will run `git commit`.
 ```
 
 ## Step 5: Make sure you have the necessary dependencies
