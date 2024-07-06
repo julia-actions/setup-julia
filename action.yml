@@ -3,7 +3,7 @@ description: 'Setup a Julia environment and add it to the PATH'
 author: 'Sascha Mann'
 inputs: 
   version:
-    description: 'The Julia version to download (if necessary) and use. Example: 1.0.4'
+    description: 'The Julia version to download (if necessary) and use. Example: 1.10.4'
     default: '1'
   include-all-prereleases:
     description: 'Include prereleases when matching the Julia version to available versions.'
