@@ -184,6 +184,7 @@ export function getFileInfo(versionInfo, version: string, arch: string) {
     }
 
     if (!versionInfo[version]) {
+       core.error(`Encountered error: ${err}`)
        throw err
     }
 
@@ -206,6 +207,7 @@ export function getFileInfo(versionInfo, version: string, arch: string) {
         }
     }
 
+    core.error(`Encountered error: ${err}`)
     throw err
 }
 
