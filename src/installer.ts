@@ -205,6 +205,36 @@ export function getFileInfo(versionInfo, version: string, arch: string) {
                 }
             }
         }
+
+        // The following block is just to provide improved log messages in the CI logs.
+        // We specifically want to improve the case where someone is trying to install
+        // Julia 1.6 or 1.7 on Apple Silicon (aarch64) macOS.
+        {
+            const one_fileext_is_targz = (fileExt1 == "tar.gz") || (fileExt2 == "tar.gz");
+            const one_fileext_is_dmg = (fileExt1 == "dmg") || (fileExt2 == "dmg");
+            const one_fileext_is_targz_and_other_is_dmg = one_fileext_is_targz && one_fileext_is_dmg;
+
+            // We say that "this Julia version does NOT have native binaries for Apple Silicon"
+            // if and only if "this Julia version is < 1.8.0"
+            const this_julia_version_does_NOT_have_native_binaries_for_apple_silicon = semver.lt(
+                version,
+                '1.8.0',
+            );
+            const this_is_macos = osPlat == 'darwin';
+            if (this_is_macos && one_fileext_is_targz_and_other_is_dmg && this_julia_version_does_NOT_have_native_binaries_for_apple_silicon) {
+                const msg = `It looks like you are trying to install Julia 1.6 or 1.7 on ` +
+                            `the "macos-latest" runners.\n` +
+                            `"macos-latest" now resolves to "macos-14", which run on Apple ` +
+                            `Silicon (aarch64) macOS machines.\n` +
+                            `Unfortunately, Julia 1.6 and 1.7 do not have native binaries ` +
+                            `available for Apple Silicon macOS.\n` +
+                            `Therefore, it is not possible to install Julia with the current ` +
+                            `constraints.\n` +
+                            `For instructions on how to fix this error, please see the following Discourse post: ` +
+                            `https://discourse.julialang.org/t/how-to-fix-github-actions-ci-failures-with-julia-1-6-or-1-7-on-macos-latest-and-macos-14/117019`
+                core.error(msg);
+            }
+        }
     }
 
     core.error(`Encountered error: ${err}`)
