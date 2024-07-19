@@ -231,7 +231,7 @@ export function getFileInfo(versionInfo, version: string, arch: string) {
                             `Therefore, it is not possible to install Julia with the current ` +
                             `constraints.\n` +
                             `For instructions on how to fix this error, please see the following Discourse post: ` +
-                            `https://discourse.julialang.org/t/how-to-fix-github-actions-ci-failures-with-julia-1-6-or-1-7-on-macos-latest-and-macos-14/117019\n`
+                            `https://discourse.julialang.org/t/how-to-fix-github-actions-ci-failures-with-julia-1-6-or-1-7-on-macos-latest-and-macos-14/117019`
                 core.error(msg);
             }
         }
