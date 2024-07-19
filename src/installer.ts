@@ -230,17 +230,7 @@ export function getFileInfo(versionInfo, version: string, arch: string) {
                             `available for Apple Silicon macOS.\n` +
                             `Therefore, it is not possible to install Julia with the current ` +
                             `constraints.\n` +
-                            `You have three options:\n` +
-                            `Option 1: Switch from "macos-latest" to "macos-13" (because ` +
-                            `"macos-13" runs on Intel (x86_64) macOS machines.)\n` +
-                            `Option 2: Modify your CI matrix to exclude Julia 1.6 and 1.7 ` +
-                            `on "macos-latest", but continue to run Julia 1.6 or 1.7 on ` +
-                            `"macos-13".\n` +
-                            `Option 2: Explicitly request an x86_64 build of Julia, which ` +
-                            `macOS will run under emulation with Rosetta 2. To choose this ` +
-                            `option, explicitly pass "x64" as the value of the "arch" input ` +
-                            `to this action.\n` +
-                            `For more information, see this Discourse post: ` +
+                            `For instructions on how to fix this error, please see the following Discourse post: ` +
                             `https://discourse.julialang.org/t/how-to-fix-github-actions-ci-failures-with-julia-1-6-or-1-7-on-macos-latest-and-macos-14/117019\n`
                 core.error(msg);
             }
