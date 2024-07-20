@@ -30,7 +30,7 @@ This action sets up a Julia environment for use in actions by downloading a spec
     # Warning: It is strongly recommended to wrap this value in quotes.
     #          Otherwise, the YAML parser used by GitHub Actions parses certain
     #          versions as numbers which causes the wrong version to be selected.
-    #          For example, `1.0` may be parsed as `1`.
+    #          For example, `1.10` may be parsed as `1.1`.
     #
     # Default: '1'
     version: ''
