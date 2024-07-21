@@ -5,17 +5,25 @@
 This action sets up a Julia environment for use in actions by downloading a specified version of Julia and adding it to PATH.
 
 ## Table of Contents
-- [Table of Contents](#table-of-contents)
-- [Usage](#usage)
-  - [Inputs](#inputs)
-  - [Outputs](#outputs)
-  - [Basic](#basic)
-  - [Julia Versions](#julia-versions)
-  - [Matrix Testing](#matrix-testing)
-  - [versioninfo](#versioninfo)
-- [Versioning](#versioning)
-- [Debug logs](#debug-logs)
-- [Third party information](#third-party-information)
+- [setup-julia Action](#setup-julia-action)
+  - [Table of Contents](#table-of-contents)
+  - [Usage](#usage)
+    - [Inputs](#inputs)
+    - [Outputs](#outputs)
+    - [Basic](#basic)
+    - [Julia Versions](#julia-versions)
+      - [Examples](#examples)
+      - [Prereleases](#prereleases)
+      - [Recently released versions](#recently-released-versions)
+    - [Matrix Testing](#matrix-testing)
+      - [64-bit Julia only](#64-bit-julia-only)
+      - [32-bit Julia](#32-bit-julia)
+    - [versioninfo](#versioninfo)
+  - [Versioning](#versioning)
+  - [Using Dependabot version updates to keep your GitHub Actions up to date](#using-dependabot-version-updates-to-keep-your-github-actions-up-to-date)
+  - [Debug logs](#debug-logs)
+  - [Third party information](#third-party-information)
+  - [Contributing to this repo](#contributing-to-this-repo)
 
 ## Usage
 
@@ -30,7 +38,7 @@ This action sets up a Julia environment for use in actions by downloading a spec
     # Warning: It is strongly recommended to wrap this value in quotes.
     #          Otherwise, the YAML parser used by GitHub Actions parses certain
     #          versions as numbers which causes the wrong version to be selected.
-    #          For example, `1.0` may be parsed as `1`.
+    #          For example, `1.10` may be parsed as `1.1`.
     #
     # Default: '1'
     version: ''

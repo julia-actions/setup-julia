@@ -53,6 +53,9 @@ async function run() {
         if (!versionInput) { // if `versionInput` is an empty string
             throw new Error('Version input must not be null')
         }
+        if (versionInput == '1.6') {
+            core.notice('[setup-julia] If you are testing 1.6 as a Long Term Support (lts) version, consider using the new "lts" version specifier instead of "1.6" explicitly, which will automatically resolve the current lts.')
+        }
         if (!originalArchInput) { // if `originalArchInput` is an empty string
             throw new Error(`Arch input must not be null`)
         }

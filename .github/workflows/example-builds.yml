@@ -19,7 +19,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        julia-version: ['1.0.5', '1.2', '^1.5.0-beta1', '1', 'lts', 'pre']
+       # include '1.6' here to test info message about lts tag existing
+        julia-version: ['1.0.5', '1.2', '^1.5.0-beta1', '1', '1.6', 'lts', 'pre']
         julia-arch: [x64, x86]
         os: [ubuntu-latest, macOS-latest, windows-latest]
         # 32-bit Julia binaries are not available on macOS
