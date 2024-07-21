@@ -1,7 +1,7 @@
 name: 'Setup Julia environment'
 description: 'Setup a Julia environment and add it to the PATH'
 author: 'Sascha Mann'
-inputs: 
+inputs:
   version:
     description: 'The Julia version to download (if necessary) and use. Example: 1.0.4'
     default: '1'
@@ -12,7 +12,7 @@ inputs:
   arch:
     description: 'Architecture of the Julia binaries. Defaults to the architecture of the runner executing the job.'
     required: false
-    default: '${{ runner.arch }}'
+    default: 'default'
   show-versioninfo:
     description: 'Display InteractiveUtils.versioninfo() after installing'
     required: false
