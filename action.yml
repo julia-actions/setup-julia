@@ -12,7 +12,7 @@ inputs:
   arch:
     description: 'Architecture of the Julia binaries. Defaults to the architecture of the runner executing the job.'
     required: false
-    default: '${{ runner.arch }}'
+    default: 'default'
   show-versioninfo:
     description: 'Display InteractiveUtils.versioninfo() after installing'
     required: false
