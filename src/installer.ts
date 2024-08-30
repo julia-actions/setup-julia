@@ -180,9 +180,9 @@ export function getJuliaVersion(availableReleases: string[], versionInput: strin
         }
         version = semver.minSatisfying(availableReleases, juliaCompatRange, {includePrerelease})
     } else if (versionInput == "lts") {
-        version = semver.maxSatisfying(availableReleases, LTS_VERSION, { includePrerelease });
+        version = semver.maxSatisfying(availableReleases, LTS_VERSION, { includePrerelease: false });
     } else if (versionInput == "pre") {
-        version = semver.maxSatisfying(availableReleases, MAJOR_VERSION, { includePrerelease });
+        version = semver.maxSatisfying(availableReleases, MAJOR_VERSION, { includePrerelease: true });
     } else {
         // Use the highest available version that matches versionInput
         version = semver.maxSatisfying(availableReleases, versionInput, {includePrerelease})
