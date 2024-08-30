@@ -44,7 +44,7 @@ async function run() {
         const versionInput = core.getInput('version').trim()
         const includePrereleases = core.getInput('include-all-prereleases').trim() == 'true'
         const originalArchInput = core.getInput('arch').trim()
-        const projectInput = core.getInput('project').trim()
+        const projectInput = core.getInput('project').trim()  // Julia project file
 
         // It can easily happen that, for example, a workflow file contains an input `version: ${{ matrix.julia-version }}`
         // while the strategy matrix only contains a key `${{ matrix.version }}`.
