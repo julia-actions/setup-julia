@@ -168,6 +168,7 @@ export function readJuliaCompatRange(projectFileContent: string): string {
 }
 
 export function getJuliaVersion(availableReleases: string[], versionInput: string, includePrerelease: boolean = false, juliaCompatRange: string = ""): string {
+    // Note: `juliaCompatRange` is ignored unless `versionInput` is `min`
     let version: string | null
 
     if (semver.valid(versionInput) == versionInput || versionInput.endsWith('nightly')) {
