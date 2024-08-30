@@ -40,19 +40,49 @@ process.env['RUNNER_TEMP'] = tempDir
 import * as installer from '../src/installer'
 import exp from 'constants'
 
-describe("getProjectFile tests", () => {
+describe("getProjectFilePath tests", () => {
+    let orgJuliaProject
+    let orgWorkingDir
+
+    beforeEach(() => {
+        orgJuliaProject = process.env["JULIA_PROJECT"]
+        orgWorkingDir = process.cwd()
+        delete process.env["JULIA_PROJECT"]
+    })
+
+    afterEach(() => {
+        process.env["JULIA_PROJECT"] = orgJuliaProject
+        process.chdir(orgWorkingDir)
+    })
+
     it("Can determine project file is missing", () => {
-        expect(() => installer.getProjectFile("DNE.toml")).toThrow("Unable to locate project file")
-        expect(() => installer.getProjectFile(fixtureDir)).toThrow("Unable to locate project file")
+        expect(() => installer.getProjectFilePath("DNE.toml")).toThrow("Unable to locate project file")
+        expect(() => installer.getProjectFilePath(fixtureDir)).toThrow("Unable to locate project file")
+        expect(() => installer.getProjectFilePath()).toThrow("Unable to locate project file")
     })
 
     it('Can determine project file from a directory', () => {
-        expect(installer.getProjectFile(path.join(fixtureDir, "PkgA"))).toEqual(path.join(fixtureDir, "PkgA", "Project.toml"))
-        expect(installer.getProjectFile(path.join(fixtureDir, "PkgB"))).toEqual(path.join(fixtureDir, "PkgB", "JuliaProject.toml"))
+        expect(installer.getProjectFilePath(path.join(fixtureDir, "PkgA"))).toEqual(path.join(fixtureDir, "PkgA", "Project.toml"))
+        expect(installer.getProjectFilePath(path.join(fixtureDir, "PkgB"))).toEqual(path.join(fixtureDir, "PkgB", "JuliaProject.toml"))
     })
 
     it("Prefers using JuliaProject.toml over Project.toml", () => {
-        expect(installer.getProjectFile(path.join(fixtureDir, "PkgC"))).toEqual(path.join(fixtureDir, "PkgC", "JuliaProject.toml"))
+        expect(installer.getProjectFilePath(path.join(fixtureDir, "PkgC"))).toEqual(path.join(fixtureDir, "PkgC", "JuliaProject.toml"))
+    })
+
+    it("Can determine project from JULIA_PROJECT", () => {
+        process.env["JULIA_PROJECT"] = path.join(fixtureDir, "PkgA")
+        expect(installer.getProjectFilePath()).toEqual(path.join(fixtureDir, "PkgA", "Project.toml"))
+    })
+
+    it("Can determine project from the current working directory", () => {
+        process.chdir(path.join(fixtureDir, "PkgA"));
+        expect(installer.getProjectFilePath()).toEqual("Project.toml")
+    })
+
+    it("Ignores JULIA_PROJECT when argument is used", () => {
+        process.env["JULIA_PROJECT"] = path.join(fixtureDir, "PkgB")
+        expect(installer.getProjectFilePath(path.join(fixtureDir, "PkgA"))).toEqual(path.join(fixtureDir, "PkgA", "Project.toml"))
     })
 })
 
