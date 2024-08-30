@@ -9,6 +9,7 @@ import * as path from 'path'
 import retry = require('async-retry')
 
 import * as semver from 'semver'
+import * as toml from 'toml'
 
 const LTS_VERSION = '1.6'
 const MAJOR_VERSION = '1' // Could be deduced from versions.json
@@ -79,23 +80,116 @@ export async function getJuliaVersions(versionInfo): Promise<string[]> {
     return versions
 }
 
-export function getJuliaVersion(availableReleases: string[], versionInput: string, includePrerelease: boolean = false): string {
+/**
+ * @returns The path to the Julia project file
+ */
+export function getProjectFilePath(projectInput: string = ""): string {
+    let projectFilePath: string = ""
+
+    // Default value for projectInput
+    if (!projectInput) {
+        projectInput = process.env.JULIA_PROJECT || "."
+    }
+
+    if (fs.existsSync(projectInput) && fs.lstatSync(projectInput).isFile()) {
+        projectFilePath = projectInput
+    } else {
+        for (let projectFilename of ["JuliaProject.toml", "Project.toml"]) {
+            let p = path.join(projectInput, projectFilename)
+            if (fs.existsSync(p) && fs.lstatSync(p).isFile()) {
+                projectFilePath = p
+                break
+            }
+        }
+    }
+
+    if (!projectFilePath) {
+        throw new Error(`Unable to locate project file with project input: ${projectInput}`)
+    }
+
+    return projectFilePath
+}
+
+/**
+ * @returns A valid NPM semver range from a Julia compat range or null if it's not valid
+ */
+export function validJuliaCompatRange(compatRange: string): string | null {
+    let ranges: Array<string> = []
+    for(let range of compatRange.split(",")) {
+        range = range.trim()
+
+        // An empty range isn't supported by Julia
+        if (!range) {
+            return null
+        }
+
+        // NPM's semver doesn't understand unicode characters such as `≥` so we'll convert to alternatives
+        range = range.replace("≥", ">=").replace("≤", "<=")
+
+        // Cleanup whitespace. Julia only allows whitespace between the specifier and version with certain specifiers
+        range = range.replace(/\s+/g, " ").replace(/(?<=(>|>=|≥|<)) (?=\d)/g, "")
+
+        if (!semver.validRange(range) || range.split(/(?<! -) (?!- )/).length > 1 || range.startsWith("<=") || range === "*") {
+            return null
+        } else if (range.search(/^\d/) === 0 && !range.includes(" ")) {
+            // Compat version is just a basic version number (e.g. 1.2.3). Since Julia's Pkg.jl's uses caret
+            // as the default specifier (e.g. `1.2.3 == ^1.2.3`) and NPM's semver uses tilde as the default
+            // specifier (e.g. `1.2.3 == 1.2.x == ~1.2.3`) we will introduce the caret specifier to ensure the
+            // orignal intent is respected.
+            // https://pkgdocs.julialang.org/v1/compatibility/#Version-specifier-format
+            // https://github.com/npm/node-semver#x-ranges-12x-1x-12-
+            range = "^" + range
+        }
+
+        ranges.push(range)
+    }
+
+    return semver.validRange(ranges.join(" || "))
+}
+
+/**
+ * @returns An array of version ranges compatible with the Julia project
+ */
+export function readJuliaCompatRange(projectFileContent: string): string {
+    let compatRange: string | null
+    let meta = toml.parse(projectFileContent)
+
+    if (meta.compat?.julia !== undefined) {
+        compatRange = validJuliaCompatRange(meta.compat.julia)
+    } else {
+        compatRange = "*"
+    }
+
+    if (!compatRange) {
+        throw new Error(`Invalid version range found in Julia compat: ${compatRange}`)
+    }
+
+    return compatRange
+}
+
+export function getJuliaVersion(availableReleases: string[], versionInput: string, includePrerelease: boolean = false, juliaCompatRange: string = ""): string {
+    // Note: `juliaCompatRange` is ignored unless `versionInput` is `min`
+    let version: string | null
+
     if (semver.valid(versionInput) == versionInput || versionInput.endsWith('nightly')) {
         // versionInput is a valid version or a nightly version, use it directly
-        return versionInput
+        version = versionInput
+    } else if (versionInput == "min") {
+        // Resolve "min" to the minimum supported Julia version compatible with the project file
+        if (!juliaCompatRange) {
+            throw new Error('Unable to use version "min" when the Julia project file does not specify a compat for Julia')
+        }
+        version = semver.minSatisfying(availableReleases, juliaCompatRange, {includePrerelease})
+    } else if (versionInput == "lts") {
+        version = semver.maxSatisfying(availableReleases, LTS_VERSION, { includePrerelease: false });
+    } else if (versionInput == "pre") {
+        version = semver.maxSatisfying(availableReleases, MAJOR_VERSION, { includePrerelease: true });
+    } else {
+        // Use the highest available version that matches versionInput
+        version = semver.maxSatisfying(availableReleases, versionInput, {includePrerelease})
     }
 
-    if (versionInput == 'lts') {
-        return getJuliaVersion(availableReleases, LTS_VERSION, false)
-    }
-
-    if (versionInput == 'pre') {
-        return getJuliaVersion(availableReleases, MAJOR_VERSION, true)
-    }
-
-    // Use the highest available version that matches versionInput
-    let version = semver.maxSatisfying(availableReleases, versionInput, {includePrerelease})
-    if (version == null) {
+    if (!version) {
         throw new Error(`Could not find a Julia version that matches ${versionInput}`)
     }
 

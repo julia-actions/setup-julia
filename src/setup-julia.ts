@@ -44,6 +44,7 @@ async function run() {
         const versionInput = core.getInput('version').trim()
         const includePrereleases = core.getInput('include-all-prereleases').trim() == 'true'
         const originalArchInput = core.getInput('arch').trim()
+        const projectInput = core.getInput('project').trim()  // Julia project file
 
         // It can easily happen that, for example, a workflow file contains an input `version: ${{ matrix.julia-version }}`
         // while the strategy matrix only contains a key `${{ matrix.version }}`.
@@ -74,9 +75,16 @@ async function run() {
         const arch = archSynonyms[processedArchInput.toLowerCase()]
         core.debug(`Mapped the "arch" from ${processedArchInput} to ${arch}`)
 
+        // Determine the Julia compat ranges as specified by the Project.toml only for special versions that require them.
+        let juliaCompatRange: string = "";
+        if (versionInput === "min") {
+            const projectFilePath = installer.getProjectFilePath(projectInput)
+            juliaCompatRange = installer.readJuliaCompatRange(fs.readFileSync(projectFilePath).toString())
+        }
+
         const versionInfo = await installer.getJuliaVersionInfo()
         const availableReleases = await installer.getJuliaVersions(versionInfo)
-        const version = installer.getJuliaVersion(availableReleases, versionInput, includePrereleases)
+        const version = installer.getJuliaVersion(availableReleases, versionInput, includePrereleases, juliaCompatRange)
         core.debug(`selected Julia version: ${arch}/${version}`)
         core.setOutput('julia-version', version)
 
