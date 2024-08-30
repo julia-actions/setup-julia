@@ -83,8 +83,8 @@ export async function getJuliaVersions(versionInfo): Promise<string[]> {
 /**
  * @returns The path to the Julia project file
  */
-export function getProjectFile(projectInput: string = ""): string {
-    let projectFile: string = ""
+export function getProjectFilePath(projectInput: string = ""): string {
+    let projectFilePath: string = ""
 
     // Default value for projectInput
     if (!projectInput) {
@@ -92,22 +92,22 @@ export function getProjectFile(projectInput: string = ""): string {
     }
 
     if (fs.existsSync(projectInput) && fs.lstatSync(projectInput).isFile()) {
-        projectFile = projectInput
+        projectFilePath = projectInput
     } else {
         for (let projectFilename of ["JuliaProject.toml", "Project.toml"]) {
             let p = path.join(projectInput, projectFilename)
             if (fs.existsSync(p) && fs.lstatSync(p).isFile()) {
-                projectFile = p
+                projectFilePath = p
                 break
             }
         }
     }
 
-    if (!projectFile) {
+    if (!projectFilePath) {
         throw new Error(`Unable to locate project file with project input: ${projectInput}`)
     }
 
-    return projectFile
+    return projectFilePath
 }
 
 /**
