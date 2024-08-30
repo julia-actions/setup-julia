@@ -18,7 +18,7 @@ inputs:
     required: false
     default: 'false'
   project:
-    description: 'The path to the project directory or file to use when resolving some versions (e.g. MIN)'
+    description: 'The path to the project directory or file to use when resolving some versions (e.g. min)'
     required: false
     default: ''  # Special value which fallsback to using JULIA_PROJECT if defined, otherwise "."
 outputs:

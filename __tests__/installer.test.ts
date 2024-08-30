@@ -196,30 +196,30 @@ describe('version matching tests', () => {
     })
 
     describe('julia compat versions', () => {
-        it('Understands MIN', () => {
+        it('Understands "min"', () => {
             let versions = ["1.6.7", "1.7.1-rc1", "1.7.1-rc2", "1.7.1", "1.7.2", "1.8.0"]
-            expect(installer.getJuliaVersion(versions, "MIN", false, "^1.7")).toEqual("1.7.1")
-            expect(installer.getJuliaVersion(versions, "MIN", true, "^1.7")).toEqual("1.7.1-rc1")
+            expect(installer.getJuliaVersion(versions, "min", false, "^1.7")).toEqual("1.7.1")
+            expect(installer.getJuliaVersion(versions, "min", true, "^1.7")).toEqual("1.7.1-rc1")
 
             versions = ["1.6.7", "1.7.3-rc1", "1.7.3-rc2", "1.8.0"]
-            expect(installer.getJuliaVersion(versions, "MIN", false, "^1.7")).toEqual("1.8.0")
-            expect(installer.getJuliaVersion(versions, "MIN", true, "^1.7")).toEqual("1.7.3-rc1")
+            expect(installer.getJuliaVersion(versions, "min", false, "^1.7")).toEqual("1.8.0")
+            expect(installer.getJuliaVersion(versions, "min", true, "^1.7")).toEqual("1.7.3-rc1")
 
-            expect(installer.getJuliaVersion(versions, "MIN", false, "~1.7 || ~1.8 || ~1.9")).toEqual("1.8.0")
-            expect(installer.getJuliaVersion(versions, "MIN", true, "~1.7 || ~1.8 || ~1.9")).toEqual("1.7.3-rc1")
-            expect(installer.getJuliaVersion(versions, "MIN", false, "~1.8 || ~1.7 || ~1.9")).toEqual("1.8.0")
-            expect(installer.getJuliaVersion(versions, "MIN", true, "~1.8 || ~1.7 || ~1.9")).toEqual("1.7.3-rc1")
+            expect(installer.getJuliaVersion(versions, "min", false, "~1.7 || ~1.8 || ~1.9")).toEqual("1.8.0")
+            expect(installer.getJuliaVersion(versions, "min", true, "~1.7 || ~1.8 || ~1.9")).toEqual("1.7.3-rc1")
+            expect(installer.getJuliaVersion(versions, "min", false, "~1.8 || ~1.7 || ~1.9")).toEqual("1.8.0")
+            expect(installer.getJuliaVersion(versions, "min", true, "~1.8 || ~1.7 || ~1.9")).toEqual("1.7.3-rc1")
 
-            expect(installer.getJuliaVersion(versions, "MIN", false, "1.7 - 1.9")).toEqual("1.8.0")
-            expect(installer.getJuliaVersion(versions, "MIN", true, "1.7 - 1.9")).toEqual("1.7.3-rc1")
+            expect(installer.getJuliaVersion(versions, "min", false, "1.7 - 1.9")).toEqual("1.8.0")
+            expect(installer.getJuliaVersion(versions, "min", true, "1.7 - 1.9")).toEqual("1.7.3-rc1")
 
-            expect(installer.getJuliaVersion(versions, "MIN", true, "< 1.9.0")).toEqual("1.6.7")
-            expect(installer.getJuliaVersion(versions, "MIN", true, ">= 1.6.0")).toEqual("1.6.7")
+            expect(installer.getJuliaVersion(versions, "min", true, "< 1.9.0")).toEqual("1.6.7")
+            expect(installer.getJuliaVersion(versions, "min", true, ">= 1.6.0")).toEqual("1.6.7")
 
             // NPM's semver package treats "1.7" as "~1.7" instead of "^1.7" like Julia
-            expect(() => installer.getJuliaVersion(versions, "MIN", false, "1.7")).toThrow("Could not find a Julia version that matches")
+            expect(() => installer.getJuliaVersion(versions, "min", false, "1.7")).toThrow("Could not find a Julia version that matches")
 
-            expect(() => installer.getJuliaVersion(versions, "MIN", true, "")).toThrow("Julia project file does not specify a compat for Julia")
+            expect(() => installer.getJuliaVersion(versions, "min", true, "")).toThrow("Julia project file does not specify a compat for Julia")
         })
     })
 })

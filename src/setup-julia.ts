@@ -77,7 +77,7 @@ async function run() {
 
         // Determine the Julia compat ranges as specified by the Project.toml only for special versions that require them.
         let juliaCompatRange: string = "";
-        if (versionInput === "MIN") {
+        if (versionInput === "min") {
             const projectFile = installer.getProjectFile(projectInput)
             juliaCompatRange = installer.readJuliaCompatRange(fs.readFileSync(projectFile).toString())
         }

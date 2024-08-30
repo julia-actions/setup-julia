@@ -72,7 +72,7 @@ This action sets up a Julia environment for use in actions by downloading a spec
     # Default: false
     show-versioninfo: ''
 
-    # Set the path to the project directory or file to use when resolving some versions (e.g. MIN).
+    # Set the path to the project directory or file to use when resolving some versions (e.g. `min`).
     #
     # Defaults to using JULIA_PROJECT if defined, otherwise '.'
     project: ''
@@ -126,7 +126,7 @@ You can either specify specific Julia versions or version ranges. If you specify
 - `'pre'` will install the latest prerelease build (RCs, betas, and alphas).
 - `'nightly'` will install the latest nightly build.
 - `'1.7-nightly'` will install the latest nightly build for the upcoming 1.7 release. This version will only be available during certain phases of the Julia release cycle.
-- `'MIN'` will install the earliest supported version of Julia compatible with the project. Especially useful in monorepos.
+- `'min'` will install the earliest supported version of Julia compatible with the project. Especially useful in monorepos.
 
 Internally the action uses node's semver package to resolve version ranges. Its [documentation](https://github.com/npm/node-semver#advanced-range-syntax) contains more details on the version range syntax. You can test what version will be selected for a given input in this JavaScript [REPL](https://repl.it/@SaschaMann/setup-julia-version-logic).
 
