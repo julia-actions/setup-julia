@@ -5,24 +5,32 @@
 This action sets up a Julia environment for use in actions by downloading a specified version of Julia and adding it to PATH.
 
 ## Table of Contents
-- [Table of Contents](#table-of-contents)
-- [Usage](#usage)
-  - [Inputs](#inputs)
-  - [Outputs](#outputs)
-  - [Basic](#basic)
-  - [Julia Versions](#julia-versions)
-  - [Matrix Testing](#matrix-testing)
-  - [versioninfo](#versioninfo)
-- [Versioning](#versioning)
-- [Debug logs](#debug-logs)
-- [Third party information](#third-party-information)
+- [setup-julia Action](#setup-julia-action)
+  - [Table of Contents](#table-of-contents)
+  - [Usage](#usage)
+    - [Inputs](#inputs)
+    - [Outputs](#outputs)
+    - [Basic](#basic)
+    - [Julia Versions](#julia-versions)
+      - [Examples](#examples)
+      - [Prereleases](#prereleases)
+      - [Recently released versions](#recently-released-versions)
+    - [Matrix Testing](#matrix-testing)
+      - [64-bit Julia only](#64-bit-julia-only)
+      - [32-bit Julia](#32-bit-julia)
+    - [versioninfo](#versioninfo)
+  - [Versioning](#versioning)
+  - [Using Dependabot version updates to keep your GitHub Actions up to date](#using-dependabot-version-updates-to-keep-your-github-actions-up-to-date)
+  - [Debug logs](#debug-logs)
+  - [Third party information](#third-party-information)
+  - [Contributing to this repo](#contributing-to-this-repo)
 
 ## Usage
 
 ### Inputs
 
 ```yaml
-- uses: julia-actions/setup-julia@v1
+- uses: julia-actions/setup-julia@v2
   with:
     # The Julia version that will be installed and added as `julia` to the PATH.
     # See "Julia Versions" below for a list of valid values.
@@ -30,7 +38,7 @@ This action sets up a Julia environment for use in actions by downloading a spec
     # Warning: It is strongly recommended to wrap this value in quotes.
     #          Otherwise, the YAML parser used by GitHub Actions parses certain
     #          versions as numbers which causes the wrong version to be selected.
-    #          For example, `1.0` may be parsed as `1`.
+    #          For example, `1.10` may be parsed as `1.1`.
     #
     # Default: '1'
     version: ''
@@ -91,10 +99,10 @@ outputs:
 
 ```yaml
 steps:
-- uses: actions/checkout@v1.0.0
-- uses: julia-actions/setup-julia@v1
+- uses: actions/checkout@v4
+- uses: julia-actions/setup-julia@v2
   with:
-    version: 1.0.4
+    version: '1.10'
 - run: julia -e 'println("Hello, World!")'
 ```
 
@@ -108,15 +116,17 @@ You can either specify specific Julia versions or version ranges. If you specify
 
 #### Examples
 
-- `1.2.0` is a valid semver version. The action will try to download exactly this version. If it's not available, the build step will fail.
-- `1.0` is a version range that will match the highest available Julia version that starts with `1.0`, e.g. `1.0.5`, excluding pre-releases.
-- `^1.3.0-rc1` is a **caret** version range that includes pre-releases of `1.3.0` starting at `rc1`. It matches all versions `≥ 1.3.0-rc1` and `< 2.0.0`.
-- `~1.3.0-rc1` is a **tilde** version range that includes pre-releases of `1.3.0` starting at `rc1`. It matches all versions `≥ 1.3.0-rc1` and `< 1.4.0`.
-- `^1.3.0-0` is a **caret** version range that includes _all_ pre-releases of `1.3.0`. It matches all versions `≥ 1.3.0-` and `< 2.0.0`.
-- `~1.3.0-0` is a **tilde** version range that includes _all_ pre-releases of `1.3.0`. It matches all versions `≥ 1.3.0-` and `< 1.4.0`.
-- `nightly` will install the latest nightly build.
-- `1.7-nightly` will install the latest nightly build for the upcoming 1.7 release. This version will only be available during certain phases of the Julia release cycle.
-- `MIN` will install the earliest supported version of Julia compatible with the project. Especially useful in monorepos.
+- `'1.2.0'` is a valid semver version. The action will try to download exactly this version. If it's not available, the build step will fail.
+- `'1.0'` is a version range that will match the highest available Julia version that starts with `1.0`, e.g. `1.0.5`, excluding pre-releases.
+- `'^1.3.0-rc1'` is a **caret** version range that includes pre-releases of `1.3.0` starting at `rc1`. It matches all versions `≥ 1.3.0-rc1` and `< 2.0.0`.
+- `'~1.3.0-rc1'` is a **tilde** version range that includes pre-releases of `1.3.0` starting at `rc1`. It matches all versions `≥ 1.3.0-rc1` and `< 1.4.0`.
+- `'^1.3.0-0'` is a **caret** version range that includes _all_ pre-releases of `1.3.0`. It matches all versions `≥ 1.3.0-` and `< 2.0.0`.
+- `'~1.3.0-0'` is a **tilde** version range that includes _all_ pre-releases of `1.3.0`. It matches all versions `≥ 1.3.0-` and `< 1.4.0`.
+- `'lts'` will install the latest LTS build.
+- `'pre'` will install the latest prerelease build (RCs, betas, and alphas).
+- `'nightly'` will install the latest nightly build.
+- `'1.7-nightly'` will install the latest nightly build for the upcoming 1.7 release. This version will only be available during certain phases of the Julia release cycle.
+- `'MIN'` will install the earliest supported version of Julia compatible with the project. Especially useful in monorepos.
 
 Internally the action uses node's semver package to resolve version ranges. Its [documentation](https://github.com/npm/node-semver#advanced-range-syntax) contains more details on the version range syntax. You can test what version will be selected for a given input in this JavaScript [REPL](https://repl.it/@SaschaMann/setup-julia-version-logic).
 
@@ -124,7 +134,7 @@ Internally the action uses node's semver package to resolve version ranges. Its 
 
 There are two methods of including pre-releases in version matching:
 
-1. Including the pre-release tag in the version itself, e.g. `^1.3.0-rc1`.
+1. Including the pre-release tag in the version itself, e.g. `'^1.3.0-rc1'`.
 2. Setting the input `include-all-prereleases` to `true`.
 
 These behave slightly differently.
@@ -139,7 +149,7 @@ With `include-all-prereleases: true`, it would match `1.3.0-rc1`, `1.3.0-rc2`, `
 If you want to run tests against the latest tagged version, no matter what version that is, you can use
 
 ```yaml
-- uses: julia-actions/setup-julia@v1
+- uses: julia-actions/setup-julia@v2
   with:
     version: '1'
     include-all-prereleases: true
@@ -165,9 +175,9 @@ jobs:
         os: [ubuntu-latest, windows-latest, macOS-latest]
 
     steps:
-      - uses: actions/checkout@v1.0.0
+      - uses: actions/checkout@v4
       - name: "Set up Julia"
-        uses: julia-actions/setup-julia@v1
+        uses: julia-actions/setup-julia@v2
         with:
           version: ${{ matrix.julia-version }}
       - run: julia -e 'println("Hello, World!")'
@@ -191,9 +201,9 @@ jobs:
             julia-arch: x86
 
     steps:
-      - uses: actions/checkout@v1.0.0
+      - uses: actions/checkout@v4
       - name: "Set up Julia"
-        uses: julia-actions/setup-julia@v1
+        uses: julia-actions/setup-julia@v2
         with:
           version: ${{ matrix.julia-version }}
           arch: ${{ matrix.julia-arch }}
@@ -218,9 +228,9 @@ jobs:
             julia-arch: x86
 
     steps:
-      - uses: actions/checkout@v1.0.0
+      - uses: actions/checkout@v4
       - name: "Set up Julia"
-        uses: julia-actions/setup-julia@v1
+        uses: julia-actions/setup-julia@v2
         with:
           version: ${{ matrix.julia-version }}
       - run: julia -e 'println("Hello, World!")'
@@ -243,22 +253,43 @@ This action follows [GitHub's advice](https://help.github.com/en/articles/about-
 
 If you don't want to deal with updating the version of the action, similiarly to how Travis CI handles it, use `latest` or major version branches. [Dependabot](https://dependabot.com/) can also be used to automatically create Pull Requests to update actions used in your workflows.
 
-It's unlikely, but not impossible, that there will be breaking changes post-v1.0.0 unless a new major version of Julia is introduced.
+It's unlikely, but not impossible, that there will be breaking changes post-v2.0.0 unless a new major version of Julia is introduced.
 
 You can specify commits, branches or tags in your workflows as follows:
 
 ```yaml
 steps:
-  - uses: julia-actions/setup-julia@d3ce119a16594ea9e5d7974813970c73b6ab9e94 # commit SHA of the tagged 1.4.1 commit
+  - uses: julia-actions/setup-julia@f2258781c657ad9b4b88072c5eeaf9ec8c370874 # commit SHA of the tagged 2.0.0 commit
   - uses: julia-actions/setup-julia@latest  # latest version tag (may break existing workflows)
-  - uses: julia-actions/setup-julia@v1      # major version tag
-  - uses: julia-actions/setup-julia@v1.4    # minor version tag
-  - uses: julia-actions/setup-julia@v1.4.1  # specific version tag
+  - uses: julia-actions/setup-julia@v2      # major version tag
+  - uses: julia-actions/setup-julia@v2.0    # minor version tag
+  - uses: julia-actions/setup-julia@v2.0.0  # specific version tag
 ```
 
 If your workflow requires access to secrets, you should always pin it to a commit SHA instead of a tag.
 This will protect you in case a bad actor gains access to the setup-julia repo.
 You can find more information in [GitHub's security hardening guide](https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/security-hardening-for-github-actions#using-third-party-actions).
+
+## Using Dependabot version updates to keep your GitHub Actions up to date
+
+We highly recommend that you set up Dependabot version updates on your repo to keep your GitHub Actions up to date.
+
+To set up Dependabot version updates, create a file named `.github/dependabot.yml` in your repo with the following contents:
+
+```yaml
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    open-pull-requests-limit: 99
+    labels:
+      - "dependencies"
+      - "github-actions"
+```
+
+For more details on Dependabot version updates, see the [GitHub Dependabot documentation](https://docs.github.com/en/code-security/dependabot/dependabot-version-updates).
 
 ## Debug logs
 
@@ -268,3 +299,7 @@ Note that when debug logs are enabled, a request will be sent to `https://httpbi
 ## Third party information
 Parts of this software have been derived from other open source software.
 See [THIRD_PARTY_NOTICE.md](THIRD_PARTY_NOTICE.md) for details.
+
+## Contributing to this repo
+
+Please see the README in the [`devdocs/`](devdocs/) folder.

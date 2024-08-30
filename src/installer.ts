@@ -11,6 +11,9 @@ import retry = require('async-retry')
 import * as semver from 'semver'
 import * as toml from 'toml'
 
+const LTS_VERSION = '1.6'
+const MAJOR_VERSION = '1' // Could be deduced from versions.json
+
 // Translations between actions input and Julia arch names
 const osMap = {
     'win32': 'winnt',
@@ -77,6 +80,9 @@ export async function getJuliaVersions(versionInfo): Promise<string[]> {
     return versions
 }
 
+/**
+ * @returns The path to the Julia project file
+ */
 export function getProjectFile(projectInput: string = ""): string {
     let projectFile: string = ""
 
@@ -104,6 +110,9 @@ export function getProjectFile(projectInput: string = ""): string {
     return projectFile
 }
 
+/**
+ * @returns A valid NPM semver range from a Julia compat range or null if it's not valid
+ */
 export function validJuliaCompatRange(compatRange: string): string | null {
     let ranges: Array<string> = []
     for(let range of compatRange.split(",")) {
@@ -170,6 +179,10 @@ export function getJuliaVersion(availableReleases: string[], versionInput: strin
             throw new Error('Unable to use version "MIN" when the Julia project file does not specify a compat for Julia')
         }
         version = semver.minSatisfying(availableReleases, juliaCompatRange, {includePrerelease})
+    } else if (versionInput == 'lts') {
+        version = semver.maxSatisfying(availableReleases, LTS_VERSION, { includePrerelease });
+    } else if (versionInput == 'pre') {
+        version = semver.maxSatisfying(availableReleases, MAJOR_VERSION, { includePrerelease });
     } else {
         // Use the highest available version that matches versionInput
         version = semver.maxSatisfying(availableReleases, versionInput, {includePrerelease})
@@ -215,14 +228,35 @@ function getNightlyFileName(arch: string): string {
     [fileExt1, , ] = getDesiredFileExts()
 
     if (osPlat == 'win32') {
-        versionExt = arch == 'x64' ? '-win64' : '-win32'
+        if (arch == 'x86') {
+            versionExt = '-win32'
+        } else if (arch == 'aarch64') {
+            throw new Error('Aarch64 Julia is not available on Windows')
+        } else if (arch == 'x64') {
+            versionExt = '-win64'
+        } else {
+            throw new Error(`Architecture ${arch} is not supported on Windows`)
+        }
     } else if (osPlat == 'darwin') {
         if (arch == 'x86') {
-            throw new Error('32-bit Julia is not available on macOS')
+            throw new Error('32-bit (x86) Julia is not available on macOS')
+        } else if (arch == 'aarch64') {
+            versionExt = '-macaarch64'
+        } else if (arch == 'x64') {
+            versionExt = '-mac64'
+        } else {
+            throw new Error(`Architecture ${arch} is not supported on macOS`)
         }
-        versionExt = '-mac64'
     } else if (osPlat === 'linux') {
-        versionExt = arch == 'x64' ? '-linux64' : '-linux32'
+        if (arch == 'x86') {
+            versionExt = '-linux32'
+        } else if (arch == 'aarch64') {
+            versionExt = '-linux-aarch64'
+        } else if (arch == 'x64') {
+            versionExt = '-linux64'
+        } else {
+            throw new Error(`Architecture ${arch} is not supported on Linux`)
+        }
     } else {
         throw new Error(`Platform ${osPlat} is not supported`)
     }
@@ -243,6 +277,7 @@ export function getFileInfo(versionInfo, version: string, arch: string) {
     }
 
     if (!versionInfo[version]) {
+       core.error(`Encountered error: ${err}`)
        throw err
     }
 
@@ -263,8 +298,39 @@ export function getFileInfo(versionInfo, version: string, arch: string) {
                 }
             }
         }
+
+        // The following block is just to provide improved log messages in the CI logs.
+        // We specifically want to improve the case where someone is trying to install
+        // Julia 1.6 or 1.7 on Apple Silicon (aarch64) macOS.
+        {
+            const one_fileext_is_targz = (fileExt1 == "tar.gz") || (fileExt2 == "tar.gz");
+            const one_fileext_is_dmg = (fileExt1 == "dmg") || (fileExt2 == "dmg");
+            const one_fileext_is_targz_and_other_is_dmg = one_fileext_is_targz && one_fileext_is_dmg;
+
+            // We say that "this Julia version does NOT have native binaries for Apple Silicon"
+            // if and only if "this Julia version is < 1.8.0"
+            const this_julia_version_does_NOT_have_native_binaries_for_apple_silicon = semver.lt(
+                version,
+                '1.8.0',
+            );
+            const this_is_macos = osPlat == 'darwin';
+            if (this_is_macos && one_fileext_is_targz_and_other_is_dmg && this_julia_version_does_NOT_have_native_binaries_for_apple_silicon) {
+                const msg = `It looks like you are trying to install Julia 1.6 or 1.7 on ` +
+                            `the "macos-latest" runners.\n` +
+                            `"macos-latest" now resolves to "macos-14", which run on Apple ` +
+                            `Silicon (aarch64) macOS machines.\n` +
+                            `Unfortunately, Julia 1.6 and 1.7 do not have native binaries ` +
+                            `available for Apple Silicon macOS.\n` +
+                            `Therefore, it is not possible to install Julia with the current ` +
+                            `constraints.\n` +
+                            `For instructions on how to fix this error, please see the following Discourse post: ` +
+                            `https://discourse.julialang.org/t/how-to-fix-github-actions-ci-failures-with-julia-1-6-or-1-7-on-macos-latest-and-macos-14/117019`
+                core.error(msg);
+            }
+        }
     }
 
+    core.error(`Encountered error: ${err}`)
     throw err
 }
 
@@ -333,7 +399,9 @@ export async function installJulia(dest: string, versionInfo, version: string, a
                 }
             } else {
                 // This is the more common path. Using .tar.gz is much faster
-                await exec.exec('powershell', ['-Command', `tar xf ${juliaDownloadPath} --strip-components=1 -C ${dest}`])
+                // don't use the Git bash provided tar. Issue #205
+                // https://github.com/julia-actions/setup-julia/issues/205
+                await exec.exec('powershell', ['-Command', `& "$env:WINDIR/System32/tar" xf ${juliaDownloadPath} --strip-components=1 -C ${dest}`])
             }
             return dest
         case 'darwin':

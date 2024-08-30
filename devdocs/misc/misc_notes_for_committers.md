@@ -1,4 +1,4 @@
-# Contributors
+# Misc notes for contributors
 
 ### Checkin
 
