@@ -1,0 +1,245 @@
+name: PR Checks
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+    tags: '*'
+concurrency:
+  # Skip intermediate builds: all builds except for builds on the `master` branch
+  # Cancel intermediate builds: only pull request builds
+  group: ${{ github.workflow }}-${{ github.ref }}-${{ github.ref != 'refs/heads/master' || github.run_number }}
+  cancel-in-progress: ${{ startsWith(github.ref, 'refs/pull/') }}
+permissions:
+  contents: read
+jobs:
+  finalize-pr-checks:
+    if: always() # this line is important to keep the `finalize` job from being marked as skipped; do not change or delete this line
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: [
+      checked-in-files,
+      build,
+      npm-run-test,
+      make-targets,
+      stalecheck-npm-install,
+    ]
+    steps:
+      - run: |
+          echo checked-in-files: ${{ needs.checked-in-files.result }}
+          echo build: ${{ needs.build.result }}
+          echo npm-run-test: ${{ needs.npm-run-test.result }}
+          echo make-targets: ${{ needs.make-targets.result }}
+          echo stalecheck-npm-install: ${{ needs.stalecheck-npm-install.result }}
+      # The last line must NOT end with ||
+      # All other lines MUST end with ||
+      - run: exit 1
+        if: |
+          (needs.checked-in-files.result != 'success') ||
+          (needs.build.result != 'success') ||
+          (needs.npm-run-test.result != 'success') ||
+          (needs.make-targets.result != 'success') ||
+          (needs.stalecheck-npm-install.result != 'success')
+  checked-in-files:
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    steps:
+      ### Check out the repo:
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
+        with:
+          persist-credentials: false
+      ### Cleanall:
+      - run: make cleanall
+      ### Install NodeJS
+      # Unix (non-Windows):
+      - uses: asdf-vm/actions/setup@05e0d2ed97b598bfce82fd30daf324ae0c4570e6
+        if: runner.os != 'Windows'
+      - run: make unix-asdf-install
+        if: runner.os != 'Windows'
+      # Windows:
+        # Windows does not support asdf, so we have to use `actions/setup-node`
+        # to install asdf:
+      - uses: actions/setup-node@1e60f620b9541d16bece96c5465dc8ee9832be0b
+        if: runner.os == 'Windows'
+        with:
+          node-version-file: '.tool-versions'
+      ### Install the NodeJS packages that we depend on:
+      - run: make install-packages
+      ### Print some debugging info:
+      - name: Print the NodeJS version (for debugging)
+        run: |
+          which -a node
+          node --version
+          which -a npm
+          npm --version
+      ### Build:
+      - run: make pack
+      ### Clean (not cleanall!):
+      - run: make clean
+      ### Make sure there are no uncommited changes
+      - uses: julia-actions/setup-julia@780022b48dfc0c2c6b94cfee6a9284850107d037
+        with:
+          version: '1'
+      - run: git --no-pager status
+      - run: git --no-pager diff
+      - run: julia ./ci/check_uncommitted_changes.jl
+  build:
+    timeout-minutes: 30
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+    steps:
+      ### Check out the repo:
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
+        with:
+          persist-credentials: false
+      ### Cleanall:
+      - run: make cleanall
+      ### Install NodeJS
+      # Unix (non-Windows):
+      - uses: asdf-vm/actions/setup@05e0d2ed97b598bfce82fd30daf324ae0c4570e6
+        if: runner.os != 'Windows'
+      - run: make unix-asdf-install
+        if: runner.os != 'Windows'
+      # Windows:
+        # Windows does not support asdf, so we have to use `actions/setup-node`
+        # to install asdf:
+      - uses: actions/setup-node@1e60f620b9541d16bece96c5465dc8ee9832be0b
+        if: runner.os == 'Windows'
+        with:
+          node-version-file: '.tool-versions'
+      ### Install the NodeJS packages that we depend on:
+      - run: make install-packages
+      ### Print some debugging info:
+      - name: Print the NodeJS version (for debugging)
+        run: |
+          which -a node
+          node --version
+          which -a npm
+          npm --version
+      ### Build:
+      - run: make build
+      - run: make pack
+      ### Make sure some other `make` targets don't bitrot:
+      - name: Run some other `make` targets to ensure that they don't bitrot
+        run: |
+          make clean
+          make cleanall
+      - name: Run all of the "cleaning" `make` targets to ensure that they don't bitrot
+        run: |
+          make clean
+          make cleanall
+  npm-run-test:
+    timeout-minutes: 30
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+    steps:
+      ### Check out the repo:
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
+        with:
+          persist-credentials: false
+      ### Cleanall:
+      - run: make cleanall
+      ### Install NodeJS
+      # Unix (non-Windows):
+      - uses: asdf-vm/actions/setup@05e0d2ed97b598bfce82fd30daf324ae0c4570e6
+        if: runner.os != 'Windows'
+      - run: make unix-asdf-install
+        if: runner.os != 'Windows'
+      # Windows:
+        # Windows does not support asdf, so we have to use `actions/setup-node`
+        # to install asdf:
+      - uses: actions/setup-node@1e60f620b9541d16bece96c5465dc8ee9832be0b
+        if: runner.os == 'Windows'
+        with:
+          node-version-file: '.tool-versions'
+      ### Install the NodeJS packages that we depend on:
+      - run: make install-packages
+      ### Print some debugging info:
+      - name: Print the NodeJS version (for debugging)
+        run: |
+          which -a node
+          node --version
+          which -a npm
+          npm --version
+      ### Build:
+      - run: make build
+      - run: make test
+  make-targets: # This is a job to make sure that none of the `make` targets bitrot
+    timeout-minutes: 30
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+    steps:
+      ### Check out the repo:
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
+        with:
+          persist-credentials: false
+      ### Cleanall:
+      - run: make cleanall
+      ### Install NodeJS
+      # Unix (non-Windows):
+      - uses: asdf-vm/actions/setup@05e0d2ed97b598bfce82fd30daf324ae0c4570e6
+        if: runner.os != 'Windows'
+      - run: make unix-asdf-install
+        if: runner.os != 'Windows'
+      ### Install the NodeJS packages that we depend on:
+      - run: make install-packages
+      ### Make sure some other `make` targets don't bitrot:
+      - name: Run some other `make` targets to ensure that they don't bitrot
+        run: |
+          make unix-asdf-install
+          make install-packages
+          make build
+          make pack
+          make everything-from-scratch
+      - name: Run all of the "cleaning" `make` targets to ensure that they don't bitrot
+        run: |
+          make clean
+          make cleanall
+  stalecheck-npm-install:
+    # In this job, we are basically trying to check if `package-lock.json` is in
+    # sync with `package-lock.json`.
+    #
+    # So, for example, if someone manually edits the `package.json` file, we want
+    # to make sure that the `package-lock.json` file is not out of sync with the
+    # `package.json` file.
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    steps:
+      ### Check out the repo:
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
+        with:
+          persist-credentials: false
+      ### Install NodeJS
+      # Unix (non-Windows):
+      - uses: asdf-vm/actions/setup@05e0d2ed97b598bfce82fd30daf324ae0c4570e6
+        if: runner.os != 'Windows'
+      - run: make unix-asdf-install
+        if: runner.os != 'Windows'
+      ### Run the master commands for this job:
+      - run: make clean
+      - run: npm ci
+      # - run: npm install --package-lock-only
+      - run: npm install
+      ### Make sure there are no uncommited changes
+      - uses: julia-actions/setup-julia@780022b48dfc0c2c6b94cfee6a9284850107d037
+        with:
+          version: '1'
+      - run: git --no-pager status
+      - run: git --no-pager diff
+      - run: julia ./ci/check_uncommitted_changes.jl
