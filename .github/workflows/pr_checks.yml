@@ -17,13 +17,12 @@ jobs:
     if: always() # this line is important to keep the `finalize` job from being marked as skipped; do not change or delete this line
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    needs: [
-      checked-in-files,
-      build,
-      npm-run-test,
-      make-targets,
-      stalecheck-npm-install,
-    ]
+    needs:
+      - checked-in-files
+      - build
+      - npm-run-test
+      - make-targets
+      - stalecheck-npm-install
     steps:
       - run: |
           echo checked-in-files: ${{ needs.checked-in-files.result }}
