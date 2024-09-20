@@ -186,7 +186,6 @@ jobs:
         run: |
           make clean
           make cleanall
-      - run: exit 1 # TODO: delete this line when finished debugging.
   stalecheck-npm-install:
     # In this job, we are basically trying to check if `package-lock.json` is in
     # sync with `package-lock.json`.
