@@ -42,6 +42,8 @@ First, `cd` to your clone of the repo. Now you can run the following commands:
 npm ci
 
 npm run build
+
+npm run pack
 ```
 
 When you are ready, you can commit your changes and push them to your PR.

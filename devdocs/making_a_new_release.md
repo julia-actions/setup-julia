@@ -1,128 +1,56 @@
 # Making a new release of this action (requires commit access)
 
-If you have commit access to this repo, you can make a new release.
+In this guide, as an example, `v2.2.0` refers to the version number of the new release that you want to make.
 
-Here are the instructions.
+## Part 1: Use the Git CLI to create and push the Git tags
 
-## Step 1: Clone a fresh copy of the repo
-
-We intentionally work in a brand-new copy of the repo.
+Step 1: Create a new lightweight tag of the form `vMAJOR.MINOR.PATCH`.
 
 ```bash
 git clone git@github.com:julia-actions/setup-julia.git
 cd setup-julia
-git checkout master
-git submodule init
-git submodule update
+git fetch --all --tags
+
+git checkout main
+
+git --no-pager log -1
+# Take note of the commit hash here.
+
+# Now, create a new lightweight tag of the form `vMAJOR.MINOR.PATCH`.
+#
+# Replace `commit_hash` with the commit hash that you obtained from the
+# `git log -1` step.
+#
+# Replace `v2.2.0` with the actual version number that you want to use.
+git tag v2.2.0 commit_hash
 ```
 
-## Step 2: Make sure you have the right version of NodeJS
-
-If you use [`asdf`](https://asdf-vm.com/), this is as simple as:
+Step 2: Once you've created the new release, you need to update the `v2` tag to point to the new release. For example, suppose that the previous release was `v2.1.0`, and suppose that you just created the new release `v2.2.0`. You need to update the `v2` tag so that it points to `v2.2.0`. Here are the commands:
 
 ```bash
-asdf plugin add nodejs
-asdf install
+# Create/update the new v2 tag locally, where the new v2 tag will point to the
+# release that you created in the previous step.
+#
+# Make sure to change `v2.2.0` to the actual value for the tag that you just
+# created in the previous step.
+#
+# The `-f` flag forcibly overwrites the old
+# `v2` tag (if it exists).
+git tag -f v2 v2.2.0
 ```
 
-If you don't use `asdf`, then you need to:
-1. Open the `./tool-versions` file in the root of the repo.
-2. Make note of the NodeJS version listed in the `.tool-versions` file.
-3. Install that same version of NodeJS on your machine.
-4. Make sure that you are currently using that version of NodeJS (i.e. it is at the front of your PATH).
-
-## Step 3: Edit the `version` field in `package.json`
+Step 3: Now you need to push the tags:
 
 ```bash
-vim package.json
+# Regular-push the new `v2.2.0` tag:
+git push origin tag v2.2.0
 
-# Edit the `version` number (should be line 2)
-# Save your changes in Vim. Then exit Vim.
-
-# For the remaining of this guide, let MAJOR.MINOR.PATCH refer
-# to the new version number that you set.
-
-git add package.json
-
-# No need to commit yet.
-# The release script will run `git commit`.
+# Force-push the new v2 tag:
+git push origin tag v2 --force
 ```
 
-## Step 4: Remove the `dist/` line from the `.gitignore` file
+## Part 2: Create the GitHub Release
 
-```bash
-vim .gitignore
-# Delete the line that says `dist/` (it should be line 3)
-# Save your changes in Vim. Then exit Vim.
+Go to the [Releases](https://github.com/julia-actions/setup-julia/releases) section of this repo and create a new release (using the GitHub web interface).
 
-git add .gitignore
-
-# No need to commit yet.
-# The release script will run `git commit`.
-```
-
-## Step 5: Make sure you have the necessary dependencies
-
-The `build-release.sh` script requires the following dependencies:
-
-1. Bash
-2. `curl`
-3. `git`
-4. `jq`
-5. `sed`
-
-## Step 6: Run the `build-release.sh` script
-
-```bash
-ls -l bin/build-release.sh
-chmod +x bin/build-release.sh
-ls -l bin/build-release.sh
-
-./bin/build-release.sh julia-actions/setup-julia
-```
-
-Wait a minute or two. The script will build everything and will create a new release branch named `releases/vMAJOR.MINOR.PATCH`.
-
-## Step 7: Push ONLY the `releases/vMAJOR.MINOR.PATCH` branch
-
-Only push the `releases/` branch. Do NOT push any tags yet.
-
-```bash
-git push origin releases/vMAJOR.MINOR.PATCH
-```
-
-Now you need to go to https://github.com/julia-actions/setup-julia/tree/releases/vMAJOR.MINOR.PATCH and wait for CI to finish running.
-
-Do NOT proceed to the next step until CI is all green on the `releases/vMAJOR.MINOR.PATCH` branch.
-
-## Step 8: Push the tags (only after CI is all green)
-
-Once CI is all green on the `releases/vMAJOR.MINOR.PATCH` branch, you can push the tags.
-
-You need to force-push.
-
-```bash
-git push --tags --force
-```
-
-## Step 9: Use the GitHub web UI to create a new GitHub Release
-
-Go to https://github.com/julia-actions/setup-julia/releases  and create a new release for the now-existant `vMAJOR.MINOR.PATCH` tag using the GitHub web interface.
-
-## Step 10: Clean up your local repo
-
-```bash
-git submodule deinit --force .
-git submodule update --init
-git fetch --all --prune
-git checkout master
-git reset --hard origin/master
-```
-
-## Step 11: Delete your local repo
-
-```bash
-cd ..
-ls setup-julia
-rm -rf setup-julia
-```
+For the "choose a tag" drop-down field, select the `v2.2.0` tag that you created and pushed in Part 1 of this guide.
