@@ -538,6 +538,7 @@ const installer = __importStar(__nccwpck_require__(1480));
 const archSynonyms = {
     'x86': 'x86',
     'x64': 'x64',
+    'x86_64': 'x64',
     'aarch64': 'aarch64',
     'arm64': 'aarch64'
 };
