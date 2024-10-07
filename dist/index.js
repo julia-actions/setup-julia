@@ -59,7 +59,7 @@ const path = __importStar(__nccwpck_require__(1017));
 const retry = __nccwpck_require__(3415);
 const semver = __importStar(__nccwpck_require__(1383));
 const toml = __importStar(__nccwpck_require__(4920));
-const LTS_VERSION = '1.6';
+const LTS_VERSION = '1.10';
 const MAJOR_VERSION = '1'; // Could be deduced from versions.json
 // Translations between actions input and Julia arch names
 const osMap = {
