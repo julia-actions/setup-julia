@@ -11,7 +11,7 @@ import retry = require('async-retry')
 import * as semver from 'semver'
 import * as toml from 'toml'
 
-const LTS_VERSION = '1.6'
+const LTS_VERSION = '1.10'
 const MAJOR_VERSION = '1' // Could be deduced from versions.json
 
 // Translations between actions input and Julia arch names

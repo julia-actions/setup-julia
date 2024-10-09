@@ -2207,6 +2207,195 @@
     ],
     "stable": true
   },
+  "1.11.0-rc1": {
+    "files": [
+      {
+        "url": "https://julialang-s3.julialang.org/bin/linux/x64/1.11/julia-1.11.0-rc1-linux-x86_64.tar.gz",
+        "triplet": "x86_64-linux-gnu",
+        "kind": "archive",
+        "arch": "x86_64",
+        "asc": "-----BEGIN PGP SIGNATURE-----\n\niQIzBAABCgAdFiEENnPfUp2QSUd/drN1ZuPH3APW5JUFAmZ6vFQACgkQZuPH3APW\n5JUUHQ//ZAS5TGq55jxkc6GQlPMp21fvaPtmagdzFrmZWnoKelQSX38KatrVSbQ6\nPIRLHXJamJ2Vnj5O6BJreege8nn15lB5qrzS3ONWezMBwpRYZROKA/QzBUhDK83S\nUK1JjLwbC3cAosvMcQhcXEk9MfUhefuZGdiOe4nrerIGlIIQxCu4T6CzGnkbOHjX\nbX6f1VKqojD6sYLYc/0PMhKqtPk1qm9dMZ+nPrzhyVGdOSizH+8lljsw8u+tv9KR\nbpIkr3TkPR35AfyLTlh1QdzWBDUZcpB6EL1MLwDTbXrDdMvBTO9slFJv7F7P83Rs\nMnpRHchzXo0nYHBRCWgDuV8ei8tBGwPHQatHyuGt7R6KDEvgSeHsa5RSq/mccqvE\nwnzn5v52escvLXUgOId0L8s8+GofWA/+nhHBhslyxltc283fFD4SnT6waKXbRScO\nchJZzgqL2YNkrCT/RqAcA49SoWQRxxmhY9mJjNTTzQI4nvtcUKdLNf62PPdUnBOQ\nKpgykq38G0CDUpibqdi2pF+47WZ2CuOOUCx+Qi8lR5nqHn1N3n8tbSbsqLVD0CgJ\nxjNrKOhwZTj4swL+J1ZrxUj++Zp27fkUcrrSFi2E5zNyxqqRYTVCsBkUPRyaRGB3\nvADT7wp+FZ/fsOtMAtdROa2YXMXtDj05nPHIpQKmnwmKBwdg92A=\n=LuD6\n-----END PGP SIGNATURE-----\n",
+        "sha256": "d9d7ca81087185abbb8a375c41f734deea6ea26aef2dc40d99467f8c5c7cc8d6",
+        "size": 250935381,
+        "version": "1.11.0-rc1",
+        "os": "linux",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/linux/x86/1.11/julia-1.11.0-rc1-linux-i686.tar.gz",
+        "triplet": "i686-linux-gnu",
+        "kind": "archive",
+        "arch": "i686",
+        "asc": "-----BEGIN PGP SIGNATURE-----\n\niQIzBAABCgAdFiEENnPfUp2QSUd/drN1ZuPH3APW5JUFAmZ6uucACgkQZuPH3APW\n5JVcBw//dgez7kEhbq5o37DNolMRbtU3ED0ASBGWWRu96IMcuekv4w26khMqVGM6\nNSoDIFlWcm5mrAgvNZGkOaQcCtFTfawILrGshqwW4WfkfULeX9PAy+9mE45xee/2\nIpLBYUUM+Nosi4rrWAjJbVbkSSH4cTrpdQPCa1DzPls/G0TXhuX2bQbjlx009hA1\nNveXr+0yHxdCQ4ZQNPUj2djRT1I0KF69FN0jqW1Ld7zHSWffeIVaoDdCmlFL6dlo\n57fuLL+dtDqfI7vpzTzYRYVy3sjUxx4IuWpPI/h0+7unIGa9oZ24MGpy9cfLXqfZ\nyavdbkYPXsrLQt7rYkZkB6OEL3uWNMkszp+Qy7kBPzu130DD4Wu7/PEDDF8sLFIr\n73w46Sh0Abc7xb+/sl8uQ/prQhhNXgcJdJNE64rOIr1V5raMyKxXff1OKiPUo8eI\nGj9sj1rHVVA0G7RY5LDQIxgY1/ZBFufw4wgowbZou/EW/p1gxI/cUpBaqlZnbicM\n2Cs+ygbTpPqnZlrI+zzCVrIAZfLYB+kHflEaAYZrPCodFSDyPcq6Rcpa6kfH8o3O\ngNr5cPZHqSVRLi3L+wAcyUCnFbNRs1BtJDfCXmoqcRNbxZ5K6QPsbgZNyhAKknrw\nJjJ/s9kXypSLAYr3LpN2qIBexJ2yDB99M3sGY85lEDsHCz9Atdg=\n=C75F\n-----END PGP SIGNATURE-----\n",
+        "sha256": "546aed60e6b6e5e5568562f299ddf1987d01f369f0243db0b8694ee83ced9809",
+        "size": 226206729,
+        "version": "1.11.0-rc1",
+        "os": "linux",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/linux/aarch64/1.11/julia-1.11.0-rc1-linux-aarch64.tar.gz",
+        "triplet": "aarch64-linux-gnu",
+        "kind": "archive",
+        "arch": "aarch64",
+        "asc": "-----BEGIN PGP SIGNATURE-----\n\niQIzBAABCgAdFiEENnPfUp2QSUd/drN1ZuPH3APW5JUFAmZ6rFIACgkQZuPH3APW\n5JWRCA//XiZ8MQyN0K3S7FdS7tK/lFKmro/9NdQ2SHZC5PczB56DnJZg34Rqb/0b\nXahlvAh/PHRcsrQCbO28jAmZvPibcfnhEo4rsQOBo/7PL9ejA+hpi+WnYP/uQTv1\nqCcvSDkeyisQA7sZIWPQQXtZPEtfJd2wSRNZ2+McW9IdcUFtzh8UiFm+dXaBv/jW\nLnOquQDFW7YYl3RwMgIhzs0HOZlCKyAbUMTkIciZSPTzo43HX0kyLPWpUc7URlgl\n8dXcHa6kEcJVSxAVslnpQlhbmXGZc3eU3PSucvKcUunZ1Ts5J7atUD0Nkl/WykI3\neMpN9hUTYKjP4Mzouj6exafNgxsYzhb/VcfLdeQCV9ar31sXXY5DBWH2ZfZ3r7gp\njfdVnCLdjedQKSnJw6P6W907Qh1MxkelboQMQ9ECyQ6FiRfhRZME3Utz96puiFJ3\nODzAgNLBCE2Jo40ra1kzOW7Wd6OFFRcDj5GmtkTusFlp6Swe8EXYhdf7Sfhz2SjM\nlgnaAwkWEXvlyo5qruCKU1QrM2X9oYTgh+Mi2modv9bs2fBfGrTGzJZGMwirig6+\ne2id7lQXWWimm7M3Nff/2j9p2zVsxtK2IhuFAFvywfwROZhblhKOuRBPWqFdpHV+\nR3QBhzEu7tB5U2fLubytRhLdQk7x1u2dtAqxfrT4d54FAhzD1Bg=\n=qx/D\n-----END PGP SIGNATURE-----\n",
+        "sha256": "192e6c92969a84b8f76e113286b81b166fe04a7c5ff6c6b44a73e494c9f7f3a5",
+        "size": 247899033,
+        "version": "1.11.0-rc1",
+        "os": "linux",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/linux/ppc64le/1.11/julia-1.11.0-rc1-linux-ppc64le.tar.gz",
+        "triplet": "powerpc64le-linux-gnu",
+        "kind": "archive",
+        "arch": "powerpc64le",
+        "asc": "-----BEGIN PGP SIGNATURE-----\n\niQIzBAABCgAdFiEENnPfUp2QSUd/drN1ZuPH3APW5JUFAmZ6xjwACgkQZuPH3APW\n5JXFyA/+M//D8fGrqm7TO5OIRYEpNFSmAdq6IkA/UjVsFZcdHTJaRlKyOBB+oKMf\nX9VkjaDNqkv9qFG9ocY5xmEU2LjyZubc8mGXtJLSQRFfUaVI2Pc9lEcUjHO/pjV6\nHFT5439OlsRUrIrA7up5vtG95mT7BnPpcHVnh6ygqANutn5KstuFuUt3pEdopoOO\nUoqqAdqmvF+rO83LoMaAX+MUxWpPgsZxzMJ3+WcbSGBVv+2vSvxbqUcCesJKnDEu\nYGR6s+HnkjLk3g2k3l9+vWPAlD+HLeXJriBYFqaiTjzz5B5UmVKnpc98qrDVvs2K\n0P5Rj2p1gBNV1MHpjxkJAxKHPVzUnatdhGaLxrCgdRgdQuFY7AKDENE0vSMaquiE\nf5RptmOYwu4l5KPePnYn2DErsHicZtpXEuzAXXGU1SFhOy0b5UeQiLzSKrdXYetl\nu4ujgJgSkSCjrsHRCtmyDJjaBakegXSUhoP9aI+/G8jRW+xTeXxluuw88M2/Tnno\nC4tZbIdmBpvvTrmnFsUOavnt8coelCtoDyj6qQdfesP9s98VWv1Woui78a6zy3ZY\ne5jkk5jEEaY1lTl3yZXYfHR2KQRv9F3scopwN/t5JTu3Hi9gubVR2rI/wb2KAqrI\nSH4jJBsRpq3P3eucLzTKfO+zVzZljZGULqWire9qXUn4ruy0NVU=\n=1koF\n-----END PGP SIGNATURE-----\n",
+        "sha256": "79870070dfc7b283691199da017f5db9dc86a8ed2260acfbb34f7e12fa9af8be",
+        "size": 238373475,
+        "version": "1.11.0-rc1",
+        "os": "linux",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/musl/x64/1.11/julia-1.11.0-rc1-musl-x86_64.tar.gz",
+        "triplet": "x86_64-linux-musl",
+        "kind": "archive",
+        "arch": "x86_64",
+        "asc": "-----BEGIN PGP SIGNATURE-----\n\niQIzBAABCgAdFiEENnPfUp2QSUd/drN1ZuPH3APW5JUFAmZ6wzsACgkQZuPH3APW\n5JXX6BAAmwa8Zau5TKTxGA+kpuLhWWgat/eI6XiIDa51pWPLFsEyovgv5KKFu4Wz\nrIKSE6hbDzQQ5KEzQ1y2zvbEJqtCFZiC79VjAtouY/x5YSxToSojgaT2hw0+w6Un\nfp+gqCv3bnpki9AF/ZO171BMOhIhTXMaZ0SCY4zYlxCJHQw/pcxaNvBD3QAdzIoW\n5cyGBI9fRx4lAx8TgfAMAzP6gWLmtlEPXVNeZTkS0zP/ysifA/DG8WKK1hPL3ukC\nU1IP2UKlkFV4YajL1RnlQ5VT2PDABqb4pnXy3MF4aLW6QXEUwFF/Su6DP/a9dt+s\nMWN1780gMXRehYAjINtxgHIPvQQo2pBm3jQb8lRJWfLiIMhqcV6fuKQyNgw8Bpmf\n8y1BspOxHYawHcr/iAwhgfrmimEekbyR7UaKii1pfmcnD62aq5zSiFR0ZlxpilLn\nsM5+4EAEOCfF512itP699oeUoJ734YxQ+u1yyUNEzL1t/Y1mLABvbFi3PPDQ+jVH\n2FaCte8Ue4zY290MI5N+TnBOgFNM47RhTrNTqagm77zoJ4+zt/zXjL23k9l0CnQX\nl/4DbbtNygE5voaIewpSlt2B3RlqHno4BII6vYfwD3ZLFM1gF2YKX5oWSxqc34Oa\npvlo8W1FziGM8i9e0ArmyE7wqZILGBv+pXoAknD0bBZIhd3/Aig=\n=1MqZ\n-----END PGP SIGNATURE-----\n",
+        "sha256": "ffebb0734c274c7f66e3b07d428869f731bf617a76d89aa7f1afa94808f7a1a0",
+        "size": 252172253,
+        "version": "1.11.0-rc1",
+        "os": "linux",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/mac/x64/1.11/julia-1.11.0-rc1-mac64.dmg",
+        "triplet": "x86_64-apple-darwin14",
+        "kind": "archive",
+        "arch": "x86_64",
+        "sha256": "bbbc0ef23b41939e41204789a31c72100c752d3529ddb5f00f26d9c14969fcbf",
+        "size": 220813827,
+        "version": "1.11.0-rc1",
+        "os": "mac",
+        "extension": "dmg"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/mac/aarch64/1.11/julia-1.11.0-rc1-macaarch64.dmg",
+        "triplet": "aarch64-apple-darwin14",
+        "kind": "archive",
+        "arch": "aarch64",
+        "sha256": "e42fa7171a729809e6cb6a779ac2e07496fd1841020cc0728be9388b7208090c",
+        "size": 210233323,
+        "version": "1.11.0-rc1",
+        "os": "mac",
+        "extension": "dmg"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/mac/x64/1.11/julia-1.11.0-rc1-mac64.tar.gz",
+        "triplet": "x86_64-apple-darwin14",
+        "kind": "archive",
+        "arch": "x86_64",
+        "asc": "-----BEGIN PGP SIGNATURE-----\n\niQIzBAABCAAdFiEENnPfUp2QSUd/drN1ZuPH3APW5JUFAmZ8NyMACgkQZuPH3APW\n5JUt5Q/+I7yezWj+cS0Qc4hfgo71ZTJ3H+LRTLKdFdeJtxVs1IKOuMC/xll8LAoT\n1xOStYifRlEDqoAbf/sMe37Qvjy0ivOOAqpbu9UhfyZH5K77jyBZ7pq4Rm5iz7X8\n3xKz8H7N0/odZiJeHXh6n3jpSwwGZU05IRpJG+CKfOWFG/hNMqRGi1ItIqqo7luA\n6ZxGH5ZA0lhYs/5EFYUJtY3k2rZMbgDuP4ODBLCu9/fIh9tSRd3jyDAAg/3fcihX\nO848r3GBU9z2Yp2Wjs9YwPVCtPFugY8hpkF5oeMAiXO2z6HwnMIsBjnyUAV390uh\ntdaeC5zG2LN7jxXKW7EKF2TQ8kVGiG7lcP/yrlRZusRvSQXupc/ZN/xwgKLaahlN\nh318ND60eMmGrX0knFiaBE0yLIxTLouPqHwWzydSb44Sx0lZDWK0R7TBB3cglph/\nNBvCsa0BUdsNWbUAsvo+1yZgWtuORie85Zq00PToKVh++X2Ol87Dm4zJrsV/NFGz\nE3SQVCSyyZHy1mtR59uA8Dsp4jR991iqfqF83whI1Bz7W1DziueyMFVUNw7DgmoB\nxedwXw/cACoaIrnwp9VsiwyLCdP4VEh4mguQfp/A8z9PplLd5TIAT7p8MKfsRasG\nUcbB+xCBtDl1+K4zPWF9PqJNcErp0O1cD8AyNTerl/p/XDBSL1U=\n=3ntO\n-----END PGP SIGNATURE-----\n",
+        "sha256": "8161e5d94200a527f8af63da3b2dec0dc60af2ffdccc7b962b5b6d52671208da",
+        "size": 220730532,
+        "version": "1.11.0-rc1",
+        "os": "mac",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/mac/aarch64/1.11/julia-1.11.0-rc1-macaarch64.tar.gz",
+        "triplet": "aarch64-apple-darwin14",
+        "kind": "archive",
+        "arch": "aarch64",
+        "asc": "-----BEGIN PGP SIGNATURE-----\n\niQIzBAABCAAdFiEENnPfUp2QSUd/drN1ZuPH3APW5JUFAmZ8ONwACgkQZuPH3APW\n5JV94w//UY+0AM7JUJ4qYm8PMdZOBc94a8S5Tl5WIMhEqXoN4js2LRE4lXEFQz+f\nptKpfxgVVSD+7ZM+pnt8P9+Fo07DaYi7WOPU/ngE6xSNK7lYy0EfspBWeYuGQSHX\n9hm8oQ3q5mUC1ZHvj+QKJucFIuC/WsM4jbnGDjaUtZ0A6jNMQXm9Urs15OxKWmAf\n/TzkfqTBlVGumAjX0pVkr36a5dPkAnnXoDA/NpYe51gHJ8LgoMu2kqAMCQN8f6v4\nxMDLOFzXBYw82yd8oVcK1iS73TF6Y0zxQA62zfMPc+67INUCYa9D/LDdpzbQHR3N\n3A+ssNyWeHNM/9SDDljIYAM6eA2RsfE7WHDy26bWrIYNcuQ9VD8lz9UEE8SORgpi\nsPjOF/u4+1aKmj3W96B77fQ1yeBJiXEwWO2ovWRDQiur31ZqLGQygl1eT934uqru\nvJQk2HHk6+946yxqO6zUuActxzQTxVWsVm+Bf9W0DebhBXsJGVbyLY+3ufU5QVEL\n+tTMme7lbKPxKhQZedxWciY+dyBiK8cbwBfkQwnZhE6WGQ0twTWxS4lNJJyVCHSk\nQ8OHzoUKmmTQBVfIcVsfxFUbczDozgvGgi8Yz23kvRJXeZn+F38Vvmb0hhYqoW5+\nnAg2PeCVTLZ1XjjZ2VVHlmO2r6iV6+rAiPqHMT1K1KtXBNnVPRo=\n=pNig\n-----END PGP SIGNATURE-----\n",
+        "sha256": "e9123319e154e5bc2485028e20cf04bf97bb59b044198cfc0442868b6fc11307",
+        "size": 210090450,
+        "version": "1.11.0-rc1",
+        "os": "mac",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/winnt/x64/1.11/julia-1.11.0-rc1-win64.exe",
+        "triplet": "x86_64-w64-mingw32",
+        "kind": "installer",
+        "arch": "x86_64",
+        "sha256": "77c6c17a940cd95c0e1bcc4ac3b6b2012cee2a7909dfd7f4494478f6b5742363",
+        "size": 142050328,
+        "version": "1.11.0-rc1",
+        "os": "winnt",
+        "extension": "exe"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/winnt/x86/1.11/julia-1.11.0-rc1-win32.exe",
+        "triplet": "i686-w64-mingw32",
+        "kind": "installer",
+        "arch": "i686",
+        "sha256": "19a636beb157925939ec3b50698c929052d24cbb218b2a39a752a7cd3a7dfe60",
+        "size": 121525664,
+        "version": "1.11.0-rc1",
+        "os": "winnt",
+        "extension": "exe"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/winnt/x64/1.11/julia-1.11.0-rc1-win64.zip",
+        "triplet": "x86_64-w64-mingw32",
+        "kind": "archive",
+        "arch": "x86_64",
+        "sha256": "0f50f837ac5f304dcd453f0026744e28e4c350cb63a1e28ca6e44c1e39ae2277",
+        "size": 237001884,
+        "version": "1.11.0-rc1",
+        "os": "winnt",
+        "extension": "zip"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/winnt/x86/1.11/julia-1.11.0-rc1-win32.zip",
+        "triplet": "i686-w64-mingw32",
+        "kind": "archive",
+        "arch": "i686",
+        "sha256": "e4930199af3fea30ce1f2b21c107040d776e8560934eb35b454887839396d4e9",
+        "size": 206019627,
+        "version": "1.11.0-rc1",
+        "os": "winnt",
+        "extension": "zip"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/winnt/x64/1.11/julia-1.11.0-rc1-win64.tar.gz",
+        "triplet": "x86_64-w64-mingw32",
+        "kind": "archive",
+        "arch": "x86_64",
+        "sha256": "492bbf74241fa6ed8d0abec8ae19fc96784826714e5107c723a0190903906e53",
+        "size": 244659562,
+        "version": "1.11.0-rc1",
+        "os": "winnt",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/winnt/x86/1.11/julia-1.11.0-rc1-win32.tar.gz",
+        "triplet": "i686-w64-mingw32",
+        "kind": "archive",
+        "arch": "i686",
+        "sha256": "5c36a5774b702e2a6d5383a9fd3ed524034e964c828b4e60687b371cb94576da",
+        "size": 212602936,
+        "version": "1.11.0-rc1",
+        "os": "winnt",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/freebsd/x64/1.11/julia-1.11.0-rc1-freebsd-x86_64.tar.gz",
+        "triplet": "x86_64-unknown-freebsd11.1",
+        "kind": "archive",
+        "arch": "x86_64",
+        "asc": "-----BEGIN PGP SIGNATURE-----\n\niQIzBAABCAAdFiEENnPfUp2QSUd/drN1ZuPH3APW5JUFAmZ6sSYACgkQZuPH3APW\n5JWAkxAAhqFoi27OknEqeGwkWJwkpCmdAeaR0Kmk6p1vIypl8HzV7dpyaYbtCkFd\nVr7wcYiwLVTj4O0RmHeXRB0J5j8xWjjmIUyd3rUDJkoMBpPt9NUw4EwGVdvQOqn9\ndA4MJZsFBtksu5qngKjQwvx0Phtxh4ddLAhlxQfqYl5qucrJMPVUY7c+K6Dia36G\n4yTezpH6ssyXBLgLcd4gcC/tIGeNWkJXiVcSOW1eJZS9VpiAfNoliH6rrkoEh/2p\ndWGimftyf3dkSf+yodkcWyZkIJUULo98+FziU8w9jQfKJ555fqXIQVb5QfFSI7cn\nDajCA2LoyVBgvezfkvMbO319U8zVZ3JEVdhqkomMK0iUiHk0aI9EWrPn8GAShVl9\nSn9f7auVpWPmEaM39xQEjdPk9jEXdOLMJuM3FhHTv/NIcZvmzC1kGxqvTFnENUP+\n6IStk5vaoNmj1bb0mfki0ihf6JIbSmoAwjFYixsKO+zLiUIEBTQITqF/0nvmouST\no/YZUCNswoiYzpAG2l97fIDZXJwf+G/ieEi2SiLxoLkzJw9oExGWLQ0APEwOAMjp\nkztKKlwO2ptN5xNh82LHi2X91ZQGc0T1Wydm2kufBmV6lqNFqbzkIdv1ZI97aya+\nx57ogCP5D6S9emsz9HcJn5Wh1HAUaOz/Sz4DtvtVy7pz9Fo1YMY=\n=180s\n-----END PGP SIGNATURE-----\n",
+        "sha256": "a5f2b75f580b188ccf15aee2b9e736a143830479e339371862bd3a41e337a88d",
+        "size": 225973999,
+        "version": "1.11.0-rc1",
+        "os": "freebsd",
+        "extension": "tar.gz"
+      }
+    ],
+    "stable": false
+  },
   "1.6.2": {
     "files": [
       {
@@ -6288,6 +6477,183 @@
     ],
     "stable": false
   },
+  "1.11.0-rc3": {
+    "files": [
+      {
+        "url": "https://julialang-s3.julialang.org/bin/linux/x64/1.11/julia-1.11.0-rc3-linux-x86_64.tar.gz",
+        "triplet": "x86_64-linux-gnu",
+        "kind": "archive",
+        "arch": "x86_64",
+        "asc": "-----BEGIN PGP SIGNATURE-----\n\niQIzBAABCgAdFiEENnPfUp2QSUd/drN1ZuPH3APW5JUFAmbM13oACgkQZuPH3APW\n5JWPhxAAsKhd+CJqzB75TDC0+563izq8w5lmCww0e+5D9mTAaJ6VKprgqoCRuZwn\ne/9zNagrUkAuOZFeWFvjPHjl2D08ALVCcaeqiIP0GH+g1ZyLiJUQcXuDTOs8xbPU\nR5gbgQrzk+vzcfJ3vjsnyEo5448QBPbWVlPF3swwUr8CCTq4ajemX9I3SzfvcHaZ\nG9pvdd86y4PyKp8Xy3z7s6geMbfszzPWbrLOEx4v6PLV1n9sN8c5LuO7qSr799Nm\nMo7gqTupUCgbVaJ9eKxNd0Ly57K/rt9ra3aL5JYAwV3oS3ez84uKUqCuAZp5cYRR\nb1bYKMzN5pWBLidXg9RUBu8NRsyfNCU7foYxnmA/1GXsVTZf9KtxE6VGpso1deH3\nLkRh5C7kInAvsAFb5yWcqJNnr6I5t+ZyTQlExGIz6RbPtBGZcyBtGF4Ws6wL1bod\n4mUfYnLDcGJ9KNp/90x7EP3mEFUMslI5LEnLIssKbKWPaUReqJz5FU8fXNk35Gfh\nE6cOSLRm1bLg9HuQIWADylX79k6x+PWmY0oqx+j1DlWV4KkSMep7QocMWQGHc/iK\nmN76soakjlJVWGMSuI4pHepUgjvJikmJEhYFcRehSRoNGh5J1L3F+dHID1SbESak\nQbyrycUbOgublaP5mnGLi4E/DlHuOqPKp0q5o5dcJP7YdYqvzjE=\n=EP7P\n-----END PGP SIGNATURE-----\n",
+        "sha256": "fc7e199ac4921a83150c2863425b203196436d12d8dc73054aeba5ad8a5d7d72",
+        "size": 252616821,
+        "version": "1.11.0-rc3",
+        "os": "linux",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/linux/x86/1.11/julia-1.11.0-rc3-linux-i686.tar.gz",
+        "triplet": "i686-linux-gnu",
+        "kind": "archive",
+        "arch": "i686",
+        "asc": "-----BEGIN PGP SIGNATURE-----\n\niQIzBAABCgAdFiEENnPfUp2QSUd/drN1ZuPH3APW5JUFAmbM2wAACgkQZuPH3APW\n5JXzVhAAtLTE4Az0x7/3OKsCEutszYpxKchun7QQpgA8ISZ57bDjKTkEoY5OSdhq\nrjuOSl0L/iDvqARYBXrlfuScH3mf2hOlqLTzEpm139JfFbXIKFAj8dUWc1DNClgT\nr8QwurwLXIO2zz9cF92Qtk8jFKl81IoR6XU6G1aMOpMJ7h4GVF9npjqS2IwEsdAh\nKFbi2eTFsQPAdI0/KRZqpuEh7Tb4fxNZtG+heRXnDmmAgmYqeJnUdfYhZ7N7gtSS\n12grV+YuTSbtQNWfI56h4NZdIZL9Wqt6e6+4ca7jl3jKuvzm5mEOO+VWuNUtdGfp\n+veGS7vSNcXOI+Efrsk15UbaXPEVDn17h1GN1vGoCxpTbviZBLzJ9qrkoO0lIaAo\n+xkegU4ohvpi+wjC81z9UQi8PIDjlMrXwALjhS1/TkOStbPkO6FKMrIBpk65Njq3\n2R2awI6/MYzftHYwHLvIjbWT+50lvvtjX3rIo5N9hQthLfEUsM4JsiYz0NhhSCjZ\nYTSDswdw1kWGKt+NghAXQqCn+iRCftDtQQiwusEWsi7t1AT/2hqK7LQQ0y0IUXWC\nUJQTCY6g+YCxIPt2y7uEoiInzzj4gRBWJTShQJHQjJr9Pfxp4bV9WBgg3BRhS991\nVj4OZeTRCs8wgbdc0mBTRIWI+/11Xxvu2ai4pkQqXKBTFMKi+es=\n=o8vT\n-----END PGP SIGNATURE-----\n",
+        "sha256": "4ca88a186b4b920c5693af8a5f36c2600c50e8442e84187bc6a3070eca785c28",
+        "size": 228947132,
+        "version": "1.11.0-rc3",
+        "os": "linux",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/linux/aarch64/1.11/julia-1.11.0-rc3-linux-aarch64.tar.gz",
+        "triplet": "aarch64-linux-gnu",
+        "kind": "archive",
+        "arch": "aarch64",
+        "asc": "-----BEGIN PGP SIGNATURE-----\n\niQIzBAABCgAdFiEENnPfUp2QSUd/drN1ZuPH3APW5JUFAmbM2FUACgkQZuPH3APW\n5JXp0BAAhg2b3hd9mbTPaWpzwlJqfP3Xsi4IQwlpDh2imVGhUydRh8so80YuPU16\naMNpuPf8TOEgFxf5S1juTBrw/AvGEuAvQiQEWhswXegmWPOJ7ftjL8Nmw5q4aiPa\np4JVDqnhthHmctqPgJgNGyjrSUtwOyUaqADkEUtcIZJOh/x7XGpIk7GaYB+GpOJV\n2pSw30BaoARrK2+yT/5yMcyiXZz5LWqLgG/J/H3NNeYPy0j6o+ZUAY3hRcOo8JNw\n6c+m0rxthED7aZFT36sbePJibfngSv9+qaW11nOvQJWSXfHDofp6Z8FGKFE9JsYA\n8O/HjxsrP4PGFPAA6dVLpyYFuy2B4UY4oTo6pUGIZnwJxhrE4giSaXsymkRC+mSC\nUJnZU/DLaTYynuuHj+ch0NnssdUYK+FDW3fYFmmovYVliVFlBHZ0Mzu2bOkfFApV\nPn7thwNKJw0oWfX5Lhi58NZx8ohkNxJ0iipXAVu2BbgXk7Iuw0tEX8WezLoo79XI\n9DyPRmVJngVFkcgGMwDm/FoKwzQDMMHY7IOOhNSZIgooq5NdWhN2Hk8w+JTj/gud\nHGuVhKFR8UgyRmSU2HmF4HlqiLJHIo38292WyL/8rZqTxwthZ+ELu8OrAT9mgizc\nLe3mYWVY2Rng7oy6Ld3SgEsV/eHa8QSf6V/y7NmKEgVEQz5D0LM=\n=taav\n-----END PGP SIGNATURE-----\n",
+        "sha256": "5aff7e677a45dc7cf65c9ac7f2e6182083304e883a4ce33ab2d701915730c21d",
+        "size": 249340262,
+        "version": "1.11.0-rc3",
+        "os": "linux",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/linux/ppc64le/1.11/julia-1.11.0-rc3-linux-ppc64le.tar.gz",
+        "triplet": "powerpc64le-linux-gnu",
+        "kind": "archive",
+        "arch": "powerpc64le",
+        "asc": "-----BEGIN PGP SIGNATURE-----\n\niQIzBAABCgAdFiEENnPfUp2QSUd/drN1ZuPH3APW5JUFAmbM+mUACgkQZuPH3APW\n5JVp2g/+JL3n0A/2jXkFkPsZcZHKnwS661ogdpr7AzwJECElXai3x8fn9/IN+UO9\n317f06ONNKk6NhRGlpWL8J4b/UsA/d/kwlOOeIFUmhOh7yNleFvirSKa7RsWRTJh\n9pgzkaztsLq4FSFl/3e0b7aThS23n7CdmKTywNEN+d1bYESM5DxLEG79nhpm1e9m\nFKPsxmK8cUXtSuqQAXZc6IkdQ3yEuggKFS2EBq61pXRP0X5oiJ2kScP/vx5t9pc+\nOghInHomrrLZkFZ7f+Fx1NMzcMVAzzDLVn8YhMaqVm2fd79ZicuFRogiWkjiQlz2\nJYsJfSh19fNaNajx3xOTIonIeqK/zygDWg2uL+p6XIf4MqnUiM7CO1eroVIysQRN\naqAIPuwO+885SoLPnwnE7/Lp+GsRekq8qLa2LaGNS+1RiHfozaffVIKgcU1WR+3E\nCX5bZ4xJ6K6GrS9yI7rdXcY2bx1vxHNkktomZHBHX/v8s0pGXa6MiOfbyJhoB5ur\n955ZJ9CNCnRnFy1wTFLtBUbfaG+x+/h3wCldBBaXGQlTTC+0WtJfzgEAdLdCCYBj\nwjRq3fiiJNsrumV8TVQ3tgqeWdJUEa0ySXVyJqa/tD9Kf8UEWZhi30X6qzMzI7SM\nrFgNB6gk2/K7gG4BLT/fWea0a+Rq2KvT+Rjx1Npn9nu3woYzVUc=\n=xiN4\n-----END PGP SIGNATURE-----\n",
+        "sha256": "f9a47e6bdfeff25b4df8b9e1b702e9a54da4248de13e927566505ee7dd5d4f05",
+        "size": 240921614,
+        "version": "1.11.0-rc3",
+        "os": "linux",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/mac/x64/1.11/julia-1.11.0-rc3-mac64.dmg",
+        "triplet": "x86_64-apple-darwin14",
+        "kind": "archive",
+        "arch": "x86_64",
+        "sha256": "d0b8793a9f645125e0555804d1fd0799bddb4e9d8325939d005fe9b9a99c3f3e",
+        "size": 226276048,
+        "version": "1.11.0-rc3",
+        "os": "mac",
+        "extension": "dmg"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/mac/aarch64/1.11/julia-1.11.0-rc3-macaarch64.dmg",
+        "triplet": "aarch64-apple-darwin14",
+        "kind": "archive",
+        "arch": "aarch64",
+        "sha256": "ad1acc47bac53fab9b80f0cd19514b41202dfcdfea3dbe880b736429ebd89449",
+        "size": 214850052,
+        "version": "1.11.0-rc3",
+        "os": "mac",
+        "extension": "dmg"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/mac/x64/1.11/julia-1.11.0-rc3-mac64.tar.gz",
+        "triplet": "x86_64-apple-darwin14",
+        "kind": "archive",
+        "arch": "x86_64",
+        "asc": "-----BEGIN PGP SIGNATURE-----\n\niQIzBAABCAAdFiEENnPfUp2QSUd/drN1ZuPH3APW5JUFAmbM5fgACgkQZuPH3APW\n5JU8XQ/+N3DDlWvZsuWUu3/Xxf15dG6FJtUQD1pvHAGUWEjmsfeoLAQiN8lFrDIf\nisiEFbWtRTh5CWiPxkd+eZVTqNaSmHtA62s9KiBP8b1seInOo/IGglcKZnuR6hgs\nCr/4z29If9/2IF+03xpsj5+Jkg8JyAcRzFK+KW+enNfxhJVyn5vIEr8V7cGjZPq9\n8x2gcoiFpzsqE7LjfyWMny7MmkCmEPOqOjhP5HDsymWVrSOl4E5Rf6iI9HWsrYBX\nWbVVVUHVfoIwHnqA1bbyXg5NBmZqs4YQDrl/oyCbgeVjyG2m9saY8SxXJOwtXPOG\n41Kes+74YDWxjqFyFv1e/NVzBfBaVsqvd4vmSA/q8txjv3dIRp46Hdiwmy7MrJK6\nkRHL896ld+/N8ytLTBVTwTs6RGzJ/d1ROzG0FVpjT76WcLNPnuSA2A9EA/yUnW5t\nGA3stm0/nmcCdSM3gEWULCBls8gXiMLkWXkdus5HBz5k5ZCWi1CpMC8E+N9j7rFC\n4NftAIUjEwTOtv5RVEjdmxme/udQ9lH/ujtZAttFEjVp3I4XNSeJ2feNUGC2UwE1\nUY6BYWATq2CYu5oXe+AegUsE2jG1/L/2bDQBF8MW8zKn5RcOwQo9DRm1MpCrFatU\naPD+zjs4E4Wj343yZXB7qTk775JVMdRi3oOXdaFym2LBRQp1Do4=\n=d/3L\n-----END PGP SIGNATURE-----\n",
+        "sha256": "9460927a89cd9020368c7d9d6f695da4adb32b49216344c8048a0b57d758e6ec",
+        "size": 224764477,
+        "version": "1.11.0-rc3",
+        "os": "mac",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/mac/aarch64/1.11/julia-1.11.0-rc3-macaarch64.tar.gz",
+        "triplet": "aarch64-apple-darwin14",
+        "kind": "archive",
+        "arch": "aarch64",
+        "asc": "-----BEGIN PGP SIGNATURE-----\n\niQIzBAABCAAdFiEENnPfUp2QSUd/drN1ZuPH3APW5JUFAmbM0t0ACgkQZuPH3APW\n5JWgaw/9HWMllP72IuBWi8AvdXSbv29JPVsZagTASBL036XzP8J51/OqwWCLSvmY\noHG8TEPaF9JNHR+u13p2lpbJ4ixxDIb23z1UiIgrU6vQ3pU2c8xanSzeot/7IUra\nR+mWqRKt8wst/nlbwdXPrBF4BMPlzPA9PYDPmbCD/+ppAzQ08/OOwv7z50ixmPfQ\nL4vs3yjoqeKBom3NJ9hXdTcsSFGNXkRU874lfNdhStUnGwig8MFWQmhCOU0TxYee\n94fE+7b5ydD86w59YK5Q5i08JmGaQld8izUX52ppHbbxbZ/V0buVUVpA+/KdjlcJ\ndh/+T+Pxx//kcW9JuAzEuaPE1DYCU3KZPKQfJ8QGu9pfdtKKTBPildfuJeSfZ4oO\nXXYgFZSTxWxFTgIRTySlrY5RhmD1x5fLLVDDf927Ix7raVxVw4TG5msZQcsUGECC\n/xUX+eRUKmVLD/UILxRCjFvNr8vMusCuAgNhmbN43HTg+Pyl7vvtBrexcTZXfo2G\nYKlW3MPy9NMbiSL2NGqP5PGtLpkNOJxIGmaYE0DMll996behULurGdcepvrtZb0F\nAI5YlJ2XSqv+xsvhQTit3aI9H9xz9D9k4e7ZmaEoM6GOtEJW5ORLapY+gkwD3okJ\nRv76UWj3ojkxTa80X8RAoPZMQujavN6usftiNMbC8eqDt2rmqIU=\n=qnR7\n-----END PGP SIGNATURE-----\n",
+        "sha256": "2cda2172a13cbcae4487a2789518984fc08b7edf09043afc14b5e5d7408462a9",
+        "size": 213210754,
+        "version": "1.11.0-rc3",
+        "os": "mac",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/winnt/x64/1.11/julia-1.11.0-rc3-win64.exe",
+        "triplet": "x86_64-w64-mingw32",
+        "kind": "installer",
+        "arch": "x86_64",
+        "sha256": "c8cf68a67216205306760cf5c0adbbaa281a859a61483409e9320b0e8c8ce605",
+        "size": 145116648,
+        "version": "1.11.0-rc3",
+        "os": "winnt",
+        "extension": "exe"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/winnt/x86/1.11/julia-1.11.0-rc3-win32.exe",
+        "triplet": "i686-w64-mingw32",
+        "kind": "installer",
+        "arch": "i686",
+        "sha256": "8438ad0337b03083c67278cd0285b66611553dd072c10e939a8ace51abacc2df",
+        "size": 122615232,
+        "version": "1.11.0-rc3",
+        "os": "winnt",
+        "extension": "exe"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/winnt/x64/1.11/julia-1.11.0-rc3-win64.zip",
+        "triplet": "x86_64-w64-mingw32",
+        "kind": "archive",
+        "arch": "x86_64",
+        "sha256": "fbf77336f51a33313894faeb0e7e6e7fc366ee6b9820672c63c2673a36eb845c",
+        "size": 242340641,
+        "version": "1.11.0-rc3",
+        "os": "winnt",
+        "extension": "zip"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/winnt/x86/1.11/julia-1.11.0-rc3-win32.zip",
+        "triplet": "i686-w64-mingw32",
+        "kind": "archive",
+        "arch": "i686",
+        "sha256": "64b49f081ae5d729ea1d50e030af8f457edbda4a1fafeb2049fa3cb1efca012a",
+        "size": 211819279,
+        "version": "1.11.0-rc3",
+        "os": "winnt",
+        "extension": "zip"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/winnt/x64/1.11/julia-1.11.0-rc3-win64.tar.gz",
+        "triplet": "x86_64-w64-mingw32",
+        "kind": "archive",
+        "arch": "x86_64",
+        "sha256": "eaf3b190c266b08db29efbbb8d97e9390f8f089d9faad0f56cf9cd8238273f59",
+        "size": 248491795,
+        "version": "1.11.0-rc3",
+        "os": "winnt",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/winnt/x86/1.11/julia-1.11.0-rc3-win32.tar.gz",
+        "triplet": "i686-w64-mingw32",
+        "kind": "archive",
+        "arch": "i686",
+        "sha256": "8b033a7165aa80c05cee206e79d6abf24d37eadff13a162c68d66af15b17ca3f",
+        "size": 216855447,
+        "version": "1.11.0-rc3",
+        "os": "winnt",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/freebsd/x64/1.11/julia-1.11.0-rc3-freebsd-x86_64.tar.gz",
+        "triplet": "x86_64-unknown-freebsd11.1",
+        "kind": "archive",
+        "arch": "x86_64",
+        "asc": "-----BEGIN PGP SIGNATURE-----\n\niQIzBAABCAAdFiEENnPfUp2QSUd/drN1ZuPH3APW5JUFAmbM1UoACgkQZuPH3APW\n5JVaEw//Qf3roFcxE5zcjpZjeb4qdG00U10lI1DVS/OJAVnBWifTel1Q50ZtrN0d\n2xxJ5/6XevGcPMd8Pnt9hCHsQ8l1oPAihmus6Zs/zWFcR0yOHmslAcHM9tj+n+S5\nUvTDsqP9WEYYE8WJzmWwiPFMTAtyQX2HBg2OwMezPMRcZms2YR5kYDzcnLTFHuPh\nwuO8+6HVgY0bj31Ty4Hpe2BtGnWe0pM4lgpATg9JsfZPH0zrmvqNCk3jWRCHv7Mo\nxAa707Jd4H7GOw5E0s6bjbLQ3nIDDi3fjP9yoiNKI+pTE956oZQrYN5tZe385n3R\nX5xp/ZgNeQAxurGYWobtBr53pFGSBBN9D08PrOYeWv2foGZjEqqzmZVl1QxcKh2e\nN9Oe8YJX71SdbMMUM2TaO+iHQwX9zCwJ/U019n8Pzn5VSPPWNsShNW4vP7oza+lr\nsUhA774a4dlHkuM5qUrRy47IFMPVD+rbW9l+47Fj5EsJWzQsDuMsFJ4ebSLzsRX7\ng+6711P7a1rQlJ7P5rtcaxDykbPnWNwMKQ+HoNetsBIzqFBhtEsXXikjD1OomASx\nuiauqkbJ6h3zJJpv2XcfvuxaKyHb+IRhhGc8Sr8Q9QiUScQGtQZrARuOkKYRfzth\no3lyGtbQ3/H5NbD2ub9HOs6zmoEWZyOcyvmHlTPZtVeks7puhG8=\n=EffR\n-----END PGP SIGNATURE-----\n",
+        "sha256": "e730d7aa9ead17253870b460ff5883127ae0c32ca31652ed0b4c6efc979f3e9e",
+        "size": 228711543,
+        "version": "1.11.0-rc3",
+        "os": "freebsd",
+        "extension": "tar.gz"
+      }
+    ],
+    "stable": false
+  },
   "0.6.3": {
     "files": [
       {
@@ -6752,6 +7118,195 @@
     ],
     "stable": true
   },
+  "1.10.3": {
+    "files": [
+      {
+        "url": "https://julialang-s3.julialang.org/bin/linux/x64/1.10/julia-1.10.3-linux-x86_64.tar.gz",
+        "triplet": "x86_64-linux-gnu",
+        "kind": "archive",
+        "arch": "x86_64",
+        "asc": "-----BEGIN PGP SIGNATURE-----\n\niQIzBAABCgAdFiEENnPfUp2QSUd/drN1ZuPH3APW5JUFAmYw3Q0ACgkQZuPH3APW\n5JUE2A//VIJqWrP0rVftNcB8m4lYK/mdS74o4+g3/bdB37AaPwwsmHdRj3J6tKQH\n8mbtHPsgVoUWsuJLaRcCPDs1lfJbrfADTnOK5Rd+DsVXx01aNfow58ssWbic43sZ\njAePDIM50zHelEVdlYa3eDtrx/PS6qbbSE9YkIm23Ub1pPnUXLatrpuq5RNFWRKI\nFGZSfmIEWg+EI/B87QAV9b+6Qo/9sGC4Niq+TV9NVpjG7su5RtXHqvBdoXuKq/nW\nTJiecnAZeyZACgtuHtLXWBOY8zQ0Ei4wmrIHwfuKZmqq6y5OokRmr3JOvSIwd9LA\ntJ6Lig/Y8qynT4nDaBr2d0FvO2f8365rCmzPulF7fkaXm9z1ZNpZVWgIi+VHqKUh\n5S0D8qFvthnjpwbww1B5Ir1XyfZoTz4A7VThSE1SV5ym50dkgJj7OyZ4cS34gw0D\nrZHnXzHE7cZtWPMuCWXQ1Mu2zWStDqm1bpIUOVV5gQNtLCkHO91Ne3KVFAGOnFVK\nZo2x+kpGM0TvcOEWFvYCUUpbclyK+kDW4NV5kC+ICIup9E4f2RinW4lznjyTC29J\n6/5qB188v07TLEvHgC0wp//3Zei+FkX3zFTzhUYt2+9KhUELjj4DhSOOy0l4zBuS\nBNSKxwbxbqHP31bq3Y50wcxSysr9fRp8ADeIK9W1GULFxkGAfdA=\n=ls/+\n-----END PGP SIGNATURE-----\n",
+        "sha256": "81b910c922fff0e27ae1f256f2cc803db81f3960215281eddd2d484721928c70",
+        "size": 173495204,
+        "version": "1.10.3",
+        "os": "linux",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/linux/x86/1.10/julia-1.10.3-linux-i686.tar.gz",
+        "triplet": "i686-linux-gnu",
+        "kind": "archive",
+        "arch": "i686",
+        "asc": "-----BEGIN PGP SIGNATURE-----\n\niQIzBAABCgAdFiEENnPfUp2QSUd/drN1ZuPH3APW5JUFAmYw6o4ACgkQZuPH3APW\n5JVAmhAAgnOUdKuv4W4OVZ1BoDwyeRKJmpvtdKec3eMQ2Rrm+NPRyIvoH181Gnc3\n9Jc4W8FCnO41hdg1TPA385VPCZAfnjpLFLI5opMXVigYVwDobTmgi1KZ1j+hm+fh\ng2t5GooWdoIHV3CyaN4TnEX0jPiDhCEMYyn6vfJrxpu7NXkUEZJxMNnRFk7NO5QO\nMuvmo0uJqS1+EsFIBm6eq2uR6Elslhib3aygDhM2Tn54uY8rHV8wyVD9SXKINqT+\nhltEow9IZoo++1Wdg+O0t+44eLKbiLqaKWrt1EoMcCrZHgPIKPCw+qG35smYINDR\nK8n2RJ3BpqahFQOr9xuyqTwO1sAMBXqTWVaJzQHvsGk9lwRwXolZQf98xg+qCBTj\nBgbqxnB+OOcT2bGrAxDID5aczbunBN0HNVcYApU6kxXd9B7aXpPLI++UmzZAswB7\nMYAaUnlw2QfiaeDe/6GSNHEI5B8f1zqCQLjlF6jCCWpdrkwr9lYtlXiMLKFVb+9r\n6uRf/10DZMmFSrV/wRUT/z2F9jJZC7KFrD9NhxA3CuIZ47HdFEgxlGVvlbt2nYQC\n5Q4AQBnPcpogCBVtK3KR7rybykdAj7bfC59PCzPSg1SCTdx+NDZXmsbGRb9nixmi\nv0Np3sc1043TW5JQtGQqhBLfEuD2ICxDjITder5/Iit/MaGkzp8=\n=vD95\n-----END PGP SIGNATURE-----\n",
+        "sha256": "f13be078c5ee7c98fd6a39a537199c253543acbd49bedc243f397cd51c7aeb58",
+        "size": 153918819,
+        "version": "1.10.3",
+        "os": "linux",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/linux/aarch64/1.10/julia-1.10.3-linux-aarch64.tar.gz",
+        "triplet": "aarch64-linux-gnu",
+        "kind": "archive",
+        "arch": "aarch64",
+        "asc": "-----BEGIN PGP SIGNATURE-----\n\niQIzBAABCgAdFiEENnPfUp2QSUd/drN1ZuPH3APW5JUFAmYw4hkACgkQZuPH3APW\n5JWnmg//c+Mp57EBb8fOvSIC5X93JSgR+eg+QM5lo0ICvbED5wAxgLriaKRAfkoq\nz8PMBPa+2LKXzcbrItGTRckbM4ssJsTVIA3O44QJ8kxvuM/h6jONKQFp/+ry6TE5\n8fwsgHrRfiy+wc+a4lpuiaqxrBGq+FLuqo6pixhY+XURfAqyJo/TG+Vg7AcBf2fg\nQ4afpB0pVosk8uDHi1SamQik8Wnyd5kuHQEpH+cIlc7bUjsyzzsL9PQHp8Q9FXo1\nYJD7TTy4OyjIzOvM8F9waIeG0/oKOUKntffSJ7hYHjiY8RCNqUdPN7w7stTqEa1i\ngVfvYjm5c3CnnhUKRttsg7+FbWu4iZ5oaviPInj9ThARCD3JBhgaEci1gbO4gUdb\nuQ2fRja/1MhpE04ia68+ZzWBk+YrX7oCqRlPTWSYd0cIyvJfNmF2e9EsB+3NIS9O\no3Q6oZBE0cNcuSd3krxcZFJh5ORYIjjpyrsnPKW8g/hs/PRjhUWjXRwZJsp8AVKD\nxrL6vPcX0rO7xeXpJ4SMIrd3KWocYkt4MOKd0W2MgLQEMicNb1S91cXFq6vF7loW\nZBTcASwymbJejjnN2e9MumnETI1SXZHAITb0cHoge7foX9DzsIEQ5Nbec/932kgE\n/jWVoTKfIfS61znPVmL1bKxj8EWK/bsso09incUPm8lmG5QJfkI=\n=BXqs\n-----END PGP SIGNATURE-----\n",
+        "sha256": "2d52a61826872b3170c65f99a954bd9d21a31211cb50948056d924f811a0024f",
+        "size": 174324620,
+        "version": "1.10.3",
+        "os": "linux",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/linux/ppc64le/1.10/julia-1.10.3-linux-ppc64le.tar.gz",
+        "triplet": "powerpc64le-linux-gnu",
+        "kind": "archive",
+        "arch": "powerpc64le",
+        "asc": "-----BEGIN PGP SIGNATURE-----\n\niQIzBAABCgAdFiEENnPfUp2QSUd/drN1ZuPH3APW5JUFAmYw8EcACgkQZuPH3APW\n5JX0UA//Qi08iNGgLxwdQLo0l5oTsOpvJLkeF78mk3nSbnQqHokJTLoSipPnXT9n\n/HnQ0SBZyJWExGuHoUq/L9qYqUpm8RuWHwvAOLP+3ksqKkjGUtuHkcmkJ5xsCIKK\nWoCgIElRdhB+GmSKHlOM5J41HIqU8DwSPfzZIECHuPFbHO7wFtumavlDqQGb2lsn\ngrNuNNNxmMgqjcePOjpIb0qgC/EqFUqyIBv3ydZwHauQR/b32X/nhPJwDlcM6i7a\n4w3nRkKCdt0vC0I7OxlnoNBwKqB+XQkbSRB4NAgNnUyYT2Go/DIt/DT2v1Gx0hAI\nvnCvF05WXUWM1o8w/fsEaWCBuK92mU0LcbL80Bb15dAvtBO+221KXDJ0ih+Ahs+n\njueVpe/+BYEBLmct84THSCbF5QQr3sgN0yKFer+EQ4BFwFWZA9/sGaNJDioRxBKv\nDF0Z+yQQIyuxWensjpKz8kfs/4Hus4QVB1/3bdc34YmvIa6SpIRGMWhKvpLVzRZA\nFE1tum74O2Y+ihts+CG2z4yPgImFjQSVSVkvDrPAsxp+FxGirPi2DcYRGk1W0oY8\nAvPl9AX26maSgtXsxqn6CFcDjs/gVr/AahJ00VED1+I1CC+GdW6KNfHPGoPxeSL+\nXiNqhvmaYTZvbhs299VnzaCPjquhQGnCIVGqvBbeWGG8J2FaRtQ=\n=h+FC\n-----END PGP SIGNATURE-----\n",
+        "sha256": "61e4398df70129ce8184a2b84a12e9d862e92f35b526cd0297b5f2791ca628ba",
+        "size": 152050767,
+        "version": "1.10.3",
+        "os": "linux",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/musl/x64/1.10/julia-1.10.3-musl-x86_64.tar.gz",
+        "triplet": "x86_64-linux-musl",
+        "kind": "archive",
+        "arch": "x86_64",
+        "asc": "-----BEGIN PGP SIGNATURE-----\n\niQIzBAABCgAdFiEENnPfUp2QSUd/drN1ZuPH3APW5JUFAmYw62cACgkQZuPH3APW\n5JVpDg/8Drmx1ogD87PaUB3S5c9ZmKsmHVOFbchewJP9oTGnbBT2H7T3/XfyyfF3\n350JR0NpThIFivurpmuRM4DbDGoP2jq6vwpuRBsyAnoS7FeLDmuepvFvquCO9GHU\nlCG8hhYuMugrBxDNaOFSx6vR/SX4nZYOIoy4JYD9HqLu1GCRkLSGdWoHA8F/ChP6\nUjEXFez4GYv7fkC4HbOeT9En7oVSh6uJiE7NgVrNSH6b7qcwg/9VLvcVDWQVLiIB\nY3WggZL2MfOgOLKfS0R2NdnxEZiAEKAS0/UBgbnYucmY7QoMu/co+eWXUqD5tczR\n34vPz15shScJ2gf0RxUn69IGtHwtyOPtdNy9KOz4bxUly3GMZI5FElZ9nwb5ZLkg\nU9NLvWi1PNmp3JsrfaxdwC+4Ffl31Xd4X1ywkyN3hgg+KuPZht9EZ66YpirRgPV7\neNY3Gm4GmIgbbxpxhJ3zqUIFFnRoGdO77trEPsyrhIFc2asiMxJsmuMGSBMv7eEA\nKAyPCkGlFWcCLFkeZ0SHbe2vn6DaKmHbnytsnTtlGJLd9ILp0uTprI1+l1VLrSpj\nRWbRYKDDkxQazuEcdnucD8WXMs7HK9/1hup9akYjBn1qXTGrEs6cytuG+0e33GPO\nFe/VpqAU+5ImCj65d5J2tPY5t6+ygaJ92iWeJMpAkVAC1UtlS/o=\n=jRcZ\n-----END PGP SIGNATURE-----\n",
+        "sha256": "2bb735b3fdef62a4370a79b91239c47d8e8b923d5263466e63a2abc80faee9e5",
+        "size": 175360825,
+        "version": "1.10.3",
+        "os": "linux",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/mac/x64/1.10/julia-1.10.3-mac64.dmg",
+        "triplet": "x86_64-apple-darwin14",
+        "kind": "archive",
+        "arch": "x86_64",
+        "sha256": "c4d3076bc918b1300edc236f827bc49349a73f4ed577ec5a5e613410363af213",
+        "size": 150314218,
+        "version": "1.10.3",
+        "os": "mac",
+        "extension": "dmg"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/mac/aarch64/1.10/julia-1.10.3-macaarch64.dmg",
+        "triplet": "aarch64-apple-darwin14",
+        "kind": "archive",
+        "arch": "aarch64",
+        "sha256": "db2a42130135f2673f1c47a1add229ced85318a7d66cd844948839ae4c62f534",
+        "size": 163625382,
+        "version": "1.10.3",
+        "os": "mac",
+        "extension": "dmg"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/mac/x64/1.10/julia-1.10.3-mac64.tar.gz",
+        "triplet": "x86_64-apple-darwin14",
+        "kind": "archive",
+        "arch": "x86_64",
+        "asc": "-----BEGIN PGP SIGNATURE-----\n\niQIzBAABCAAdFiEENnPfUp2QSUd/drN1ZuPH3APW5JUFAmYw6rAACgkQZuPH3APW\n5JV60Q//WuaaUr4297c8wLw82sCC4xMqOl4GX3fuRjt9GUyBlsrwI6gKRc7pxVgt\nku+rk+LiNBTr+8RLAoNsw46b76KYabPz12+ALCTq79qMdEeF9mJfu9ygmBJqRiWo\nRHstirK/X6gevlz4CFfyiF2GyVINlB1e2o2j8xferjOJl/dzYV/JQ9N7+fQDw5xr\nCsY/BMU4XuvVpBE+ozf1IZuSGe+0cbmDuzbjFQuOLslaLb4uJeZsfgdbBhulT4PU\nMboBaP9UQW0dPYT9mMgMEWUalfKO1jfTHgd1F4luqdRgm4qGP0ksX5F44h6N551m\nI3VhAx7EyhjTzHiVmVJfxMuhdcUtl7W/fr6FFPIs8Yrn2tT89VmBmReK/LiF11wg\nlb3acNECLPdkjdVcMdurRfvNvk16QDl8OLTyjVPA0vXBwtaz9Mc1Zkq3aSSZff3O\nPm9d1w0G3Mj43ZEtBfJe1iAXcIHOXdbqyVkCe+tiKGmzl2t8Y2Q5q90o+tOM3T6Q\n8KgfAQPTTr89M9zfA+2wQ3SbHUvbLYUMjNiGe+NcA+4fJGMoWG2/gs1BtaH0ws7X\npy7HmSln8jGPN4en7oD1ZVAE4QVRngam+m6cidQB668T4AJePm+EVcnTKhIxnQGQ\nYKK9UPSbxnJUJmE46WKyEz6jXiJNPU4QbSBYbERH6WUCwn8V2KE=\n=eDct\n-----END PGP SIGNATURE-----\n",
+        "sha256": "af61600db0abdc56fffb1b47cd18c30213b8925796546b53b657e164126082b4",
+        "size": 149887619,
+        "version": "1.10.3",
+        "os": "mac",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/mac/aarch64/1.10/julia-1.10.3-macaarch64.tar.gz",
+        "triplet": "aarch64-apple-darwin14",
+        "kind": "archive",
+        "arch": "aarch64",
+        "asc": "-----BEGIN PGP SIGNATURE-----\n\niQIzBAABCAAdFiEENnPfUp2QSUd/drN1ZuPH3APW5JUFAmYw4BQACgkQZuPH3APW\n5JUebw/9EDLCyFL0JZzjpp5jEWWFtPG0011vkqySrRkAbzZHT2CVwGm3rhppWP6S\nW77nqFip4jtcYNLAPmWBWz4hQ1Xa6tee1xZWaDGP32HXYtZcPEumf/2HsplI60UQ\nHvyuOwW7P0QVD2ituCyE6INm433EgeyJImfeoaI4/lDp84gdVHHUM5UezqkQdjQO\nd6go89qsP6z0Sioq+SCPBu3F9ajUMybtqpdWiNf+2Cg4j7wzpGrmfxC02Arc6bnr\ntpvuMyvZqv0RXBYPuSfNAkoQoFAxT/TyUXPen3BQEsikU9KGDnq2V9LytVy/jxDp\nxoaLMeaqWZxt5fGwB42EpwbKtQxMEEHdyt5I10MgNX270w3070vHCDrCXl6X8kk4\nh2PAdzWAJZg7OLNhg6ZP79MZVnwKfhZfgTg7mAAJnzrZnKYOObz0DmSqkXV3O3kw\nxhsD+DksYwRlY7gCzs1OV4qq4ZH5F7y6KQnGocjpJ3Ai69IGyHqRn2w3smePCKRh\nON3OK6B2j537XiqWzcwbkCZEqTkOkUqZUN5ceF53lz+8AVWzTqKhhKV1ID/Pfcfk\nlShUsnTjekfTYH1UaYcfBgv0aM6d0dMZ3zTNmTzXx0aqTTLwpnVDZgKKecsWzWWl\n9GdvUHSkeNSSXiji/MU60+YOMHPc1jYa5GOcjKTfYJdJsWLXjJc=\n=nvzy\n-----END PGP SIGNATURE-----\n",
+        "sha256": "9ea32daa1bef34c8e48d6c76187f48fd2bf1054cc921fb8c374b737b51c9ffdd",
+        "size": 163071186,
+        "version": "1.10.3",
+        "os": "mac",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/winnt/x64/1.10/julia-1.10.3-win64.exe",
+        "triplet": "x86_64-w64-mingw32",
+        "kind": "installer",
+        "arch": "x86_64",
+        "sha256": "688e746f3d8700ba44a6cbc9ce04ccead4cd921f093af80259e10d0b0c5448c8",
+        "size": 109186056,
+        "version": "1.10.3",
+        "os": "winnt",
+        "extension": "exe"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/winnt/x86/1.10/julia-1.10.3-win32.exe",
+        "triplet": "i686-w64-mingw32",
+        "kind": "installer",
+        "arch": "i686",
+        "sha256": "dd1335e3ca82295531fb09662fb0e11d25b121eac3ce7ef8b65eb6d46846ce4b",
+        "size": 92676056,
+        "version": "1.10.3",
+        "os": "winnt",
+        "extension": "exe"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/winnt/x64/1.10/julia-1.10.3-win64.zip",
+        "triplet": "x86_64-w64-mingw32",
+        "kind": "archive",
+        "arch": "x86_64",
+        "sha256": "0d4e17b9816a35531242a0ecb1271cac25b88acec3b04f257816c752acdf38fd",
+        "size": 176572489,
+        "version": "1.10.3",
+        "os": "winnt",
+        "extension": "zip"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/winnt/x86/1.10/julia-1.10.3-win32.zip",
+        "triplet": "i686-w64-mingw32",
+        "kind": "archive",
+        "arch": "i686",
+        "sha256": "564bb4067eeb3a1aca706b9d2f771fd8748b8cb7cb7a7d312dd5a2a02313d31f",
+        "size": 147754449,
+        "version": "1.10.3",
+        "os": "winnt",
+        "extension": "zip"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/winnt/x64/1.10/julia-1.10.3-win64.tar.gz",
+        "triplet": "x86_64-w64-mingw32",
+        "kind": "archive",
+        "arch": "x86_64",
+        "sha256": "ada58504da198f82edf42fc671078ade86cbf1fe9f2db850668ad718653d3fb2",
+        "size": 182034957,
+        "version": "1.10.3",
+        "os": "winnt",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/winnt/x86/1.10/julia-1.10.3-win32.tar.gz",
+        "triplet": "i686-w64-mingw32",
+        "kind": "archive",
+        "arch": "i686",
+        "sha256": "7c76b31a2a5ccf41f9ad271b3e8c434f8fe533980f432e7b9257b913c66d1666",
+        "size": 151770511,
+        "version": "1.10.3",
+        "os": "winnt",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/freebsd/x64/1.10/julia-1.10.3-freebsd-x86_64.tar.gz",
+        "triplet": "x86_64-unknown-freebsd11.1",
+        "kind": "archive",
+        "arch": "x86_64",
+        "asc": "-----BEGIN PGP SIGNATURE-----\n\niQIzBAABCAAdFiEENnPfUp2QSUd/drN1ZuPH3APW5JUFAmYw46AACgkQZuPH3APW\n5JWO+w/+OndEoef2VdvjxH9JBNbiaIPLK5CPbyBG5S36Koh1SLEoZsUlLEOk70J+\nh32wRoRGWmMvLTRzky/fhjIB0Ghp/17LOr1KXSPcpdlwcLBLBTV5fdwC3OO6mikI\nMk8bJsxO0S8+B1qRzDfk5V/2lDEd823XJhp/S2vo3ajVEx9ojh1FolrA+CBrvHl/\nf/RTJhrbVmf0RsjsPHGm01Np8/8/Ievmu+MQ7oYmH0iLARXaakFeu78fklth9Dup\n5OKWLxZlosv4BlBU90/gw0CA5FBt4wWsvSFuDStoqEW7cbnkVWgeRhpnAEBd3Q76\nGepcruqweWY3+esRLtspA3BFgQwRMIwsRy27UMbk2hzJDyvpL2m4zjCC6oJGkMRs\nAz3RDQ4AhG4WTtIW/E1t3yEMvzNwP/X3whXBtaHJ4PYKVi+XSBu2EnWEtJjP3Uxq\npiL0bU0u61dur6+Sy3TwAOtPgLRuiMDpwCPDq6B79IpRERVkFe+AL8RmQCP+vQTm\n3OdfhyxuOV1uJ25KP93TZIPlxI4l+qH70YoWCyxB8OCfkCw0A1qVNipHHSR1LLeK\nchlMdCMxd61K71rkyVZx5VLu6Y5SaHg76qRr1Nt3fHuYbMzcYPoI1BZFnRdbhqX0\nhBIBMcvS69L8iCK3A+RGmUUs/Wv5Zxek1ryLLpN44j8fEx6fZgQ=\n=xFQY\n-----END PGP SIGNATURE-----\n",
+        "sha256": "0485b09bb107df62af6b25da4a00e9d87562abee16e6d71e5e74a7939ed226d4",
+        "size": 157377753,
+        "version": "1.10.3",
+        "os": "freebsd",
+        "extension": "tar.gz"
+      }
+    ],
+    "stable": true
+  },
   "1.9.0-rc2": {
     "files": [
       {
@@ -6935,6 +7490,183 @@
         "sha256": "907d0cb91cc54e4f5b290e85fb61cae3ec4c9a0e1e7e0fff13c20b42604d1a72",
         "size": 133644255,
         "version": "1.9.0-rc2",
+        "os": "freebsd",
+        "extension": "tar.gz"
+      }
+    ],
+    "stable": false
+  },
+  "1.11.0-beta2": {
+    "files": [
+      {
+        "url": "https://julialang-s3.julialang.org/bin/linux/x64/1.11/julia-1.11.0-beta2-linux-x86_64.tar.gz",
+        "triplet": "x86_64-linux-gnu",
+        "kind": "archive",
+        "arch": "x86_64",
+        "asc": "-----BEGIN PGP SIGNATURE-----\n\niQIzBAABCgAdFiEENnPfUp2QSUd/drN1ZuPH3APW5JUFAmZXDbgACgkQZuPH3APW\n5JVL/w/9G+Csr2BspHpnNayqvUYs94CjBuA29a8KaWk5abUkcoLGUho6a9SlSPDY\nesRRbNwexJsgSPXOASiXRB+4BCE3EgwvaRjJx8W4+HaN1v8Egz5VmEhACYNGYaQc\nL8ECaZ0gnM+b1G7ZYoie1Yfn2YJD4f0sc0vz2pllsE1mdypJvCrrAaaGxrKw89pi\nwuR+ZnnN1VLl5aP1M3G0iSJHIap0z9lpYUKMEdI6mp/fxVFGU+eWlwttrFZxrS5U\nCa3LN62aO9MmIzyeSPJUKCKh5s5k0WnZbP4pvue5z1H7dZA27wUfOonjylgixsgc\nRAvIq3Gj+4tVfsg8LDKgCv+tGOJIzmbv9JUws28k4L83noayLqbrqvbiT2sJ91bT\n6SpT+zQyNnc7aENTF0Hsuk2aHIBMNKdX8mg/SxgL9xqSwFNjkqfn685+cixr0ai9\n9v1o+MNJ/bHGKsr3+wARmTFYDkD/3dXgUF8JK2ugWuk63GBaR4fEWFner5ke2etG\nxO76lb14Ks1WLFCxkhxdrHc6SJOzehAFQR4VRbNVtdtqaLKUbFql4j+TARU6WKNc\nkHuxhe8WyWmTMcx+zYJnim8CHXLA3YUYc+HFbzgCuaPW7OdXp0V7BOr8kTG+mXQk\nZe24Mf3umTc8aBQzcc6krcUop+jtx/dPCeYoUHuslm62O6y/f8c=\n=nROw\n-----END PGP SIGNATURE-----\n",
+        "sha256": "e92ae1cebd519180881770cc9ab903d39c49c6bcb9c8251861e6eac9acd566a6",
+        "size": 251247020,
+        "version": "1.11.0-beta2",
+        "os": "linux",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/linux/x86/1.11/julia-1.11.0-beta2-linux-i686.tar.gz",
+        "triplet": "i686-linux-gnu",
+        "kind": "archive",
+        "arch": "i686",
+        "asc": "-----BEGIN PGP SIGNATURE-----\n\niQIzBAABCgAdFiEENnPfUp2QSUd/drN1ZuPH3APW5JUFAmZXERIACgkQZuPH3APW\n5JWFBg//Tx7l5fzKSKSDT2p56vSjf7cbQZpLJ044Jy5fArMh2IrtN/OTj9qiPau8\ntJvQun+un0SvBh2OA071r0Pk3ldMNtFHMubZuuKCTx98y6m9LCRsGd6pRWF/rakg\nPPIkWcehGoTwtLVmKfmsTp4yKtpe1xDvNrU/o2JBRGLavV8rO4RlCFbJQObQTetn\niDpRUMRlMwwUZGL4zUAmL9kKCYpq/iU5vV9ikrebQl3qzxdZ1ZbDv0zmsmiLuLlI\nJ4x3bnYYDpThllgtatvuHmU61rPPK88taYsNjc1KJb8NJl6S8OAjEyDnyAQ8JP24\nudEjabTF68BS/SwjgWTQDmo+9OXOA4ZpWCXg9tCM2UwVZ6Uc2yjW0W9dRATHyWfK\nREgS0hTJ1LZIv+3z+qFf6IYEKZE/08a+biY9WaWxMkD23/qtjwZuU4DqOsDPCodS\nNx+8/dOYf1TNcgznBQ5qK0fJ1zBbv+Kw5I0nuB1Q1WyH0ABBQFvmp/vzhQAejzwb\nGWjF/qFG0ABktqTOinuPFibKYfLowfWrFhOAg6uljh1Qq7qgHhBd9cRovTQtOTKW\nKX2zwu6wnRb5rPlJko23myEL5xfN0/Uu60l3ANwZfXV9lZnwrvf+NQ2tGi2RF/VE\nY8uuxRBgwLB6ut8CG5VK2fmPi/+bxfk4LMQfbEP7BGXJvxvH8Ds=\n=tvB4\n-----END PGP SIGNATURE-----\n",
+        "sha256": "9d1e9f8a03ab6396acfc3e4d4edcff68907b20c53f252da6ea4573a72c39e361",
+        "size": 226066520,
+        "version": "1.11.0-beta2",
+        "os": "linux",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/linux/aarch64/1.11/julia-1.11.0-beta2-linux-aarch64.tar.gz",
+        "triplet": "aarch64-linux-gnu",
+        "kind": "archive",
+        "arch": "aarch64",
+        "asc": "-----BEGIN PGP SIGNATURE-----\n\niQIzBAABCgAdFiEENnPfUp2QSUd/drN1ZuPH3APW5JUFAmZXCXQACgkQZuPH3APW\n5JWrYQ/9F1l8Qlgv1mSwWYsqfaLC9ITeIUEXnBX7gPub2bfO0Eu1WMUvuY7Sqzus\nk9jWI1hv76na+kRoZShrUvWgbP9jXAYHnNjw0lDEipgfGi0yoXFmMszImEYBVJcl\nTKJDOZDN2qSSE0Vsol19lRaRIulOLGWDDVA38Wm4LWrQlwyNux/e7Q0wsEFQcYMQ\nS+8kpPsaHVnWELv4YH7JaTsK8Lz5LSlKT9DSWHfOWMK+HGgREKxDED3KsE89VUy4\nb2EKqMKgxmuLj6btidrg81keMBJAMsMaQXqos87RCAPEG5kY+axP13TmXkYaCJ3z\nRQUMqCT48NN3eMaBBTOtTzubFdU3YTWeTViUAyBaz67ZQg5W7gkLRmeKKzF6ccvT\n6kjZDJqR1e782R6JpnMqZPA3E7u7vRpj5AWsE6eoMhKlmYK5e5NghoJefj+6HFj6\nXNlMBjk2/Br1/qf1t1PG6DGrYj9hZvbskwQ5Ypc12j6S9Vwc/DuJ2UxPd4bn/LlI\nZqKWyW/XahlfrF4gY9BoYnsaJ/9UUxT0DFlkBYKM6kZ+T0DzQrwbo+H+l3+SxCkD\n2Jnc7OC4wPc3E0wpFIJl2KWeqBuRKEIxW4r/911puED1af3aA/wmLzdU32QDtLAd\nNwK1nPmjYlx+FKLmhMGAx4o0XyawmNDzvMO5BGgUbZ2yWfqMmQk=\n=r9+U\n-----END PGP SIGNATURE-----\n",
+        "sha256": "71f7c0135c3dae94c069b6ab391f8a4a05f857acea3f8d6da0352d00cb86d49b",
+        "size": 246609409,
+        "version": "1.11.0-beta2",
+        "os": "linux",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/linux/ppc64le/1.11/julia-1.11.0-beta2-linux-ppc64le.tar.gz",
+        "triplet": "powerpc64le-linux-gnu",
+        "kind": "archive",
+        "arch": "powerpc64le",
+        "asc": "-----BEGIN PGP SIGNATURE-----\n\niQIzBAABCgAdFiEENnPfUp2QSUd/drN1ZuPH3APW5JUFAmZXFeMACgkQZuPH3APW\n5JWDwg/9EqSGmXwmXq23LqjEdXUZ9qdfqTMIo69xKPYUdnr5XdUs/lJgx1472h5s\n2J7onioAbSAbqB3eGhpxeDJZuYkPcCBab+8fZ8egG/LRp9jCTxPZEKoIAJEVxzOo\n5v4W8jK2XzOo6+gh4A4sc3lS9TD4QVnsM1xd9udN7VuHZG8phS4zyYly5YO+8Cki\nopOn35MEdlWzrSdky2D9qQT9OoVESn0CHcHf9F0C84XXogwmuLScPkTAJ+hZ67R5\nIIofMQnHWQ7IEmQr1MMuHpI02qQjy1BQEcMjS7DrMvE8qBSYO7LdTTfnaQyw2Z1j\nXqm5OeuQocrI4Jp758GTh3SQDoVnvaU9mbFTPV3uMxbirUCEQc3fnhd73L83/L1J\ng2Viku6M6qIRoKCENmxsEpEqkg5KKModLmwS+hPoa+0WmZJNNlM4W0c0pfrKyXzt\nXAPZ/r/S7kfuRAMDjitZECQNAhIVGAX9kZDZZKLTYOPeFX+VXLxEG2me9JeJTVwa\nFaA4mfnemDvEqijDRAsdGJbQxN6ae3BxTTEXz6VBVZmakx1OpO8SwmVf+2FbudwW\nJg9HvvbnW7vagh6P6IV5M/UV3rgfV5+o9bptBWzlDRb+zjx5bnwLn4ofVttpUvmB\neWCYfeAKORkSxIKTwJSi9F87JG4BA13dr/6E42SsQr+UFZoOUI0=\n=4YQ4\n-----END PGP SIGNATURE-----\n",
+        "sha256": "e7f9bbe1843760e52a57e0d502990af3abb189f5a20ed292ce5d00db1d003088",
+        "size": 238442242,
+        "version": "1.11.0-beta2",
+        "os": "linux",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/mac/x64/1.11/julia-1.11.0-beta2-mac64.dmg",
+        "triplet": "x86_64-apple-darwin14",
+        "kind": "archive",
+        "arch": "x86_64",
+        "sha256": "8d33fe3a6304223f604d5cb5cf2c564d64885a163eedecc71d644b124a66966d",
+        "size": 220938607,
+        "version": "1.11.0-beta2",
+        "os": "mac",
+        "extension": "dmg"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/mac/aarch64/1.11/julia-1.11.0-beta2-macaarch64.dmg",
+        "triplet": "aarch64-apple-darwin14",
+        "kind": "archive",
+        "arch": "aarch64",
+        "sha256": "3db99fbd081f97f4b8e6ad0ff576c171c78dbe5b8f5f702f360970f834404612",
+        "size": 228624100,
+        "version": "1.11.0-beta2",
+        "os": "mac",
+        "extension": "dmg"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/mac/x64/1.11/julia-1.11.0-beta2-mac64.tar.gz",
+        "triplet": "x86_64-apple-darwin14",
+        "kind": "archive",
+        "arch": "x86_64",
+        "asc": "-----BEGIN PGP SIGNATURE-----\n\niQIzBAABCAAdFiEENnPfUp2QSUd/drN1ZuPH3APW5JUFAmZXFxEACgkQZuPH3APW\n5JVwAhAAiQHebWCPmG00yEJXXramf2TSLkIlnInI0bvyS3Djmh51+s66FHnyfXSE\nP+XZKnyIDLR3/HXfseyReQ5hWPjamuamoWIuxiVgMdMnKpvLS0tUu4DYoU7Vumcv\nVILF8kAOfLq4hkurftPKwcchybgkBrCjHRL+MNCw//g/Xi4yIKOiMBWaaxvWJiai\nojskdkrL3ZhkVhg34VoOAsLJs8T1mViFCre4ip3cV3vWoCkCY1cPoUuQs+vgcRYb\nf+zr3i7BPPVzQXlxmojzoomcJpjH3JzdXtTitKjWc52OEcsln0Gnjp9EtxJGx9MQ\nn/bvzyLCeITEtMiQHq671jyqK2MzLsbHbZOVuoogxP3FKKNpjjBKQjRqVNv+c285\nf72NnuvbKapUSFe/hvPEkWYjMMvCil7gCHOzVOitC1zzZrE3uM9SjlzeYZrzIODH\npOZJOuIKuypjV/ClKGbnJEaKS4hWUHF7WLPFzJ7q5HajudxONPqnHBKk791+ykvc\nGgE7HIpfWyqPVAQbAUP1TQ7N9hHCQxmJu0jIqQQfERKMVnxgqIxiCrhMd7AsYizg\nxcma8JaF/5fXH2xdomgjoLKsRSWzfwONNxKxH9dGAFjmG6WzB0kaNyu5jr9MPtmV\n8NB9uOB6Pukwf9hOnjyt8ffCKqqgg2rtw19PTv8Z1hntAsCWfo8=\n=TnQU\n-----END PGP SIGNATURE-----\n",
+        "sha256": "cfb7c11f8434b0e280a0deb1cf66c54891636c3705850fab9db017eacb576c90",
+        "size": 221022098,
+        "version": "1.11.0-beta2",
+        "os": "mac",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/mac/aarch64/1.11/julia-1.11.0-beta2-macaarch64.tar.gz",
+        "triplet": "aarch64-apple-darwin14",
+        "kind": "archive",
+        "arch": "aarch64",
+        "asc": "-----BEGIN PGP SIGNATURE-----\n\niQIzBAABCAAdFiEENnPfUp2QSUd/drN1ZuPH3APW5JUFAmZXBsgACgkQZuPH3APW\n5JXWZQ//aODf/Ci+FBdCH0dcFjA7o0Pw2jeN6p5B2bJOi66WT/rlBttU6YZfBNGm\n4zAIjQgsoRdQsjTEso9QWnP+qU3+Q/xRnzUKYDOBDw9lyi4Dq/ZKFebvC0JKyosv\nOPYsaVGLiwCrtt20ZYwt1RKhi4P+KN85zr4rub2ovE+XY3jadajG2ZQqtPyKWOBJ\nubqhntGplE3bpxD3sEZAHGB7MH8PbhMn+ChPvR/Kpbfcc/aJKMGTkxElM0dq9uG8\nlwD98GuCHbiI07bGqVwdVV1bRgD1VSzr88m9WTgtRmJeI4okh9vN8RgoDtxHFzUf\nH8+jrf7go1vhhrfCsk0vs6IGWVeSEfFkbBZLiDphUr4qPYRXsMYMLi79f4V/UPUK\nZE/8qJ47wsdkd5bZX3c4hkiTIGebIuAOiYXCpgNwIWGfKUnPSsohI8MqFbLOXguz\nRAeFjYTX5bUlNFCyV76mN3UpjptDVZPQ2yuoZYUa89zObgocDU+z8WMegKY5i7qp\n8wX7f9QzPVG9SJMXQhV7AmfQdIQFRLSqLlk6p2MkmWp81QJ8IRUJZSFli3B6OrcV\nubXtd5+ZdfYKOggHvyVFI7fs1+n3RjEWbEAufC6Ps/R6XoyP0Z+1DvJivzzBwiG/\nTekIyWay9lFfWTKl8v8d5/64ftgeapzE6Hk/Ycz7oynWkeS+rhM=\n=hHuf\n-----END PGP SIGNATURE-----\n",
+        "sha256": "f56a3873e6e2c6520caef5c80991d57ed8d6e0ed68ba42541f2e86301478d3b0",
+        "size": 228629457,
+        "version": "1.11.0-beta2",
+        "os": "mac",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/winnt/x64/1.11/julia-1.11.0-beta2-win64.exe",
+        "triplet": "x86_64-w64-mingw32",
+        "kind": "installer",
+        "arch": "x86_64",
+        "sha256": "e6d27f8a5819fd9e63ecb4ed19bed8a0c1ab719a5a6cf0f772c240eb44b46d68",
+        "size": 141371344,
+        "version": "1.11.0-beta2",
+        "os": "winnt",
+        "extension": "exe"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/winnt/x86/1.11/julia-1.11.0-beta2-win32.exe",
+        "triplet": "i686-w64-mingw32",
+        "kind": "installer",
+        "arch": "i686",
+        "sha256": "ef7d521d467811d01e6591def89c4b9058eea6df4af757eab7ace9bf61e47ac1",
+        "size": 120940520,
+        "version": "1.11.0-beta2",
+        "os": "winnt",
+        "extension": "exe"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/winnt/x64/1.11/julia-1.11.0-beta2-win64.zip",
+        "triplet": "x86_64-w64-mingw32",
+        "kind": "archive",
+        "arch": "x86_64",
+        "sha256": "61be83595a0136424cda25d9ff3fe791be6fa1d24b2a5bf68660eb7d7ab47446",
+        "size": 236223096,
+        "version": "1.11.0-beta2",
+        "os": "winnt",
+        "extension": "zip"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/winnt/x86/1.11/julia-1.11.0-beta2-win32.zip",
+        "triplet": "i686-w64-mingw32",
+        "kind": "archive",
+        "arch": "i686",
+        "sha256": "94c106fa9111bb129bc2e481921d22c35f51fdabe4b5186d50251297fde63f44",
+        "size": 205183883,
+        "version": "1.11.0-beta2",
+        "os": "winnt",
+        "extension": "zip"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/winnt/x64/1.11/julia-1.11.0-beta2-win64.tar.gz",
+        "triplet": "x86_64-w64-mingw32",
+        "kind": "archive",
+        "arch": "x86_64",
+        "sha256": "c3f0d1325defef8c5cdfe393f7a431c03a4f955af700b95eef5f7f296d7bdf44",
+        "size": 243882334,
+        "version": "1.11.0-beta2",
+        "os": "winnt",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/winnt/x86/1.11/julia-1.11.0-beta2-win32.tar.gz",
+        "triplet": "i686-w64-mingw32",
+        "kind": "archive",
+        "arch": "i686",
+        "sha256": "36d9bad77aec55233a64412c12f315c69613494a3c076321899b7425944996bf",
+        "size": 211714078,
+        "version": "1.11.0-beta2",
+        "os": "winnt",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/freebsd/x64/1.11/julia-1.11.0-beta2-freebsd-x86_64.tar.gz",
+        "triplet": "x86_64-unknown-freebsd11.1",
+        "kind": "archive",
+        "arch": "x86_64",
+        "asc": "-----BEGIN PGP SIGNATURE-----\n\niQIzBAABCAAdFiEENnPfUp2QSUd/drN1ZuPH3APW5JUFAmZXCzIACgkQZuPH3APW\n5JXZLA/+KcF72xYSpxkBNrvjEBkwmZtHqVBt1azJ+SpzSHiRW8a3dDX+4kZb8azY\n/yey3GDI7vim8b81Lr7vENmFajrQ/cO2MK/X/n6pPvC9jPne40hZN1853SQYoPtK\ngYLcv44ONhaUdP3YV6UcUHdfOYiSUbtUuWeaoALcgdtWSBTfXeQc2QGpcddih3gF\nvkMNDmKHeBCk2j5ZsddhuHRep7ncAZevYHAwV96W7uqvtwkhKKLz7D6OE874v+eq\nNQ1NW/g1QegnmDHigjR1cCM/jtSnvWroAzj0ydFDQS3jXBqR4d6Mm5MuttnSVqST\nTacEdyxdGeazAKcctoCglO90hJA+iSeVviF723UnRU7Dufz+gQyWjzVMqAnY0qrf\nJaf/lsaUCeVmYDs9bLrgtQC5obs6/b1vpCZcjt/SUggVmBQgmbW8twcCHTGznrK9\nJTtJ+rtY/Q1jgD3z1k7+QiMl2C/+ZSHFUpeR5o7fh142nGkJVinMKNWYcoqPS/0D\n6JUjVj3B7AAwOPGMw/fGQsU7XTPQmGN12fUL8UOtKSFLXMnViKqzBFkeaoClCd1M\nPreW2pxF95+gpOJJQypjv9juLD8NxzwMglNaeP+GZe8b8FBEw5nMPntNbSfpfSTG\n9073p4YOgNaUSqBKMMDTGFmZY777exS1ECvL23jGVOL9pJ8GQEI=\n=MJL+\n-----END PGP SIGNATURE-----\n",
+        "sha256": "0d4ca5eadfabe854376a87a548c66bf089610ff80640ad78354f60247b540329",
+        "size": 225922586,
+        "version": "1.11.0-beta2",
         "os": "freebsd",
         "extension": "tar.gz"
       }
@@ -8031,6 +8763,183 @@
     ],
     "stable": false
   },
+  "1.11.0": {
+    "files": [
+      {
+        "url": "https://julialang-s3.julialang.org/bin/linux/x64/1.11/julia-1.11.0-linux-x86_64.tar.gz",
+        "triplet": "x86_64-linux-gnu",
+        "kind": "archive",
+        "arch": "x86_64",
+        "asc": "-----BEGIN PGP SIGNATURE-----\n\niQIzBAABCgAdFiEENnPfUp2QSUd/drN1ZuPH3APW5JUFAmcD8UsACgkQZuPH3APW\n5JWdKQ//Xd+W/TMF+bejaJo0rHVWBJy1TcF0uhqE1eX9rO5wBuIN7sPBnsCx8BP5\nyquyBdPSlqV8Mww5lMY0sNVQDAkYYD/UzPG75fpSHN+/fuY6udF0fNfr9uiDtlZN\nfwoTFxFtgek40PesFX9+RjxMBEX2J3y4rmY+oMcEWjeH7Do1MRgSjmF9ns5QycaZ\nIksNi7x5CMyk/Qkw138KrXYyOHP79NXU0Ey54jZ7xKZawxlkAkcXPWxMSeSq52Ly\nTFeHjkd4bdjV0WM/ZLgJZG2DInBp/y5RIgzNP6NvcupSY2GPX9acccMBGPnO+Ewj\nlMXiGIOjW+lo3dtg3IQ7jxLuKDJ3Xrvw0WiuTEJ2Lb6N0QkPp+EoP2wfEagT8+EV\nB8QhB/rJlGDOBA7H/DFwCzhjkurO5GbeWW00gODC4BYoHjHMJoLcgZ1ps9b9ZI/h\nTy7TIId9FzZVHKjKWS6YLC+f/IIWW7MPD06GZs6PiiBmnVUUb1BrTb4R843pqKOD\nmRa5kX9WpSre2syCUEGT+CNFmIP/AhPcgDk8y77Fu+zejsaF8xyjly3ZPMSA4mKH\nWcdjRT2D2ASbwGwwGH5oLZBaHgKVCDstdsWMDDweW54FN+pGGi2Kc4IR6BnSfR4k\nKOI79+xbwGkVUWZZzPI0tBkPct26+BpVDQYSt1GCWBEKozTX61U=\n=Oa+x\n-----END PGP SIGNATURE-----\n",
+        "sha256": "bcf815553fda2ed7910524c8caa189c8e8191a40a799dd8b5fbed0d9dd6b882c",
+        "size": 254121552,
+        "version": "1.11.0",
+        "os": "linux",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/linux/x86/1.11/julia-1.11.0-linux-i686.tar.gz",
+        "triplet": "i686-linux-gnu",
+        "kind": "archive",
+        "arch": "i686",
+        "asc": "-----BEGIN PGP SIGNATURE-----\n\niQIzBAABCgAdFiEENnPfUp2QSUd/drN1ZuPH3APW5JUFAmcD89sACgkQZuPH3APW\n5JVS8g//ZcQmH9raeZtCmcfkJMX9gylgjSis4ygYaL12nOXEf9dSmNqEZL1pHHdI\naiFEYv3fSkvNWXlA9fVyLuJ6K/gcHmTlNDG1PvxwOtne9Bng8NHqOoXQXTVMBZqI\nsKeNpqO4npk2WX7zGuRw+RlcRLluApuvmmWk4w0jztUYLv9CdJovLnuIr3G2h38/\nIfhlDLdY1QaBF2wwZuHSgI50YiAgoEi/6QsuI2NKiPF24+goE5ScBBsx2M6nWmJp\naefNkMeszTRdVcw/yui+tE8mtP+uZHER2jERf3r7Hy/HsALWooIchL6bD0TQdpyI\nnYpzQ18G4XyRikDf2CTGtSagz+HoXKY1mNNMv+rQ5vQSRPuRSb3/DqVvA9J8eESG\nRgRpniW1nqv3SBgaByne055ULVZ6DdWeakd4ThPQQaBP8Pw8Sx+/ONd+Wc/JvMZh\n7mv0BjiUhA8LXK9YfUWkvHCI2pJJDhLDxK2/B8wDxvnPRwTc0kw7mHHpmHTvJN7B\nDCYGr4lfLTii8ecft4NH9xbMjwazTbB1siPdyNEgpmsPmaUNspfjFA+bqt9kvEj4\nvGwTj0TNQp6YDbY/9fh0+yMnqndSuDym4jyVSFpeuBriM0uAM6N1JZHeX2sABrEF\nRFVth68oeU1U+lC96p2T2t4cYuKs2hjYvgi4vvNu9ROIgbQBxa8=\n=44F7\n-----END PGP SIGNATURE-----\n",
+        "sha256": "b4088274ca31ed3c58fa6f4d0f3887b0610ea38e1aa87000993cb24900c773aa",
+        "size": 229438005,
+        "version": "1.11.0",
+        "os": "linux",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/linux/aarch64/1.11/julia-1.11.0-linux-aarch64.tar.gz",
+        "triplet": "aarch64-linux-gnu",
+        "kind": "archive",
+        "arch": "aarch64",
+        "asc": "-----BEGIN PGP SIGNATURE-----\n\niQIzBAABCgAdFiEENnPfUp2QSUd/drN1ZuPH3APW5JUFAmcD3eYACgkQZuPH3APW\n5JW/WxAAnT1BckG7wOsOec30OGCocbCgszDHgFxKCLESWgPBbo9vf+jD2OiKRgRq\nVbCfiZSNVN5DDb5+Fg3ZgxDr7NcgrTdddmxYyZYZTeX7iLD97SZSCd53egreaPr4\nKvfuPFnevU8rBzSQsQgbjOVauEud0zh3L75V7FUqS3SFdG9z8em1xJqIkTGnVot+\n+ywXClwZZ18MxokRvve0Y1xpgMpjbWk9jpBZE0c35y/oCrSXSCNGehLGt+Nh4qQa\nEWhThaFMacsmH3u1zGrG0Mbo9FGLGT7NPzxrJFW69nIf9kV9s9CByzOD4/1KUHbW\nQ9ylYSMZd7j85TR3IAhTsD/ehFSXE1oaSfhvhah5EH1R80rmOeJhC17qMlblKrSi\nRPShBZ9H69Absnz0ctx6nCbeoLoRB4xF7Ul0KeFxsfTqYdnSAyFsUvU9cbk5n+8/\nbVxX9mw6yXy6OddOsIG/8IWLqBoBMHpF7A/rWyHPh2xQE4xnzSDi+0MiD+mqnaH1\nQine7tHD4Pvp6sJbikjQzSD/F8VeMzb/2I53n2Ken77Q7AGU0ITtyrmQGsIavzWD\nkCQ1kkoQxsiXGamuuJfCcYUF/ujG+UuIQsEkuhd0SQxxbn5lo4AXy2MgtUBD+WSb\nWKx+bqLOHFuJnR6l8KsKJ7YkzsDO20zAEosmNj7LnpikdFTyxLA=\n=/JXa\n-----END PGP SIGNATURE-----\n",
+        "sha256": "66b9195b4c6b85403834dca9ef4fcae75f15be906bb3bb2c48eccb780ab810a1",
+        "size": 249417836,
+        "version": "1.11.0",
+        "os": "linux",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/linux/ppc64le/1.11/julia-1.11.0-linux-ppc64le.tar.gz",
+        "triplet": "powerpc64le-linux-gnu",
+        "kind": "archive",
+        "arch": "powerpc64le",
+        "asc": "-----BEGIN PGP SIGNATURE-----\n\niQIzBAABCgAdFiEENnPfUp2QSUd/drN1ZuPH3APW5JUFAmcEAE4ACgkQZuPH3APW\n5JUFTRAAniXFPkqH7ykegoqN84P0mW1aoxw/uvsWl56gOFiUqTMom0miN6sI6c6u\n9x5pGF5TZTgpFa2Czhi3wzPmCLk2Gkd+HnEM/9aFpTf3u5i/tL0aM+0gx2F/M234\nM10aQr1aWSqFGb7ieUrCrvqShsgmck8nI4ECipQEBov0BL3hGJ6yCbcGvG4meX4V\nhdqDXP+xXbEdwCm/KLDa1iGvkwkpSy7J/D6Z/ZC0YRTefpS7FiMIiIkkG2Lm7gbM\nL52tvGQNGoQJjg66kptKgDumM5A1GudD2yajJrN8NNXjQCXuvKAzHzeIA6xx/CmW\n+7bp5HmrX7zdClpRx/KDKJ/lWO7uPHOERII9kQS355OvBNBKhr7cG9Vk4wKu3eAM\nMDrCsY4VtLgxJPGiX3juFdCoswfR3WfZmH7b2mmS3+NBq2Wz/tb+onJfjd3PRL7X\nudWNoXNZC7W4EJEx4SJQVU0uxFN1FfVOqMmJgfPbNHH5RxVnJsCYFjqv2GlnKJ4v\nDW+EexHs9efR31wjZUT4HKJy5DAFGXgXJ6pboobzhdkOc5wTJYTZJfDOHh05OV7o\nbZJUuvBi0WiZ2ocsleLQIP/U0IV8yTWDFXh7LhnyXj/F5+YRe1DZZhF3y1jhxNcG\nf5YPt0b9WTlr3y5RrBOHxLFrvs6EBemi74UPssoAAwx6Ko/jdg0=\n=7nrU\n-----END PGP SIGNATURE-----\n",
+        "sha256": "6fc3981aded87517b9b6515e0ce9d56d2889c0ffef1e1646bb44808e57cb3276",
+        "size": 241656423,
+        "version": "1.11.0",
+        "os": "linux",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/mac/x64/1.11/julia-1.11.0-mac64.dmg",
+        "triplet": "x86_64-apple-darwin14",
+        "kind": "archive",
+        "arch": "x86_64",
+        "sha256": "e5f04a4479b97ce719e30fc56475b9a3a5240e3f2bb526d50c3627d898437eec",
+        "size": 225983231,
+        "version": "1.11.0",
+        "os": "mac",
+        "extension": "dmg"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/mac/aarch64/1.11/julia-1.11.0-macaarch64.dmg",
+        "triplet": "aarch64-apple-darwin14",
+        "kind": "archive",
+        "arch": "aarch64",
+        "sha256": "365d0a8e25ab2ee61f519fe52d41c09a01eb54af6e35833d6b331e7cfd31eb77",
+        "size": 215438355,
+        "version": "1.11.0",
+        "os": "mac",
+        "extension": "dmg"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/mac/x64/1.11/julia-1.11.0-mac64.tar.gz",
+        "triplet": "x86_64-apple-darwin14",
+        "kind": "archive",
+        "arch": "x86_64",
+        "asc": "-----BEGIN PGP SIGNATURE-----\n\niQIzBAABCAAdFiEENnPfUp2QSUd/drN1ZuPH3APW5JUFAmcEISsACgkQZuPH3APW\n5JWA8g/+PSb5tufyPgkg7EC1IA85pYD4EQuDd7lhyyDdBl2f1Nvqoq0jl/pnQyDm\ndGLXK7BdktXAhtc3vWkGdpzsZLZQ+vB1cZliFQzbpOZfYrSiIVhIFLJ6cmlKPvxU\nQIJlNuXDg5p3q1Foul9u744ZY4dDMossdytuOdDXWfn5BksN7YODQ+dI0qKhqksa\nxVNja4rAfuss2rDZspkNLwCIM8LR7lje7mKqsPieXd0iJZ2zLmp8+zazCeudBc5C\ndW5Ag/J2C8ISBV/IUtxCZvavpgyf0Bl981XDJ8aA6eyBeR3rvfz57c9jNBonPhsW\nOn0CemxlGrHIlDcwywbXxzciSjNMiERH7CjEpwtXjorADEQXvxqXtdJtUemzZzIL\nr14vvG8vbwbV0rui35FYNbA3/BM839y35adxMqR8iF6w/6kpccuCab3e5hYzkX/R\nh1PvknxvhZBArcqj+iEXL2fFQbo3P7Mj09ty1vecNfWnRh6xDtONt+W3fa2aUTzQ\n3CPUxX1oYwILtg9uwMCop/1IIfQtEj6nXIKUxmQi18gpQqGSrd4V+4JyRK16Sd65\naUTlpjdL7k+6rf4Kqf4TdSfpjnZu3AxPa/5OJ4o82nm9FCqc8bFH0uF6qddvhZ2o\n+NOcOZcZ66V0J8yrZiRV9feCiYT+uXNFr8r2J5tunZJkrwbiXB4=\n=tGJ3\n-----END PGP SIGNATURE-----\n",
+        "sha256": "e001d80b53cb9637402633f6cf50cbf2d83d4de03c4093783b8878265996e33d",
+        "size": 224453571,
+        "version": "1.11.0",
+        "os": "mac",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/mac/aarch64/1.11/julia-1.11.0-macaarch64.tar.gz",
+        "triplet": "aarch64-apple-darwin14",
+        "kind": "archive",
+        "arch": "aarch64",
+        "asc": "-----BEGIN PGP SIGNATURE-----\n\niQIzBAABCAAdFiEENnPfUp2QSUd/drN1ZuPH3APW5JUFAmcD5lEACgkQZuPH3APW\n5JXdjQ//Sw66UPbhCCFHbNb6ptRsNSo5zgrFdUNN9Vr0ns/NuLrOUXWnWnd6cxrf\n4QXyDj5wfRpbCTaMNN+fSJeCwSdER0aLBQtVhjz/8JGSf3SDUQiwlsOxv5VJaGXK\nbdwXVzoYi5N7l8AdZlXFwcw57V8qcBXU71ETd6c42E596Kb9br9XfABZfeNY5uR3\ncFZ3o1cCVLelaeJSq2KjqrHlbcTzeMEoK52X1CPi977iwPX4XGTyzZ/rA17DBM0n\nV5na3SlRi7JkyiqLzhvwQFlnBsDqM3hxxmkkew/CErXtWmVcZZLCBNiZFTR8C4SY\nodPDqEB0hjDfHI4OEHAxPh3lR/YDmzCBeAQ3be59230rXfwi3OTKtsd5gSrZRyDo\nvrgDMyGBWOK6ezttkKROIluCmwRm1KKu3WbYffC/Qq1eUXFb4Mn5f22OJmNJsOfj\nzQs9TWO/yOUsiwcdcAojOW1Jou5JwI2TNPZJPkJ5Nw4BbbpNdd3vgSaWiQihHo2t\nYGs3MhogAGKjC2xNJu9BAiAx5oD+QWefdYJ3ZZHeRygnmBwZcoSFGdLhsbFLeWKv\n1cN26bL+sHceotVxf43KAApeYQO7mTTPZK16knWM+zmEF84z12SP1U+HlJmostex\ng6QCDDv6gYAyha7OVqnPyQX9y/xBv3F5SXDu2rOvIjJGsth6OVI=\n=AHNF\n-----END PGP SIGNATURE-----\n",
+        "sha256": "c25ae0c87a418555e40167e07524824659656cb60bac9d1e4a5d50d887abe560",
+        "size": 213723650,
+        "version": "1.11.0",
+        "os": "mac",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/winnt/x64/1.11/julia-1.11.0-win64.exe",
+        "triplet": "x86_64-w64-mingw32",
+        "kind": "installer",
+        "arch": "x86_64",
+        "sha256": "7de521dfc4b874150d4d2b3001fc1fdae4083a7a1b07c5d7704d00052b6c118e",
+        "size": 143123064,
+        "version": "1.11.0",
+        "os": "winnt",
+        "extension": "exe"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/winnt/x86/1.11/julia-1.11.0-win32.exe",
+        "triplet": "i686-w64-mingw32",
+        "kind": "installer",
+        "arch": "i686",
+        "sha256": "47a8917505d001cd67c3fca0cdbf415d94f42d560004712b35159560af12a4dd",
+        "size": 122821144,
+        "version": "1.11.0",
+        "os": "winnt",
+        "extension": "exe"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/winnt/x64/1.11/julia-1.11.0-win64.zip",
+        "triplet": "x86_64-w64-mingw32",
+        "kind": "archive",
+        "arch": "x86_64",
+        "sha256": "5aff4a34dc1ea8ea18081fc119cd440b95a7ee8ae3d8b64cf0e0c454a5c0b754",
+        "size": 242976008,
+        "version": "1.11.0",
+        "os": "winnt",
+        "extension": "zip"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/winnt/x86/1.11/julia-1.11.0-win32.zip",
+        "triplet": "i686-w64-mingw32",
+        "kind": "archive",
+        "arch": "i686",
+        "sha256": "3f040aa48e3b475b2263650cc08d714f7fdc003307ee451308745274ace2fcc3",
+        "size": 212106309,
+        "version": "1.11.0",
+        "os": "winnt",
+        "extension": "zip"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/winnt/x64/1.11/julia-1.11.0-win64.tar.gz",
+        "triplet": "x86_64-w64-mingw32",
+        "kind": "archive",
+        "arch": "x86_64",
+        "sha256": "b2529c1cd5f9162e311722a2cde55b6cc72fc5476b3704c2d8e63f112a44505b",
+        "size": 249112265,
+        "version": "1.11.0",
+        "os": "winnt",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/winnt/x86/1.11/julia-1.11.0-win32.tar.gz",
+        "triplet": "i686-w64-mingw32",
+        "kind": "archive",
+        "arch": "i686",
+        "sha256": "6e4c7aca8293a85c54577c5fa1a8fe1deac34a0d36d9ffd90e4b894cb3c9e31a",
+        "size": 217113933,
+        "version": "1.11.0",
+        "os": "winnt",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/freebsd/x64/1.11/julia-1.11.0-freebsd-x86_64.tar.gz",
+        "triplet": "x86_64-unknown-freebsd11.1",
+        "kind": "archive",
+        "arch": "x86_64",
+        "asc": "-----BEGIN PGP SIGNATURE-----\n\niQIzBAABCAAdFiEENnPfUp2QSUd/drN1ZuPH3APW5JUFAmcD7EIACgkQZuPH3APW\n5JUlwg/+IEifm2iD3YLCHPCLewf9OE97MaHAdZrkuzg3krx2ETpDQU8mWdSPfMvJ\n7kqLVnCr2ZuEhETW/FcFtFt0apFO5QgzFDWadAWLuppZX7Pkd/1H7DJbKLBIx9SE\n4yXN3AtwFjiwR+IrIaDKs0AlR9Um+gWUQPiwLbAy8SPG+rH0THnTVDsECtMM2Nx4\n17esIta6HSpvWzDNeBNJvNRgfdgx+Js2+kM1WNlDOg8YGWpD7IcjmNd1Ph55qu7T\n8gXHKp2N2WsEKwW5cmcq1zpKweARe3JeslnO0e70QA+XGcayt9LQoHWRoZ7EJ00Q\nOXbOOj6Hys3Mid9t5M6L7DJlGd3Dr33UVmXCAHHxJsevs4vC0Pubpl9Z4arb3SPu\nKJmu1dOrU01T6zvQB9nemsRjHyjPEhilq4emFh8kaU9yWotGKlDYVahaCbmQEd4s\nXSedLZXIRAkudeduYxBDhYIp6IHAmj6M18ya9r8LNFjpdJpObUp9xEeUddnqaoYS\nfCmHDNrTQwMk2BZEAOl6hjYGWCT7r4cmg0dTkhQuWM7MHVd6eyOefwjv5W+GYeux\nRsfZovKrfxPe3XmNErItqZvEk67KHWauKrkbHnyjzYvyCdQtQ2en3VkedGxjPO+R\n77i4LdLBPbeO/3xP7kp4PZo5NBxsFpvIarhbuXay9Si3G1Auv5s=\n=QsIw\n-----END PGP SIGNATURE-----\n",
+        "sha256": "eb432cc963ec7671750297fb89bb9b6e42bd2e446ce7130f23f1f75f9ae1cfd8",
+        "size": 229127365,
+        "version": "1.11.0",
+        "os": "freebsd",
+        "extension": "tar.gz"
+      }
+    ],
+    "stable": true
+  },
   "0.5.0-rc1": {
     "files": [
       {
@@ -9050,6 +9959,183 @@
     ],
     "stable": true
   },
+  "1.10.5": {
+    "files": [
+      {
+        "url": "https://julialang-s3.julialang.org/bin/linux/x64/1.10/julia-1.10.5-linux-x86_64.tar.gz",
+        "triplet": "x86_64-linux-gnu",
+        "kind": "archive",
+        "arch": "x86_64",
+        "asc": "-----BEGIN PGP SIGNATURE-----\n\niQIzBAABCgAdFiEENnPfUp2QSUd/drN1ZuPH3APW5JUFAmbOI04ACgkQZuPH3APW\n5JUbpA//QTnVYzt90ZKs8PenfKVEucydmNac6i5D+VyM178vAaKivJ+CKq3nQA9d\nYzd5qBQ2qjdLxZKulOTwjlOv9eb2BHBY/kTmwT3NbnD0NlXoIN9sH0eGtlo/kE60\nyaxxNGKu29fK4KrqbL9AtL8thvKh/QXLvj8yRLn+mDB/7DkzzcXwXqaTGMHCjLaj\nXS46JmlTn4vdXafNiDmlCis7llsuOvB3pvk3mVLFXE4V/Kg5N9kgQubgkdG7T7zm\n0/YZ9aTAgPyYp9QUsMI2VKo4LBhKjptDB1JJgoNjQartgoejI4m8xohXeNhKfxjr\nTUl4Zw6YbJ5WlgvOcIAGxlc1C67frypW1zX3RUY9CXmvHd6T0NLSTfkkGgkwV79L\nw33y+2GF4kMO3BH3sOu0Rm2QJ9EDD18q6sKVC2GttOXp2z+OEjgsuGGc6qyFOwHH\n6V9W/nJhP6N5chwGr8Ajmy2AmCj6HobDpcYGrSKkapdvXM3mR44lCw7JF74yS3lJ\nNjzXgj/94P5Ms02QoSQ/cB97mmFrXQw4QliBUsXyG/Lc0lbphhpwqQ2Jx2zDaRzB\nip9Ru34C7Fr5ClW9Z0G793EP4yQKVV+gVcTVJpioVidMoEQlXdRE9GJ/6pVgHgxr\nVGdkJHYcOJR3QPy45e2Z6pACzQeX6CiX4d6FgALwvCp/BnBL9no=\n=c0Nm\n-----END PGP SIGNATURE-----\n",
+        "sha256": "33497b93cf9dd65e8431024fd1db19cbfbe30bd796775a59d53e2df9a8de6dc0",
+        "size": 173909866,
+        "version": "1.10.5",
+        "os": "linux",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/linux/x86/1.10/julia-1.10.5-linux-i686.tar.gz",
+        "triplet": "i686-linux-gnu",
+        "kind": "archive",
+        "arch": "i686",
+        "asc": "-----BEGIN PGP SIGNATURE-----\n\niQIzBAABCgAdFiEENnPfUp2QSUd/drN1ZuPH3APW5JUFAmbOIioACgkQZuPH3APW\n5JUMmQ//bFdHZLPNuZ9BgqfgWMZ/zWXQ566BQ0JChE5SMltLKs2oFrw1nhZ+JGp7\nX1E10ek1ioO4+uh7KCKne2vFCQ7vDEtLSHmerqRLQuGzaCcsXqIgWjaEN35utzQa\n7kATaLhf9yyUrgWRUy33WNIyULJ2f/GP76Z6MQyAUzQ1+u8HPAw+Z0J3xR1uGeLN\n1R+QQqhhciGX6OvWgBbeSvcaT3HqaaqtRIRjGdz78evSFMDT4mPsWGxQrNBnLHbH\nX+qXhJs2rxKWT9qtWeQMsP72QJEWIpVzcCJvuutmPQ8noPQsNqcTYGQmaYZuOiWZ\naAFmUH7iXdJBTlbqGzK7kGNMk7XEPI/PF2QvZ71uv7C5oL/hnnNzdPK58npy/yut\nS2VytiBB+R/b6w2unsCEct9EH2sKM3s7mFvfsXlO3Dm4L0wCdEMZPKHmVEyoEkhr\nWb4ShpysAlzlKqlJdUnYzkCrdiYx/ANH+tV+KOldw/QLZr8wREjfq7k744zrzlGU\nunK1DsyCGQGQEWeyAysj/WMu/bjuoufWinx8vXEx50WCQop91G6/6nL3sml6nCNf\n2n8/vZcXH2B6Z/r5NdiGWiwu2SCJcGC9BsYhoALHMtJUeXFLIwWcC4mekiJCUTWx\n+9AnL+k6ZdVqFDYXxSEzecDS9YtUMIBtnpkPuTEAUxDCsaydMTk=\n=Jbzu\n-----END PGP SIGNATURE-----\n",
+        "sha256": "508b573b0afc6427ce6b2bdfe471fcf86ff920383193aedb5fd6982bcb5cdb8a",
+        "size": 154199971,
+        "version": "1.10.5",
+        "os": "linux",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/linux/aarch64/1.10/julia-1.10.5-linux-aarch64.tar.gz",
+        "triplet": "aarch64-linux-gnu",
+        "kind": "archive",
+        "arch": "aarch64",
+        "asc": "-----BEGIN PGP SIGNATURE-----\n\niQIzBAABCgAdFiEENnPfUp2QSUd/drN1ZuPH3APW5JUFAmbOG9oACgkQZuPH3APW\n5JWo0BAAjv4xMkg4sPTxdDen1XQSMd4eeFdQEUaY6fofhP8XbpigATUVoDiIz6k7\n006ZUqRGbY/lzBm/Avr1bNV/iKh0t6bu8CazS8rvomP7TVFP2nnkWvq0pubHBBL9\noiY5eevsZ+hcJHOCiLLyxrDo9tYXelo+FG2RcZ+slKrf5u44Ybq6ahWj+x7uTTcb\n3T4j/Sv69IfO3x1ISnCQgg/byvtIesZuHQJ6rpeWlCg2leeVQx/4ard8GLePCuTl\nqevwdkhatP4yjsTCG12AW0pH0KDUjOUpFwf0oQIPV2pWywHqkQbGHBvN1ZQsihCi\nLPKbXIO+IdS9GySuXD4QyO4B7E+oKIZYrfgBbCCyslewS+dUcokuVemjYFR5f5Cq\nokbicTh7uH2GC86KHZtclIq/eBg2q41AJ8rFMBOtSTYgFTbimHglb4n+2UN0beGP\nEM460fnzKjkMYlEdZHQxqPPje9PfkxObZAEJLmenrYkMbq9DTN76JfSolvTD38Ub\nWY1goFJF0FOSRzhEYcdB2C+PwfYx6hae3qDp6VJNaInuouI9SV/EiwrmQFsBoR+Z\nyU8KVFQvc3JRgtBPwNYAFBGyZ5gGlRAyAj3rKXRSzHVvR0TP0ZIwEMEuX2RLrS4A\n2xKf9xo+ggXf6hSakHwxg4+3DKi7b0cKCqI/8NqCUuH6qdhXtCE=\n=SHUa\n-----END PGP SIGNATURE-----\n",
+        "sha256": "59620a93cd64542d1f901ef9cfaecd310d0673b2bab2e2345774d456952a7ad0",
+        "size": 173394432,
+        "version": "1.10.5",
+        "os": "linux",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/linux/ppc64le/1.10/julia-1.10.5-linux-ppc64le.tar.gz",
+        "triplet": "powerpc64le-linux-gnu",
+        "kind": "archive",
+        "arch": "powerpc64le",
+        "asc": "-----BEGIN PGP SIGNATURE-----\n\niQIzBAABCgAdFiEENnPfUp2QSUd/drN1ZuPH3APW5JUFAmbOUXUACgkQZuPH3APW\n5JX5Xw/8CvP52NuDNcB1zkfFGpSNF9Im4TKusLpAk8qYW25U8cyNdWU2/HGALs9z\n4zJ2DB5O6EqV2NeNMtFkXpPcdOGzNqOUTcGtObI7iJv/SxtWZjRq0SBDm6R9QLz6\nYGZEKKbAOQTDEsYlgH7TEgwTEws9gS2scF12jSi/TnJuPx825zZNxgQlItNarTUO\nBY3MvLVgXvZdjeVK5r0ic19cqSruBGTJSfSAZnFa7L0PrcIOSgEayQVrx05XyIhc\nSuTYKOPxQywrUcYFKs4xgubarcorh2+BFpD3AutwtbQV6i52GoBPmijuPbU+V1gz\nQedOh75PsSKoo42XaGlUvyRPidQOlpBJofx/whRKUcEM4DJz9XyEnQuKf0LnBAs4\nQlw6i1SkCu7wX6X9N73XLlAq4fJmq/dmKT0g7Cj9FM3XgxI+1zX1M2DBTxve9xnf\nwbncoMMTyTZ1z0IhN9jzDj6lJ2VoIbz3C6ClUTkyBmh+vVdVOgZFAg88pkWKTNJr\nriVhKG9Lo+ZeDECZdhF/c7J6ToDIVMMyPGxk1a34GtZlo+z8vNKpqFlZBlrjSLvD\nhck5wKE1F0FQcxDpBc1D9JBgOFI2QGF+emV2PjPRCISmVV6ofd/bsMY8oAYy4JCb\nOPSIA8LPGfalmQ6ntqpleJJEYu3OJ1mGCDUIvIxuySyZcGQNyFU=\n=YNQP\n-----END PGP SIGNATURE-----\n",
+        "sha256": "80ccbe68d1bc5c1e971d526da463f8ecf62eb6ee81d4fd01345ccbe1e2a8833a",
+        "size": 152523089,
+        "version": "1.10.5",
+        "os": "linux",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/mac/x64/1.10/julia-1.10.5-mac64.dmg",
+        "triplet": "x86_64-apple-darwin14",
+        "kind": "archive",
+        "arch": "x86_64",
+        "sha256": "2b5cc5bab50c9bedf03cc957e0d4a9d5d357ce32252004b129609af287577c97",
+        "size": 150671019,
+        "version": "1.10.5",
+        "os": "mac",
+        "extension": "dmg"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/mac/aarch64/1.10/julia-1.10.5-macaarch64.dmg",
+        "triplet": "aarch64-apple-darwin14",
+        "kind": "archive",
+        "arch": "aarch64",
+        "sha256": "1d345c3ad2ea3a23197c6ba6c95fdae4d99fa3863ddd9f5664fbd97de67c7c56",
+        "size": 136441700,
+        "version": "1.10.5",
+        "os": "mac",
+        "extension": "dmg"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/mac/x64/1.10/julia-1.10.5-mac64.tar.gz",
+        "triplet": "x86_64-apple-darwin14",
+        "kind": "archive",
+        "arch": "x86_64",
+        "asc": "-----BEGIN PGP SIGNATURE-----\n\niQIzBAABCAAdFiEENnPfUp2QSUd/drN1ZuPH3APW5JUFAmbOKcQACgkQZuPH3APW\n5JW04A//Xg04GGfAoHV3OE8hYzngdaRCeeqRjIvhw2SvAQirO6oX/xm1AhWnQRgg\nBU7k4TdqoTEKfPplxW2owmxoGSS4JMTswmU1jTtD9RL70/AsNH+KDK64uMSrMWsa\naTUldvr/pNXWiBOeVcwprKBZ5O9MGCfGXx5AUCA6uI4qWeAdt4WgFIn6YpotrEaD\njQ7FxHj9mZsicaj6iqcKoTBNGMwoY+a4qFvOa3FCzvlJommew55NHtKoVkX6jjnJ\nIaqzWYlXmi3NfMupL0EnMnHMXQErwhECFho+eKEkA6PZV0NX+1N79+UyRjTG7urk\nohRpltl075LwWD2uj5oSKqUB/4nwF788M+EWPSL0ben4TdAdxDBXu5Og2aNxZ6uQ\n40INNDz/bk+GgC+73w5konIVqcRfS5EFeLgO/o3ULmVyeZCS93EcRFpz+fXNPez9\n9uZHZbEZgELG7pNGapKK0BUDmOJhdFYT9JQ3W/pET1cMqqtQUGs9/Pj4kn1f66RL\nYsmJibLVUxmX3Q7zfujXnGAS1reSdYYhCDmE8i6Erdy4ugk9x44yXqpxki7uEaeb\nuJHze4iNa7eiligv0Vd4MyXBVKIby2iZZCbPWoNsV7gh3NVGglgvIMhUzFoSeG39\nO4Nv3rP+AV539k69pYwEae8st8g294NDtUYz+yAhnSFLK8FxGjw=\n=5YFz\n-----END PGP SIGNATURE-----\n",
+        "sha256": "fb2754d6038c54abc8c04aff6dfe5b51987a6834d4a7a4658130f59e36d9b403",
+        "size": 150192566,
+        "version": "1.10.5",
+        "os": "mac",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/mac/aarch64/1.10/julia-1.10.5-macaarch64.tar.gz",
+        "triplet": "aarch64-apple-darwin14",
+        "kind": "archive",
+        "arch": "aarch64",
+        "asc": "-----BEGIN PGP SIGNATURE-----\n\niQIzBAABCAAdFiEENnPfUp2QSUd/drN1ZuPH3APW5JUFAmbOHsYACgkQZuPH3APW\n5JUmEQ//S0mzsXm6jYBPqTonmSL8zenQ627JpTipqroCiQu4YWyRnNp+XmwqmbYJ\nQMsJUfHQMDxxoOsDdQk89BvoyCN/5rY1Zmz+nN4mY8QjmlwIe0WG9vBUOsdls/ea\nH+aUFuepM+8ccYTO5pEXcHAi2MMqa00l2cIub1YhVzRYvN2oN92AAhzixrZJ4Dbk\nEWcHSTzAoGfA8zf8nxRNwpdqzHYknSK10xtNnNPExKkATMlgOrut3tMxTs+PG0hQ\nvjkL0RccRgtJZg9k/pRf6zMcgqf1tiZf38ApjDYEA0p5gkUw/rX7MxO+CzLX3ilG\nTDllhJ38Dman1qrvubtsK3dLUztRS6F2B5PAyEaqo8QLwwR4/p6ChsQ6XtqUDa8y\nqT4WJRKSyw1QyEa3sbHk+q+5+bPWY76TEAo+g0UGUbc6oWrMHBmC3lfHi0W6/qdg\nWXQtBzoyCrTUQZztYE0IFCONj51Evtx0fpJxgbqsb1Ilz2WQuw9CzBy9djMaaWPY\nojRcHyKcgHJVERpU2tTtCnMc6T8RvmrCCmaoH2nyZecXraCjikmdoKNpXYn5cB0b\nx/Iw7ckmzIhZB5zTIPpssKMGLkR6KKdKEFdZexjKQc8Zhox6mKtrjs/BM3FFWt9A\n7i4vJCbXqAzPK+RLzTBDyV/hnC24r6P8Sgy1F8RQHtRaIhu8N1Y=\n=gFWW\n-----END PGP SIGNATURE-----\n",
+        "sha256": "d503d720169e58dd60244063831a6f7bc72a345529a9622f6dc9f3825b0b9ab6",
+        "size": 135895654,
+        "version": "1.10.5",
+        "os": "mac",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/winnt/x64/1.10/julia-1.10.5-win64.exe",
+        "triplet": "x86_64-w64-mingw32",
+        "kind": "installer",
+        "arch": "x86_64",
+        "sha256": "82b4674bfb6d0422c2f1ccc4794c6d910252a3063f0220f68f80891f53aa581e",
+        "size": 109925080,
+        "version": "1.10.5",
+        "os": "winnt",
+        "extension": "exe"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/winnt/x86/1.10/julia-1.10.5-win32.exe",
+        "triplet": "i686-w64-mingw32",
+        "kind": "installer",
+        "arch": "i686",
+        "sha256": "58183eecdb099477849a9c32086f9e86a0a96b19a0c017620b2a00722b5d732b",
+        "size": 93068128,
+        "version": "1.10.5",
+        "os": "winnt",
+        "extension": "exe"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/winnt/x64/1.10/julia-1.10.5-win64.zip",
+        "triplet": "x86_64-w64-mingw32",
+        "kind": "archive",
+        "arch": "x86_64",
+        "sha256": "7b21b30c0a412df7bf2472ff5ee5d47aab5a9b4f184a7595da62eea3f10650b1",
+        "size": 178745098,
+        "version": "1.10.5",
+        "os": "winnt",
+        "extension": "zip"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/winnt/x86/1.10/julia-1.10.5-win32.zip",
+        "triplet": "i686-w64-mingw32",
+        "kind": "archive",
+        "arch": "i686",
+        "sha256": "5a2ff3252ae8707c1e9c5b46389c596b4f8036efeff64fea5e1acd219a5db3c9",
+        "size": 149619965,
+        "version": "1.10.5",
+        "os": "winnt",
+        "extension": "zip"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/winnt/x64/1.10/julia-1.10.5-win64.tar.gz",
+        "triplet": "x86_64-w64-mingw32",
+        "kind": "archive",
+        "arch": "x86_64",
+        "sha256": "7db84368953716275d3f6a6487cc2b3ac0f4822d605ff8b26b737aaf9bd633da",
+        "size": 184375385,
+        "version": "1.10.5",
+        "os": "winnt",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/winnt/x86/1.10/julia-1.10.5-win32.tar.gz",
+        "triplet": "i686-w64-mingw32",
+        "kind": "archive",
+        "arch": "i686",
+        "sha256": "78b53e23eeae70f6f5ded7b8c73c019781b33735064217ff910ea1c2a39190de",
+        "size": 153772191,
+        "version": "1.10.5",
+        "os": "winnt",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/freebsd/x64/1.10/julia-1.10.5-freebsd-x86_64.tar.gz",
+        "triplet": "x86_64-unknown-freebsd11.1",
+        "kind": "archive",
+        "arch": "x86_64",
+        "asc": "-----BEGIN PGP SIGNATURE-----\n\niQIzBAABCAAdFiEENnPfUp2QSUd/drN1ZuPH3APW5JUFAmbOHZwACgkQZuPH3APW\n5JX0hRAAhRFlSgos7Kc/NIoExlNcVrEptqiw5q7HzIYqA90Yte/KIaRhr+PiC6lB\n9LPhtyQbIjr484XTmInig7DTNlnRqLAujEe1ChAPJq3/XP58IGchazb8cGkyvN8V\nT/gd0UCnqZSodkVT2XPL1wNI7LVpRaSGJgUozA+8gOSFqbKJUAWmdmzdWV6B7cwB\nOIBDnXjWLJt9Cx8+TkejUvWKo8ZvnOdkkyjZ56ZmAG9cmJGsPoy/dCPJ+mpcLbV/\nuF9KECEMm+kUgw+LNEFMGW5QBYL9szslhz69D/3YWc6xeX9cFTG0JdQeltEdTQPr\naBp/xT107IX16rtr8OSRYJWElW+SSDWXWz43gyGVNCSg+o/igeY52UTZTCKNnENm\nkRg6CQpTSgCEQGSIB79JKHNhhrkYge1dD6eYw62QVTHjb6XL5Uq4qQMmFJdeUqcM\nHQPAc2ub9rwK5UPYp1bmlHfdx9qgFMh2GhzZT600tlSDjJe3NhT9LHwURTOZwdwQ\nknnpLTI0H3DF5RLIbqw3z/4N6quvE0MD4UtjoRlPAIgkHPnWgeAxYnbsAnG16maS\nVUEwDjlhVY8nSH/Um6GcZGeDZpXcbxmHfm65JNq5dkDlO8k7y17Qe3kZ4pb4Dy7G\nvzDBl6Ks22LGY8IVnsvLS0QyiYIgFqz4I36FPyXVtFxdSdZSpdA=\n=J27B\n-----END PGP SIGNATURE-----\n",
+        "sha256": "bf8f45f85d7c615f01aa46db427c2435b397ec58f2c7ee6d4b0785481a747d98",
+        "size": 157797077,
+        "version": "1.10.5",
+        "os": "freebsd",
+        "extension": "tar.gz"
+      }
+    ],
+    "stable": true
+  },
   "0.4.7": {
     "files": [
       {
@@ -9286,6 +10372,195 @@
       }
     ],
     "stable": true
+  },
+  "1.11.0-rc2": {
+    "files": [
+      {
+        "url": "https://julialang-s3.julialang.org/bin/linux/x64/1.11/julia-1.11.0-rc2-linux-x86_64.tar.gz",
+        "triplet": "x86_64-linux-gnu",
+        "kind": "archive",
+        "arch": "x86_64",
+        "asc": "-----BEGIN PGP SIGNATURE-----\n\niQIzBAABCgAdFiEENnPfUp2QSUd/drN1ZuPH3APW5JUFAmanS6EACgkQZuPH3APW\n5JV4rA/8D6Bo3B8q3sswXog7AAbKkp2qRn1UNQ5WgTsez9ml0ULlP7I2AmbFZqZC\noA+ly4HxRir179X7CS5/8MUcLvo1Jabbk+YDVJPWLeR453jMK0SQnk21i6BomLV4\nkqnmorlxBiyVh6OkDQKYhXeUcFhTQQTaVqf48nEsAOxcoujR908kcwsc0vA4pekq\n5vz0TYvKfYyggQhHzuo7KHJzirZsJFuKKxfE8Jp/V39fs045lWCwRQd6Iz8+TgPX\nEDqGNw31sjoFMa/O9/uK/lEjM30rRMD6w2GJLLTaHrMAlFFKWoaRvC5YM2Jtno61\nNACCsofDH6rkgb784KUQLpAkknh4N1NB6JisqCkz/ARau+QWa7xWoq/erXgP1zVl\nIDfc8JnMbrVIoECekgHKNSwbt/YSUxGgR+bYGOSwaIjEAgBSLZp4rn61cHiGC7TI\nOt8cTV7BpzTOMlZW/0NSl572K9et0KmK2nB4meZPnDQpXYyyY9/ujZ5PtfM2i254\nOLjNe5yGtC9G619IR/stP/g8X16KZK8O4Ob0RVOv9JRyo2JGyn5IlOweFBNX83Ax\n0kLwVWR/G2J3ddhvub9htK2aTeMtVD3zFXBSHmfXzzhAtD20B1yXrd73PvA6gy5l\nDEVXhMVvTNiCW9FSHBRbztQk/1l+rqs60jdkAL1lRyYWoNDSEVw=\n=FKfy\n-----END PGP SIGNATURE-----\n",
+        "sha256": "7416f969669761e3507ebb7b505075ca234a1785b438304c2b016f5ee00058ea",
+        "size": 250429310,
+        "version": "1.11.0-rc2",
+        "os": "linux",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/linux/x86/1.11/julia-1.11.0-rc2-linux-i686.tar.gz",
+        "triplet": "i686-linux-gnu",
+        "kind": "archive",
+        "arch": "i686",
+        "asc": "-----BEGIN PGP SIGNATURE-----\n\niQIzBAABCgAdFiEENnPfUp2QSUd/drN1ZuPH3APW5JUFAmanT6AACgkQZuPH3APW\n5JW6Jg/+IuGGeTzBtxDAU7bNO7xSJdFxezB9tV4DXI/X5UTcXiuWvhXAkJtg7mAj\nQPSVRaIDsosEgGYw9pK6axWzyBAvm/OWLMQhH+cyKvLaTmLC+1BPuglAy2v9iIvQ\nYXSnQjpHgtiC5TrSklHjFhq0kgPrYcGHFU9yHMO+YaE5EXEDCIC6TfieHWAyK5Kk\nbiVCO/Fg3Tp4ZD43UKthY6/WDuK5XORTNV/+npVMhEh8wAWd6U6HwXWu24dXIfak\nLak3C0Hb9EHLuo1HutgRPrwZe1LKTvCsCzXxBCwk84OCnbuggajMRvDIyrOkN43W\nsj1iKkZAp6K/8Lz+edST1/N0M9SHCT7feWjcWeZVXwbX87TQ/ZiPaQMM9QPpNmJB\nO6BaWbHImgVD8m2WvRLYJhzxqmwmvPuCJ4nY8uHSeE52381Pwwssxkr35+BPkS1W\nQmjfjOd3jwM5EG2sK/wLhDcyXWfkKv21Xi3fJZR89kq0TjIkvFcgldsXm48LX88L\nl3G3Lzd8B0D1BSm5OtdAEJrnDoMy59mjPidBVtoM05Mt+5WpdWPpJ38wAsQmnDW0\nivU2rFuDWP3S8bb5ikuuJLOi/RjuLUtVt+9bwDcMAMhJ3k4Whz1NIB8MQBkHRpSi\n8NgMo2EdusgHEEppt+8UTBSzwHJrU+oPHs0WHqlqkKh7kPPTIxA=\n=DVVK\n-----END PGP SIGNATURE-----\n",
+        "sha256": "611428bdc5bef1e96f6a86ee5064ef0e22e3612891b8a27e7a129742dad4fe97",
+        "size": 225829712,
+        "version": "1.11.0-rc2",
+        "os": "linux",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/linux/aarch64/1.11/julia-1.11.0-rc2-linux-aarch64.tar.gz",
+        "triplet": "aarch64-linux-gnu",
+        "kind": "archive",
+        "arch": "aarch64",
+        "asc": "-----BEGIN PGP SIGNATURE-----\n\niQIzBAABCgAdFiEENnPfUp2QSUd/drN1ZuPH3APW5JUFAmanSEgACgkQZuPH3APW\n5JUHrBAAkV+r5B1bS2pAIVjcuMMrteEwCqwHOyHrDfED1wgXkUJ6eOQMUKYV0TK8\nYl3wHkfARNpOxh0xJPC1DoIoAnxhBl7wR0+ba2jvobxwCvXaG0JrSA8HxlS/o/ro\nEVqi4OiHn1pVVLDed/0O1+5nE/Cz6wV3JHYvFWr2uQVm7g4sCVWsGmAPVcmh3OsU\ny4ZaugvG0vzupbleiINHxfvX43bN5PNYGQgDqNR3w+U1BZ5FtaWHIzFIwxvmGG+I\npVTsBuvA18v0b+3D0hfRlSgJmon70k6aRLNr/rNd6NRqVBzq0yIc9zGYZUXxlGt9\ngCOMwRkJFhBxnYBvfo/6fhSI2NpvjJii2MA3vZntz3FOuUfY4oq50/lQY+QmezDP\n13cqb3dW5Yq5THXYdDSQFdI3jRqygTW8y7LgY3AZZNBPYMbrzuzeEA4gECBeEnqk\nuqwXaMwNFDBFPewoMgbMFpilp0TXza2+EDKuFMa6SkvMTPJvYagPiSZdHFyJplvk\nDYJau5Jn0/IVcTSDV4tZKZq6f7HBMID1CuvR/V4Gyqhqa9yv2y8QNCu1GGQ/pfKa\n00hMvUnwDQlxgq2GfVYYdF+cKfjstklEPH4ip45sT40xaDuMxwsKQTkVBK8+pYMA\n1V/IIwsLhR+Quv+lHAe3p6HpYwRG5tKOX/jpLm9BbHwyGuNum3c=\n=KeNZ\n-----END PGP SIGNATURE-----\n",
+        "sha256": "947f48e9bf65217782b33be4ce0a9e4c07b5101121871da954c230bb63db9ab0",
+        "size": 245886322,
+        "version": "1.11.0-rc2",
+        "os": "linux",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/linux/ppc64le/1.11/julia-1.11.0-rc2-linux-ppc64le.tar.gz",
+        "triplet": "powerpc64le-linux-gnu",
+        "kind": "archive",
+        "arch": "powerpc64le",
+        "asc": "-----BEGIN PGP SIGNATURE-----\n\niQIzBAABCgAdFiEENnPfUp2QSUd/drN1ZuPH3APW5JUFAmanbTIACgkQZuPH3APW\n5JWPrhAAg3ui/OukV4r2eaZTTkvWcW9m/rJYyGKS0wUItQ6Lo2tV6srVq9sRDvDX\nr3291MQKEl9aMiTKbEyEdwHASKaVIPWiZvk93Put42nrnW1TygoGU3EF0PEWdnXF\npE06cGOdwa+ZOarXXzBYtvBNLOT2gsq0AkW19/XOWIp0yndnn2eRwr1fVg9WHx6I\nozkoXFXivBQ9PO+egpuzUvb9O2GqcrYAxzhor/4Rtl+mKR/+zNQjNvDtDyvpGul0\nbHSpyDcasXHmi2t4d05KTIWL+TjQJIreU7xTmJEuHbJ3bh/o+bHerF9/Amfp1KiW\nQW4ZiN1VIk6T6cu7aNenvQVuMUSI3LOLLK3n8enYbAygKR7fwceSV27T/982hpfV\nJetABnOjk2wkusxxq/iImVhkcz6ooT7tYjaU2K4RnDSLfc0H7QSmrGEfup+ESkYU\nTOpqhSNYtHElUEnQRK3zdMwGOt2RsiF+0p85dC9FPXmCnN3CwkKesz8hga37HwKu\nbzIVgBpkhjB2vQFqkDxNPI4+jnuQYU7u/VxNAZWatKXXPfXiLKQxrprWOmnYFApC\nfYH/KCJOGkIMzWqXvtF5OHf3vHvHMMdQVOeLCtfQ2OHDIwWK/41X1rquwVd291+c\n8oDmH76hvYwj3SBejNB5BHHdzP1FWd/EISypyl+JNNemvza6NB4=\n=dzYB\n-----END PGP SIGNATURE-----\n",
+        "sha256": "3ccbc68c091e6f52a490aeaac46ec24d528e1a41f4b817b7c715111dff169bbe",
+        "size": 237794015,
+        "version": "1.11.0-rc2",
+        "os": "linux",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/musl/x64/1.11/julia-1.11.0-rc2-musl-x86_64.tar.gz",
+        "triplet": "x86_64-linux-musl",
+        "kind": "archive",
+        "arch": "x86_64",
+        "asc": "-----BEGIN PGP SIGNATURE-----\n\niQIzBAABCgAdFiEENnPfUp2QSUd/drN1ZuPH3APW5JUFAmanT6sACgkQZuPH3APW\n5JWjtw//eSMSyWVvRJPwxFFgG2FYTzqYk5nH4k3eFNcyh0Rgx+b7rJvAR+BsYJvP\nN7wrGLz01ueJSxlqGjb/gh7isrqQle6jImtpkMWBcH5iZNppraksyIZR1Pu5MkNB\nAlw1iLToVE8DGDuxF/9fVRHr29lRJFhszfpzI/cwGbuwuRiuLVtE/rpbBemoshQr\nU2l09NW+QKQIMV6be2YbYWje3NLTAzhNFEcDPomWI6mSx0Xq0yB2aY73QVVf7W7p\nMKcVyLtOy5PZHLoRufM/ItvN7jj0UewHYLu+jmjjY9GANF8mZhcQyqLsBxZzCdOg\nycArYU4ICftWLKeKH/jnQKPfYuVZfaAy7YI8+FHCV5MESprC7Q4IBRqwcR6GaxXs\nS5DyDwdkS+3pMupbv82voFWYAt9GP2/Xsvwhi+k070BhvAd4AsHeR3U8+BkKR25N\nMPzHRkufjs4UreBfHrQfyTAGsx2mLQxqUdTIj+SZ8Ea/k27nxc223vraf512UN0h\ni3kQmvCL+QpOoAgD8ibE08Nnftjlfj3FNTGZy70+h1xKILUR6Bg2b+0zw02xm4o4\nBLjutPW0dsLRA//vtNP/x7fN5Xd0u2e8t1NX3ldy7/DLmQqin8kXNdjblrHW7f2y\nUuWYbRv8yZE17M1Lzn2InwPKsdeN2eOMqgfiRmxSbmxOzJXRD08=\n=DZ4I\n-----END PGP SIGNATURE-----\n",
+        "sha256": "971a11ffa935747114ab665ed7128b306c44c753e85f05667c22ea7f6d8cecd7",
+        "size": 253030161,
+        "version": "1.11.0-rc2",
+        "os": "linux",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/mac/x64/1.11/julia-1.11.0-rc2-mac64.dmg",
+        "triplet": "x86_64-apple-darwin14",
+        "kind": "archive",
+        "arch": "x86_64",
+        "sha256": "8bbae9425a67ec6ac9764020129472066ae1d1481031ee837829cfb14d3c547f",
+        "size": 220134250,
+        "version": "1.11.0-rc2",
+        "os": "mac",
+        "extension": "dmg"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/mac/aarch64/1.11/julia-1.11.0-rc2-macaarch64.dmg",
+        "triplet": "aarch64-apple-darwin14",
+        "kind": "archive",
+        "arch": "aarch64",
+        "sha256": "0dc60af418fc913af0053bed24ac3c595b816c5ee7e4ad922d6e3164538e0a43",
+        "size": 209627702,
+        "version": "1.11.0-rc2",
+        "os": "mac",
+        "extension": "dmg"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/mac/x64/1.11/julia-1.11.0-rc2-mac64.tar.gz",
+        "triplet": "x86_64-apple-darwin14",
+        "kind": "archive",
+        "arch": "x86_64",
+        "asc": "-----BEGIN PGP SIGNATURE-----\n\niQIzBAABCAAdFiEENnPfUp2QSUd/drN1ZuPH3APW5JUFAmanW6sACgkQZuPH3APW\n5JWgmw//R2kD5YIH2ti48V+bLe4a+VsjECOfdHJx0lMyv3a3eF/r1i9V4/e7ezeP\nDVI281Jij8P52yRuSB06vGlImHlvsZjr5OYzlxqGIAadv3qGB+yLFI8tFznZx+zE\nhl9e/uAZag70GXQj7wXxVHsMjAK4BgBJX3pYI4LujBzledTjaiOprJtI3uffqC2E\nan33bzQmgunjEsm0vqV/MaYo3ONXYeFsDhDo90qVu9ughSNFtMdu+Dt3Alp0Wsl+\n0R+yqZl7AngnAFQCOZy/FAtwps1YJ4OtdOVXAs+DZRe/RdP3Xsw6A4rlquzq4OOj\n9J3+wdCZ3QlM654CLP+Z6z6GFCB+MMO51F99g6brhOKsqxx5v+bDFcCBVpONmgRH\nhRGdXhnCJrZxtV1xzvGKMQr9T+a45oSHnTvv+wom5sVByn6bf41NaptzHk5ME+Zy\nBS1N8qm0keKc1vII3GDaCsu80UwkGm3c/WCJHYAHLXy5UctgalSNXvn2yO1BdzEG\nMnmUK3UQdCEbgZKYhAItVrL6jsDFWmxcKNHJRjiAWfB41RG4jDbpCLvHOnrwy/0t\n/F+eHk87nFWTag4AMz/jBIcobR0gCd1buxLAz2abHWO73l7mQrdU2aH/UU1MLEF2\niBrVdHIdB/Fa+/3r1PXzaoTXj+IxnYHWQpEgDP7be/Q1Me7c4A0=\n=NHia\n-----END PGP SIGNATURE-----\n",
+        "sha256": "d1c0e86980b6f4713073061ab0c8bfdfa9857c4bfd3ac111b4f9d70bf03e740f",
+        "size": 220168301,
+        "version": "1.11.0-rc2",
+        "os": "mac",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/mac/aarch64/1.11/julia-1.11.0-rc2-macaarch64.tar.gz",
+        "triplet": "aarch64-apple-darwin14",
+        "kind": "archive",
+        "arch": "aarch64",
+        "asc": "-----BEGIN PGP SIGNATURE-----\n\niQIzBAABCAAdFiEENnPfUp2QSUd/drN1ZuPH3APW5JUFAmanRUAACgkQZuPH3APW\n5JWvOA//WjSkEl/eBZnOVrGebUlgIuzoboffSpAlMMZgP8kGZo8SrT8PlvMacOII\nCeA+nQFyIF29ICfKBUrRmNeDzV4MnAb8xWyHIxzuPN3l70le36md+/RNkWQebvT2\nxewiFzIuNzlcXovOSwlj7fS6qk3WXhhjUWfh/lZJAanvPapz/HwaxhxRO9TPYzJL\nL3FVucCXWROZ+6y/keZwOPfIfSI045Qvg0NZNUdpv3129s50KadwyvtjfLRwxNNY\nLHzq2SV1a9llC4jCl1/cB3AGMVmt4+w2rU1VMQuhth6LSAJJrT+ruhM7bCYRMHXR\nQmvpH1zY4wjYoxakFfS68dWJ9N7NgdzPAAVEbqHbL5bjThy0De31CmDOWKyjiS7q\nQ76KAmUNAMxOTI37MwyPbqkOrbAmCllCTiDqwGmeLu6pAdmR7x8/dhBD4Xzxmhm5\n3TLehtvY30LHHjES24XZNWdBFgbcV/iPmMSf6tlg1EerAxB3i/kmJ6Jqf8qwF81M\n2CvLjI/2WeOHY0O1oiSKfvc52dhuSxTR/yTSeSGdqNqeX4Wlx0DJwyuE6NWOWvAe\nVY1GHqOGVYg2HcF4s6MwTRay6I03KesuX9yvx6I2zx3wiPbQTt1GIVrl7uOI2odM\nhuuNluHTI5k8cQfB3J5nmJ+eVcYaUnaUURbeZbWo6CEaOw+KUdg=\n=J5gd\n-----END PGP SIGNATURE-----\n",
+        "sha256": "5c1a39ba9812f285711e210f2fe2312f3834bc10e627f96daaf61a4bd38a6576",
+        "size": 209517012,
+        "version": "1.11.0-rc2",
+        "os": "mac",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/winnt/x64/1.11/julia-1.11.0-rc2-win64.exe",
+        "triplet": "x86_64-w64-mingw32",
+        "kind": "installer",
+        "arch": "x86_64",
+        "sha256": "5c9b27f41094a3458973eeede7ace2af4c2fadadbc7f30b700ab8cf089641d15",
+        "size": 141828872,
+        "version": "1.11.0-rc2",
+        "os": "winnt",
+        "extension": "exe"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/winnt/x86/1.11/julia-1.11.0-rc2-win32.exe",
+        "triplet": "i686-w64-mingw32",
+        "kind": "installer",
+        "arch": "i686",
+        "sha256": "ad6edc2040ff64169bd15576fb078624a8d53347b164c2ab7c4bd7e22a9288e7",
+        "size": 121180792,
+        "version": "1.11.0-rc2",
+        "os": "winnt",
+        "extension": "exe"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/winnt/x64/1.11/julia-1.11.0-rc2-win64.zip",
+        "triplet": "x86_64-w64-mingw32",
+        "kind": "archive",
+        "arch": "x86_64",
+        "sha256": "01e92c9d1a4a2c02ca5338deedee9791682f46b84e7987256c6419bdf4f227c8",
+        "size": 236021430,
+        "version": "1.11.0-rc2",
+        "os": "winnt",
+        "extension": "zip"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/winnt/x86/1.11/julia-1.11.0-rc2-win32.zip",
+        "triplet": "i686-w64-mingw32",
+        "kind": "archive",
+        "arch": "i686",
+        "sha256": "afa4e9e65dfcf18ef1961a81f0688e68c0ee1b8705a8622d20579c110526ee36",
+        "size": 205342393,
+        "version": "1.11.0-rc2",
+        "os": "winnt",
+        "extension": "zip"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/winnt/x64/1.11/julia-1.11.0-rc2-win64.tar.gz",
+        "triplet": "x86_64-w64-mingw32",
+        "kind": "archive",
+        "arch": "x86_64",
+        "sha256": "b73214b19c1789acbb466b7843fc26c0ef810a8bfa6997d61ae43e736bdfbc8e",
+        "size": 243705637,
+        "version": "1.11.0-rc2",
+        "os": "winnt",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/winnt/x86/1.11/julia-1.11.0-rc2-win32.tar.gz",
+        "triplet": "i686-w64-mingw32",
+        "kind": "archive",
+        "arch": "i686",
+        "sha256": "3064482cce3b25910a264a12c0abfd946cb41d26773c4c9085e3b985d6d4ce65",
+        "size": 211877918,
+        "version": "1.11.0-rc2",
+        "os": "winnt",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/freebsd/x64/1.11/julia-1.11.0-rc2-freebsd-x86_64.tar.gz",
+        "triplet": "x86_64-unknown-freebsd11.1",
+        "kind": "archive",
+        "arch": "x86_64",
+        "asc": "-----BEGIN PGP SIGNATURE-----\n\niQIzBAABCAAdFiEENnPfUp2QSUd/drN1ZuPH3APW5JUFAmanS/oACgkQZuPH3APW\n5JVvHBAAtquFmvCcv+HaSanafl8NcBKop5NQx4XIMkNrH31ezTow9FxT0JARi8R3\nGJbWjfj8/4AoNfvyVALxPb34ED4d+UDGLp/US8UFgsi4J8bxChR7RDuHH7AdNdyV\nxMGP7T0QCw9rxnJxhhFzktTv9w/6BE09vCg1EZs88gKN6aehNV46dlaV71D+ss63\nMhYts60QdanpIrSLVF7syFIlUCvHZXokjEFmR780DnxkRE8Lsjk07DSYX956OJiI\n0HANGYNIr7EgpYWhqWHrEPDbMkZljzrUmZHaeLGhTYldNLuiwr0xRqsXWVbPQuJv\nIqUjKER6Lhg/d9XLvncNdbeVZHwUMzQoDLu6XZquYUGa/2ACCGKh+eLvQRY8jESp\npdMZP5wwFUvcIVwGORjygi1p2yFpDk6SNowUyc28hFGz5uLZJQwuUOdCE9G0luZn\nfbutsj+id8rPHpRN3fY0EXNMqOIXBvtIqT8gq6oJqqYfVH6RrzYMXT9LVso5aaMV\n+gFLgtz86x58pQwUxi8NcD8K5fB4vaIfuHjR50/gIk2JMD9gd/tL38TL9b6zhdmf\nKd947eR99arKDstOPFM3/0ju8htej0dpZ6k0qRbbpBX+3pU/y03scAsnkgLpVtta\n0+ByxtiwYXuCKq3q7nZYFvCAI22P3Hx03LLsVrbtHp35wW1tlV0=\n=gYuV\n-----END PGP SIGNATURE-----\n",
+        "sha256": "cd6ca1fe4fc80ce5b4999f1fdcf609292f08d6b7fc68420ebf10b5524e408e48",
+        "size": 225390336,
+        "version": "1.11.0-rc2",
+        "os": "freebsd",
+        "extension": "tar.gz"
+      }
+    ],
+    "stable": false
   },
   "1.2.0-rc1": {
     "files": [
@@ -13194,6 +14469,372 @@
         "sha256": "ddf7f445aa6cac8d32a6e4ca9fae34c997c2f7857e551a1a936c3b99568b0083",
         "size": 152730882,
         "version": "1.10.0-rc3",
+        "os": "freebsd",
+        "extension": "tar.gz"
+      }
+    ],
+    "stable": false
+  },
+  "1.10.4": {
+    "files": [
+      {
+        "url": "https://julialang-s3.julialang.org/bin/linux/x64/1.10/julia-1.10.4-linux-x86_64.tar.gz",
+        "triplet": "x86_64-linux-gnu",
+        "kind": "archive",
+        "arch": "x86_64",
+        "asc": "-----BEGIN PGP SIGNATURE-----\n\niQIzBAABCgAdFiEENnPfUp2QSUd/drN1ZuPH3APW5JUFAmZfSwkACgkQZuPH3APW\n5JUTDw/+IoGiQL2QkT1NI67OZs//MvjMuAS+dhiaqQjP4AQ98UpitLyMOydK2FzP\nVBYMUIZro7rPPX5Tz6/Olv3AaItpbZkd3y0hmcWFINCBkkTRwCep9hTdN5O+IWhq\nAxnDRr6pkBlpYnC/me9RVjQQgrntTVhZywYTUNaMAOE9r1jt4+4BUVQP0IDfpUII\nyBq4oifRPPIU+v+GgfrrSwaaJNB1EHUSHhWcbhZY/P4rVX6Fa1iwrDffodSSlER0\n/blCudt9CSWgtFRfbltLy3HE9V4C520ebKDpgoRAvTSlPqZ9taLYC8Sz1mzafzsS\nIHg1wzooe5WX4CDigRocFNbDuspZD8vVbWy5huuxurAF+4zoL/OaCNTYLf4OBDbJ\ntZNJ70+5KQZP4q+lLB1FcDRnErZ9r2nCWm9XNuvRogAyiW/LdR6tBiIinwaYL4fa\nWDFyF/wFkLUbUZoA8FCOWBMUktWGF/UshrtgI/ag5HC328OSjcQcaiTYjyT8uDW1\nNSaWOplq2r0n+sPkLjYv5S6L3kGrYjAtAaXsNpssZQGj1lqHb1qXi3lD32qSDbOa\nH/Gp88P2ASTo6qR389P2pGfezWlHb0oS73HigBxuD501FSavwi73s2m8nHK5i4yZ\nJEn1QaM3UWW+FPvPHSeHaK+23otCDEKq8NKl1uKCkIs7FTeDPeE=\n=9nlK\n-----END PGP SIGNATURE-----\n",
+        "sha256": "079f61757c3b5b40d2ade052b3cc4816f50f7ef6df668825772562b3746adff1",
+        "size": 173704015,
+        "version": "1.10.4",
+        "os": "linux",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/linux/x86/1.10/julia-1.10.4-linux-i686.tar.gz",
+        "triplet": "i686-linux-gnu",
+        "kind": "archive",
+        "arch": "i686",
+        "asc": "-----BEGIN PGP SIGNATURE-----\n\niQIzBAABCgAdFiEENnPfUp2QSUd/drN1ZuPH3APW5JUFAmZfAdQACgkQZuPH3APW\n5JVHug//QDZt7r7QbfIapyMTrR83WbTH22PD/OW71gbRRDvPx0no2oO8XmneKCFi\neKejCR0FcGldyKRQFiYjYJd35cCP3YCd77Ad9nRnk3BnFx464pOeqYhleoLzOum9\n7R27ZWvqnv+Gag8BYAT6Zbytq/8yThWRUglBrIvkkC65GuN3BxjunxAnrPP8D7sD\nHs7ekKAh1lLAPLjg+LVktc/QeRt97wmftlvH8Ug/fQyN6VYN4VAOVFS1+vSGcuu4\n9ABUZRtRyDjkXYcxamVbE667Zhe8PJ7NY1N9ELcp0i9XzLaOHkBXZXMgHNz0Esjg\nqrCMye/NjJEAjr7C9UUwUUZ/bwkFiN/o2b0w+Cd8dtOTPuIm4IWcQ2Hm3CQWtmBz\nlADe1cqtcNx3uTrcUGD8FJIbPWuDRhW0GjY1b91JL3fpEeiyKAITVipVQtzu8SVh\nCWWwamLi24e+Ajxs0cDpUmbo2qL9ySZv89QScNRKOAKvVx8SuNx0jZJESu+cT2E8\ngNS8Ab4KyguN4Xt8JWhFX5mm4HiGkFsBG+Z8bSeAXi3prfHiR07GZGKl0st6O04S\nyfAjby+2xXgMOwCaX34wcoRFGYk5ZZbE2iizPZOtSFsIQj/z+O9VCKaqXTaSzNrw\nvuMAVBgRpg62t5PpQS9EcRA1wah7DauWUyMuuO3WwI3plJZiBMw=\n=1iY8\n-----END PGP SIGNATURE-----\n",
+        "sha256": "5771c6032b2be4442f4d4f4fc610eac09a48888ce1f4a41d10208e9d413f5054",
+        "size": 153943073,
+        "version": "1.10.4",
+        "os": "linux",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/linux/aarch64/1.10/julia-1.10.4-linux-aarch64.tar.gz",
+        "triplet": "aarch64-linux-gnu",
+        "kind": "archive",
+        "arch": "aarch64",
+        "asc": "-----BEGIN PGP SIGNATURE-----\n\niQIzBAABCgAdFiEENnPfUp2QSUd/drN1ZuPH3APW5JUFAmZe/5gACgkQZuPH3APW\n5JUTFBAAoEsBWVgZX7khsAizWsWB6CvpCugktZUzLG4daIsqFYC+6BexJrx2wO9/\n6vqdVS5/LBJcfdsRALKXEr6K2/OlsOzEESmq+EZnxL/3PUXvQGT69aMDX6RVibVK\n0VgePcQ5i5fXaZdWg1GKRc8R324GtfTaDp6EWI5Ng0qj4fZtmDsHE9wpR9SJkyMM\nLCRSw9URiPBydLFP2MZ90vzKTYaipMsAvNsGykV5awTqRjJFysEEnoQb51PhSnw7\n0YrzVg7nGA1vJATTDvHESVQjCm+k9LMWvgaraI+tQTML/PpI7jMwejf5o/9L2Vpa\nEkKKrvsyydueKXi7PxndAbfrSQQFJr0F0plt0fDDDcpZ6F8UT2z5DKlt2l6+XBIm\nQCcDQE9huKkpVJ1AcyhU63ixMSYZRqjkfhW7FP1rbi2g6e8vmnTzFnQTp+ug5JVG\nF1fOOdPDtxgFnkyJfxI+uAxA7srcZbQ67EvYQSdMgShfVKJTfwFHc9PwCmzDnNeU\nRC9f6jVyBIgij7hwGJGO1YiGKDirsGs5J0lBSjx8izb1iMcK7f4K7HsHFF9m4E0W\nj4HfhLr9PdG6Pd6bwQpWhzDI/sG7/KXzf7q3efGr79ztcN7mx6J8R+e1hoVc+mfQ\n2lMKghlF9Alo6PEdgxpK4mO4Dx8ZY7KF9trDf+dI8smAYT8aPJs=\n=d+ln\n-----END PGP SIGNATURE-----\n",
+        "sha256": "ae4ae6ade84a103cdf30ce91c8d4035a0ef51c3e2e66f90a0c13abeb4e100fc4",
+        "size": 174444470,
+        "version": "1.10.4",
+        "os": "linux",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/linux/ppc64le/1.10/julia-1.10.4-linux-ppc64le.tar.gz",
+        "triplet": "powerpc64le-linux-gnu",
+        "kind": "archive",
+        "arch": "powerpc64le",
+        "asc": "-----BEGIN PGP SIGNATURE-----\n\niQIzBAABCgAdFiEENnPfUp2QSUd/drN1ZuPH3APW5JUFAmZfHF8ACgkQZuPH3APW\n5JV16g//dW6GpiB0UfoEN6Wgh9a1pTMlpbJT+kjGUw/4w1sM9hO/B/sRwiE9RR8L\nGIaynw1wfi/hPAll/oqjMD+fAHfO46/cfJRDDmDnt+0OpEelIJNSugBZYusOKrjW\n/ofBIHMfl2GSHOOUHOVDeAO/lOcBJuqiy+tHClrPE0ner0ZIEk46cuiTFwqy/7LE\nKo64RgRXQKkvYE9HPc3Mgbb1m+N1A5PJ+fMrDgu23Iz8GF7eA1+Dr1nU2TC2XA89\nURkow7Iqws9VcQy3DFQ8ogqu2RP2fxt/QWyeRLpx0VqkXJGrCGNeLkMgaGH2Wc99\nK8UemcNGifvpHkxjp6RXmleT9fFLojVbxtS3rB0hgtX7CXpKi0rvtUiPlw5OlK6x\ntlByumtQjSwnpKaduTaT/WCkVH+o3qtutb+cZSIXKl7mGcPffMCLnRxDXwgQuiu9\nMAwH4aNEfqJn+tSM/+goShKBNNN3HfkLzHr7uFpc2GoZSsUALKTnT+QW1JuqXgp0\nKiLvhPNApiYgaH8YmA2kElK5MWwNah+C936Ilx7d1H9ssCQ0pXgCt8NoyQJmsymE\nOQy0WmkZ19rNJjUMHPty6WnA3W0elrODG8ZFpBs4nvKLQ8LeSOVvXXnpoHiNAkHf\nH3UsHdRnfNYDMGCmiv+aVkzCnQH0AaKIypdewbxfxPnE9efQ6RI=\n=Ivh+\n-----END PGP SIGNATURE-----\n",
+        "sha256": "0703f983894974491715e816a006e0f063966544023f470c94c71ef99dff9dba",
+        "size": 152519899,
+        "version": "1.10.4",
+        "os": "linux",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/musl/x64/1.10/julia-1.10.4-musl-x86_64.tar.gz",
+        "triplet": "x86_64-linux-musl",
+        "kind": "archive",
+        "arch": "x86_64",
+        "asc": "-----BEGIN PGP SIGNATURE-----\n\niQIzBAABCgAdFiEENnPfUp2QSUd/drN1ZuPH3APW5JUFAmZfAqcACgkQZuPH3APW\n5JWTwA/+LNIqJAgt9WnWIIBoJ0/PtwfLl6nFFb5bKATMl9OdW4bURQT4K/wLsnm9\nM//1CX5qoBSay7tC4haaX/0kEDE5NqkYNOwcPuqn1noSaKezv9rETmBwieYoNGE7\njT5VzBAm7YWQayP419ezs4ZuO8Rkk0x2PBUYrCKhzJypINfoTxRGLyhRWH//VSJu\nK3aZylhy8uUIpexDevjx796BwxzvTHDozTXZzFQ+mMw8cGjRfWTWZbqEX7/WfDYD\ndhnmm40QbwV8Mtc75RI/j+NsPiBpLxpztDytYKmC9lOMzL94gE6Yhw/FWT3Stxlu\nyIcmv5MPMXiMruhx/hP2WvsURKDip+T22r3ir4nL/E+KZg9sC3xtzOdjrPZsfWna\nDJg3LpS0IjVNqaEf7RRvqS6ErkIO016+TXeF+yqp7ld3SX/hW+COII0Wca9aels3\ncTPOc4oBExVnZ61AfF85ouDyCy3uMsiavrA2twPdCuqDAv71KF6F+ACXDQQh2pf7\n8hl207EWx56OPVl02nZq3xsEhx85Yr87tKMkJcoFcVbkMk/F0YPo1Js1mNTZhAlo\nbkYZzCbrMydochSRw8n/RzUWJ6/oXaTHv5s+IZc7LL3K9A/JyCC0BKhgr6cOngFw\nRcr+4+5F/snU1GvkMlDFYMrGd6kq2UqmSRMG3aRBKul29MGErdE=\n=TlB0\n-----END PGP SIGNATURE-----\n",
+        "sha256": "c7506a1aad431ff1d902a3f4eb9373cfe25440492b45148268a5aca48ece04c2",
+        "size": 174382283,
+        "version": "1.10.4",
+        "os": "linux",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/mac/x64/1.10/julia-1.10.4-mac64.dmg",
+        "triplet": "x86_64-apple-darwin14",
+        "kind": "archive",
+        "arch": "x86_64",
+        "sha256": "19e419ae40d798f0445b7e3ca875e11bd4f8ffd95ae83c818a08a7f5a41bafef",
+        "size": 150671043,
+        "version": "1.10.4",
+        "os": "mac",
+        "extension": "dmg"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/mac/aarch64/1.10/julia-1.10.4-macaarch64.dmg",
+        "triplet": "aarch64-apple-darwin14",
+        "kind": "archive",
+        "arch": "aarch64",
+        "sha256": "f05c042d7bf42807da13ebdd27d1c217d2ee2a42294f7e5cbd61546f11d3dd1e",
+        "size": 163644235,
+        "version": "1.10.4",
+        "os": "mac",
+        "extension": "dmg"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/mac/x64/1.10/julia-1.10.4-mac64.tar.gz",
+        "triplet": "x86_64-apple-darwin14",
+        "kind": "archive",
+        "arch": "x86_64",
+        "asc": "-----BEGIN PGP SIGNATURE-----\n\niQIzBAABCAAdFiEENnPfUp2QSUd/drN1ZuPH3APW5JUFAmZfCPYACgkQZuPH3APW\n5JVi4w/7BdFCsMs/be5oOl6FG+gLyEPuNgfZbwyntlsyfGiAJYeO64yTXMUaKs71\nbfQ2jQvSjv0FF1MTKlRSn2Y2GrK0CJIhT6N9ufFc7O4dZbbT/WAPFTtr4Jnv9liB\nfJfTpY6Ws8ZzyTyN6FW56d9BRuFT9GSrdmfF+jQQ3Xmof0f4CX6DbjZdyWi4Qc8V\nsTurgDHDxLf6y2RJZUODP3MTHYuS6cevXjP6BymQB2fMi3eUHyaQDxr7HBBQ90OZ\nlD+vmLeJ16itCvzVJPYBZjjCnUwDFjaXfxmcl8ziY3bmGE9zYKw03rBgIasgQeq9\noRKPKSGIaa+IxwJ2UuO9BoKNMfZ3wBNheV+WKNIITE11IZoXvWaS9cfZiiPnmgKj\n6BEdFZp510x8DITLmfSyes1qhf+/eNjzn+26OiqT/tzoLkD63ETErlg3XYPi9Ypa\nHGc7Me0Gqp+IiE+adYFIVBtaYtxpumykTQ4z1isfocIevwVCet8Z8tCfTk/w/4nn\ns40cQRY0Jrv12L3FE5plzIVXdv4Aegc8OUu0JKmd3+U73y/9WmiZlCG8EGUwvagW\nDHi+P1m88wb7Qzp+E+XJ+yfVpiqlvsWYnPx8dyY9oZ6xphUkTDKa0vyBipTTEMbY\nh1U7quc/W50tmbVhzFurnob/H6UcqsZUGIv2UNPFFLM5Vjt5Tg0=\n=gbC+\n-----END PGP SIGNATURE-----\n",
+        "sha256": "259c18a5294dd41cc60117ecb9fc5a8b2f659807284903a65439fb9d3818c763",
+        "size": 150117788,
+        "version": "1.10.4",
+        "os": "mac",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/mac/aarch64/1.10/julia-1.10.4-macaarch64.tar.gz",
+        "triplet": "aarch64-apple-darwin14",
+        "kind": "archive",
+        "arch": "aarch64",
+        "asc": "-----BEGIN PGP SIGNATURE-----\n\niQIzBAABCAAdFiEENnPfUp2QSUd/drN1ZuPH3APW5JUFAmZfACsACgkQZuPH3APW\n5JXqQw/+NfSJ4ZvBCDLz2U2xXoGB05KU5M0yCzK6lTh9wAUm2Itslz4bIO5aR7pF\n+LrWBdT/8u1HyaVc0vnwGX5ExEmpmaMvwbXXMyNm417sWA0kpf6sZQAD3bC/k9eN\npGjFDTVlPMSCB7iQqFg9WhLWEP8oginsYW/oTB2LqY4AgEoC0Voz0ysHFRJ1oL+r\nATnhZM3yzMOWHyVGkdMPDgNGiAuxoQob070q6mkwb34WpeI3Sz5NqXe9hgyvqKHN\ns8USNJ0coqg1wuBFnpPW2J+srDFOn04J8Qa8ZlnE4LvyhkCJWPZqGcVLWdmFFhm+\nWUb05wh0yWCokVrGgt4wYoab0uiTktpg7Vr4YcsxiQRS8TRa6YwZmVoNW5IfKdU4\ncgPtwLhpA89jHhcghqB0p8CGkG2HpDuNYxY9aUKF8luMFDW+TiEI104x9WqTkCfV\nPzUlG7dpS9+CdDABy7FozEfDy4FjxVVscjam6EaQa/iep2QNkSkzaq4Nmwde4Sss\nk8RVNn+OKIrmBH5ibVyl9/snck1gbVSpLI7kZLJW93OZ7702PdBZN84/cp74wYhk\nR0Bx8It/RGvCC0eFn83B4KFD8e4bRIFqdUT9DndzxvMI50kfVoOWYlV4BalxrYhk\nBFmWVnM6LxbFzx/W1/FC62PJmGdfHeES2jbG9Te+PIxkL+6nFLk=\n=TXML\n-----END PGP SIGNATURE-----\n",
+        "sha256": "97b88d7f9b5724118769f3a3bd259f8f7ada48cdecf3d584cf68162dd873dd10",
+        "size": 163105646,
+        "version": "1.10.4",
+        "os": "mac",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/winnt/x64/1.10/julia-1.10.4-win64.exe",
+        "triplet": "x86_64-w64-mingw32",
+        "kind": "installer",
+        "arch": "x86_64",
+        "sha256": "c1b659abc90991dcbdf461f33cae483501da736fc223c11d4c51f337338ccb21",
+        "size": 109213384,
+        "version": "1.10.4",
+        "os": "winnt",
+        "extension": "exe"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/winnt/x86/1.10/julia-1.10.4-win32.exe",
+        "triplet": "i686-w64-mingw32",
+        "kind": "installer",
+        "arch": "i686",
+        "sha256": "5dbbab19864d27dfc06b84f872a8137e46e222344aedaea44f6c78bbbe702ae9",
+        "size": 92488184,
+        "version": "1.10.4",
+        "os": "winnt",
+        "extension": "exe"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/winnt/x64/1.10/julia-1.10.4-win64.zip",
+        "triplet": "x86_64-w64-mingw32",
+        "kind": "archive",
+        "arch": "x86_64",
+        "sha256": "aa31c7d074060c2aab84a83ccd2fcabef6900c6e5f41cff8fd514fc28c42dc44",
+        "size": 176725622,
+        "version": "1.10.4",
+        "os": "winnt",
+        "extension": "zip"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/winnt/x86/1.10/julia-1.10.4-win32.zip",
+        "triplet": "i686-w64-mingw32",
+        "kind": "archive",
+        "arch": "i686",
+        "sha256": "6458722ff8f34592b5f48b872c54d18218edd51e22deecb7d755bbaf3fb7ae66",
+        "size": 147536060,
+        "version": "1.10.4",
+        "os": "winnt",
+        "extension": "zip"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/winnt/x64/1.10/julia-1.10.4-win64.tar.gz",
+        "triplet": "x86_64-w64-mingw32",
+        "kind": "archive",
+        "arch": "x86_64",
+        "sha256": "c69ef4fdec5b45d02c18c2296422ebae7716534a86beb5b7e394fc1477f15e24",
+        "size": 182191504,
+        "version": "1.10.4",
+        "os": "winnt",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/winnt/x86/1.10/julia-1.10.4-win32.tar.gz",
+        "triplet": "i686-w64-mingw32",
+        "kind": "archive",
+        "arch": "i686",
+        "sha256": "f87dd26756493e7356323b63b7b462be1a80edf91f4861595d25017735c61d62",
+        "size": 151549067,
+        "version": "1.10.4",
+        "os": "winnt",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/freebsd/x64/1.10/julia-1.10.4-freebsd-x86_64.tar.gz",
+        "triplet": "x86_64-unknown-freebsd11.1",
+        "kind": "archive",
+        "arch": "x86_64",
+        "asc": "-----BEGIN PGP SIGNATURE-----\n\niQIzBAABCAAdFiEENnPfUp2QSUd/drN1ZuPH3APW5JUFAmZfCRgACgkQZuPH3APW\n5JUQzw//SLMKqREl2s2e27T80MDp9Mjj8NDupWFY4+uCchGQSodT2GcHYEmfL05i\nXjilX5Yrs6/MardFP1qrm7KflBfvJPaHBmkFrfB1K4zx5iNRA+T00ic6K5q2AlaZ\na3IGggVBsk2ywSHKLpZPiyHCsiMvqygORPM0NX/9g4cgxNW6T/MjKrrcTBOaxJoA\nnYoDSqAAiHCNEdr1hdTgge7VCpIxvpR3RHN9N/blbdVo5e8zZfcCuitvFE10buCJ\n7EraXIW8US1lCrUJAu/HXr6oCFnI1j2GsQfyZQ8/MzmShoLBD1N2yMAToKAW0e3W\ne+NJRfxRqO/7qOrIjjK/rCSKLC/NpsfKpZL8i15tw/4SX2Gxhv2DzEbJNkKdEbyT\ntcrbIRY9nv9juuwlxPPfqPNXxoshaXQID7fmtcGD+vWtraKa0t9+lPATB4m7ZnW3\nfnFcX0YQU3+9pdrBKhYDtFVLIqRDf6aQGAndqe3j93q9pWPWYFCX0ehRCg7O+iLB\nIwq03KhiyThfhF8zRx/z0Evra5P0nx0s+I4UB/AWTqMbQLfqBPw85yDqsklbQAvm\npY0XoDaMhy977RkIncz0vrDnzh5hV8LuqhUWz/XNjq0GRA9/Ffdj2O8u6nDIdsvY\nh8B8zxwMTcM7J6ZLgcIFr3lnMftiHNwje+BXD9xfpcSTDJbe4RE=\n=pXEr\n-----END PGP SIGNATURE-----\n",
+        "sha256": "fbd1f72f6ba9530accbedc321b9173e0039c036c873b58467f3362cf4bc706e6",
+        "size": 157488005,
+        "version": "1.10.4",
+        "os": "freebsd",
+        "extension": "tar.gz"
+      }
+    ],
+    "stable": true
+  },
+  "1.11.0-rc4": {
+    "files": [
+      {
+        "url": "https://julialang-s3.julialang.org/bin/linux/x64/1.11/julia-1.11.0-rc4-linux-x86_64.tar.gz",
+        "triplet": "x86_64-linux-gnu",
+        "kind": "archive",
+        "arch": "x86_64",
+        "asc": "-----BEGIN PGP SIGNATURE-----\n\niQIzBAABCgAdFiEENnPfUp2QSUd/drN1ZuPH3APW5JUFAmb0AxIACgkQZuPH3APW\n5JVZEA//RTTiRk4COT1nKj2R0A/ipkhAAVlkN42bdVpNXahpAyRyr3NXO6yYRYOI\nUuQZfC6Hpzd4zyhXgXv+Cu6wEikeVe60VimBfPqp+JpVA6g2RFFXZJuisALerCtG\n3TTPKrpzKUxa5gNludE8XueMuIoXoE55jrNKE+KD9BKa39+avdIKPn7YgsoYeSCK\n7/dvd/1AlMwUgUX4slJUprago9Gntvgep0afX3Rc/lkGy5LT/7ktMF+4QOQTJtAU\n67LgKGVAG2ymGVAvezplbNwMItYbmUhLW45ClPKS5hy+aZOLxAhLlYt7VY6tprd9\nKTrUPltnXTXD92t6zpfEQYwV6ZBC/wvG/O5psupR4AebHO159DHE45py1aDDKvDQ\nYd0j3dLitp4dLPxLRYJ6siiZAriy5AMYLDibBdA6U5ed8e7qClrjDS/G5CiNs+tj\nelZEtjRlQ64bmeCwJNvkJ1uBDJhURpzagt0ooGBRZ3KpRUrN2/ITkvvLFeunWG5f\nQmxpwYU6zTWp2wXXLoVl5oS/t6OngRh2bRgrWvPAXX1o2Tg6jwcmH8Q9BufZHbXm\nG06VssX7tOJm4iu1Pk4SOMbcltpjjHa0ITsCm4YsaNCRok1OpLBpceEj305Rkh9N\ni9hUnPc4GvJvxCkC2EzHw7mCJNUR5B7i2SMBJsvL6JvbLlz+oQQ=\n=ukNP\n-----END PGP SIGNATURE-----\n",
+        "sha256": "fdbd1aae595bd90f20b01cffe7ec34afcd25568b6351888065c934923ecfa042",
+        "size": 254151619,
+        "version": "1.11.0-rc4",
+        "os": "linux",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/linux/x86/1.11/julia-1.11.0-rc4-linux-i686.tar.gz",
+        "triplet": "i686-linux-gnu",
+        "kind": "archive",
+        "arch": "i686",
+        "asc": "-----BEGIN PGP SIGNATURE-----\n\niQIzBAABCgAdFiEENnPfUp2QSUd/drN1ZuPH3APW5JUFAmb0A/oACgkQZuPH3APW\n5JWGKw//Tv4P+gRKQuZMeFu75xFRhdALgGkOCFNyv8/mebsCsJWAFqq6boTdik1v\nIiH3upFclPphDYyWHhEDOeD3fmDRQOSlCI6GkMQrP3DzxrktyLf/fZSZXXRGpk0e\nwsirdFaumWNIrs9khB3Bp6ZK31JZjCD9HkepBB1hvRvnjaGeCnVn1q3QN99ocVQY\ngcQX8Sy/jKuEjFQ3c8mAdCcPiovBUQYCEk2eQVQTOSe7X6xWHGI1X3MHihiKGiXH\nguMEXw8HeM3PJfipXTjcw4PJkJumOXak7v7fJ3Olb+aCVgpKqSaxl4Py2piUCoLh\n5zpfVTr4bj3/HYSzZYyZPna1is8mSkMJAJknJMLyq9HOug5r+/BqoXahl5YazbiX\neWT7jYExK+/kL0AntE68NcKcJj9+N3Kic5R5MjNlIKFd+I/gqlXmNmHAJ7St7kSS\nYVGnniP0LPIgBcjNxspM9oaZV8Er33QR/ym95dpNOLWTJteUaCEX14K7ws7ztBVE\n+b+sJHvs30gzwyKIE0mwUqMq3UOcLXgfaITck0R3faHOR5+Cci06GNF/Pacu4aCU\n12hBdfcTo63zsF617kLGWPJ+Ahr0Si4Q+dZcFz1LKSzGA7du6DbChoszfF5bz0KI\njU0zd84zR5BhJ3rFfNGN9djcEwQN7K2UWoQV7cJdyTFfopgpEmQ=\n=71Ct\n-----END PGP SIGNATURE-----\n",
+        "sha256": "dbcb66e774c71daf53d8b2582d30352c8696f05907e82b64a49754f718447196",
+        "size": 229439244,
+        "version": "1.11.0-rc4",
+        "os": "linux",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/linux/aarch64/1.11/julia-1.11.0-rc4-linux-aarch64.tar.gz",
+        "triplet": "aarch64-linux-gnu",
+        "kind": "archive",
+        "arch": "aarch64",
+        "asc": "-----BEGIN PGP SIGNATURE-----\n\niQIzBAABCgAdFiEENnPfUp2QSUd/drN1ZuPH3APW5JUFAmb0APQACgkQZuPH3APW\n5JWJuA//Yrvgi8reN2tYIE1wBuF1IWYH4r6wzU0ApytL9jVSFAri7Cj51KRCaZFO\nZvk1bJgxzhkkKUqXa0dCgioaelSBAXn5XP3eunrorSDz2ZByf9QqDbuLPUfTn+o9\nM8aP6XfvMKf3OaALAnH+6k/abTuX/mUAOdjjlC2FUlBR3IM2QQCaN6UhVvjqgy2O\n5hK+8nBm/CB9WYwq4y26O1iHJ7CH0A1lNNN15bRJG3PEz9zfvphBtsoD3ec+kZMS\nwD2+QM0rIN7vSabp/Xp0EqZbGmPDtIHG7DTS0zFI1HRD7n04hBkhpesWI/z07Lti\n8JJnNtrPeXrZ7vFNSOGYHL47KdcQ7aHZPVweBaf6XWp3lqBI21RYJ0Glh4cbly6S\nUp73hWxYPWKleNLehmeXeocp9pAi8EM6FmdIjqKvvkze7Dnj1iTaEEHbKOpM+ZRm\ncoBlp4sEaPD0SlvOjfZKBu5HDgisEZ6TfuLsNAcrcLBYOJSug2AWK7A7CEnkVSm5\nL5EOfZzPiaWi57PjalXzS3dkcK6mG6ru/Vjhp+Ms2UrZWI4YFURQJ9vTYjBoE7G1\nDzJY9DpwoRVuPgcQbPTlAgHlj1/wDdaUH0CDA760C3poHUi0K/KUgB9gZq5hTJnp\nslEjpQRVyxLQkORWY7uIHvJAonENtLYcb83ibye++c17J1+IK98=\n=4AU1\n-----END PGP SIGNATURE-----\n",
+        "sha256": "bc87e519a7f4d1633ca38db2b6bafd58f7025601202291a8ab6dd680101ad44f",
+        "size": 249454890,
+        "version": "1.11.0-rc4",
+        "os": "linux",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/linux/ppc64le/1.11/julia-1.11.0-rc4-linux-ppc64le.tar.gz",
+        "triplet": "powerpc64le-linux-gnu",
+        "kind": "archive",
+        "arch": "powerpc64le",
+        "asc": "-----BEGIN PGP SIGNATURE-----\n\niQIzBAABCgAdFiEENnPfUp2QSUd/drN1ZuPH3APW5JUFAmb0Gl4ACgkQZuPH3APW\n5JUMaw//YJJ+tuE60vV4oMj6odmP6T+driEuxdc4vfP5CEdV7ItlpzyvqqyGmlDG\nxuTFp2dKsKhmZ/yOUPnDQIoRDHO8nlYDVZSSBUYNRJYO7RUV92e0JJFmTFQ4cf7t\nrcy34WpYSY+QMEoe6gvRM+7Yb1bSJ0Q49FLapW8NbiGL3pXsdaJ8jZClnToJPmCG\nyyuSvbXRGJmnAUAh9MAa8kV58XLoc1g4PuFEOuvfF0bA0lu1V9BF85dDr91Dxggb\nky/yuDFqjs9hHd9EeROYTgL/8zmtRfliGFCkaDrwqoxpknEy27sZ/pGyvHd6YKNJ\nov0sFt1uRXN/rVMVDuL3f8YgLt1GDw7FwJ2MzmFZ2YEmJurKb4U42w71CFjEVaSt\nn+QS35VrL92hB5HUoi0ecGH9ffcAFL3xPEwODENgh5KJ5EpZ25SG6nv+HVdEckgF\nomK8cqP6Q3HEQaTguPS1We8Q7iQuk6UKiIORscIGRZmw1DOqX0PF3PljHIftsQXY\nHppQilk8Vis+T1RNfxIafdBPv6boMAE4iVUUE7+bWDuA4YiLCq6ZD+6XLrntpvTf\nXNY0RHzThE83NgHNhkKeLajnD5OBJ9t9wuBhcOXma/I+h4e27fleYknmVVyKln8z\nYeJ3jQx0+IQe9VXE4nSQTIKKjh0BdsOjP2XqxjaxVyWS18DH2mU=\n=C2zR\n-----END PGP SIGNATURE-----\n",
+        "sha256": "06892cc4172e4e7a62051e68acd1a664da5e8e0cdd5f4902c5cad679ac27890d",
+        "size": 241420172,
+        "version": "1.11.0-rc4",
+        "os": "linux",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/mac/x64/1.11/julia-1.11.0-rc4-mac64.dmg",
+        "triplet": "x86_64-apple-darwin14",
+        "kind": "archive",
+        "arch": "x86_64",
+        "sha256": "e8b40142c81ecad7366fc21cef02cd9d3820465c2e233382c052f867c215af31",
+        "size": 226684418,
+        "version": "1.11.0-rc4",
+        "os": "mac",
+        "extension": "dmg"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/mac/aarch64/1.11/julia-1.11.0-rc4-macaarch64.dmg",
+        "triplet": "aarch64-apple-darwin14",
+        "kind": "archive",
+        "arch": "aarch64",
+        "sha256": "2863c303d538fb5f1f04b663d7ebd242a326d59b292432f2f4da1df03925ab89",
+        "size": 214978622,
+        "version": "1.11.0-rc4",
+        "os": "mac",
+        "extension": "dmg"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/mac/x64/1.11/julia-1.11.0-rc4-mac64.tar.gz",
+        "triplet": "x86_64-apple-darwin14",
+        "kind": "archive",
+        "arch": "x86_64",
+        "asc": "-----BEGIN PGP SIGNATURE-----\n\niQIzBAABCAAdFiEENnPfUp2QSUd/drN1ZuPH3APW5JUFAmb0CSoACgkQZuPH3APW\n5JWslQ//eJbpFBNWtvmFDg+bVRj0O2rKzpbsA528RT20E9fWLdJu3zWmT2hBq3wc\nXk1CdD/0C0yJYdSCWj6fE3uR9lyJ1DYcmjwkw54c0FOMe8huoLqVsJqD5pUmcIV5\nOcrZeYaj+d7suHGwWYqAlXNy2sQswJpf0ke17pddtNLL9bFmXndBXCV3n6CFyPsc\nsAsEZmRWu0YphIbJTmrfp5U01FR0hGKRIKlodIHaVLj1HFfjw78TNq6zJo6PxErL\nGwVOaO9TII681bolLokgqVs2cKxyBm9TM+/fk7hOGVVncRCxvFSc7kHdbzi++1Sy\nb5mf57PjZeCj5t0L+4arrqHUqOyzht+CH/g2wPiRgGchhxKqufz1minfFcrH6E3+\n6l05JNZ0ywWvUxl+hZs9qLadA9+Y9Dt6JlSTuXNBeJjiT+VhCqSbbBISbjI66BrR\nYDg/5CTjpwZQrUowQ6hzMWoDe0tsWrYyvFvc1hi3p6wz3umFnv6Ks5er0Tk1ixwR\nUELyJo1lJ6ml9ri6OCuSntg8gGs+AafjU/b1gJse0V1WAEjt3Qqby+lTSiZHwqva\nxqulUKBwWj5j+xzIroLkXtWubrCt2JFkXd1sxBlcg9zKNbv8oW+EPR4Kku6/IU+J\nCJ0IMw7qoswK7GHI9I3VdPpJgRSmfPnioLaH4HQo9U2XR0Rwj50=\n=D0wE\n-----END PGP SIGNATURE-----\n",
+        "sha256": "15852b4df3c3e1bd74c8d2da617674af8db52d7ea94e512072c1c9f58574ba97",
+        "size": 225167287,
+        "version": "1.11.0-rc4",
+        "os": "mac",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/mac/aarch64/1.11/julia-1.11.0-rc4-macaarch64.tar.gz",
+        "triplet": "aarch64-apple-darwin14",
+        "kind": "archive",
+        "arch": "aarch64",
+        "asc": "-----BEGIN PGP SIGNATURE-----\n\niQIzBAABCAAdFiEENnPfUp2QSUd/drN1ZuPH3APW5JUFAmbz+ywACgkQZuPH3APW\n5JWUQxAAyrKNgQD09YG5jTHgg3xjPn/YAng7xD9FVHHN59Tiksk3D5sEjeBwiZMD\n6fJv2gopw1lFhihWoL+ro7MrIY2zzRzIJD3TpGxBeaEy5ar3SENmsX+bXuGZpI6W\njRlsY9gcB3hg5lNqhwaShzo+CSZKVVA2D1Trjr9itUFUL7mICuZfVuBDuazBnJAD\nZeNvdzZClQK2GAnIKPnaiXTbw8GxqgsLgupOZevdnLIfPjCWCjKCkk67c5nyZl2P\n7OWpuL2ERoIIC0fxPZfR43KABRJPVPXF/CX3xzj1i5z00FnOt56iFV7C9aClSjG/\nmdjowbNRL8VMVFZtUQ6j429i99+ct1WNhZIBxLqgQ14DUf71G4NkOQT00OhQdRlo\no0eRM7F2XJr6zqQyqI9pJqk8FF+O55OEjIfIQwY4G6la9YWJaqstEoIorvZN6sgp\nmqymTK0ZYLdqYFP9THfyOGgbpr/3Yw+KO4BMFuxSeZVSzAtfxNorfByUqTcSHti3\n7NiZjUr9Ks9vfdqEb4mqVDXP28YHwtRzMLjBF7XukuC4KbW1BV/KBe+0iVyEYYHj\nQQFlSGIO7lU5HohOTDDV0gvbs08tO1Y85FpfQoPNVgWXNjDiOs1jttcxxTE6H6RH\nzqjpSkA7jr3hbF12MKPN5HH8ePzjZQ0PTMfWnGF8s58cwrVpfrg=\n=Ise9\n-----END PGP SIGNATURE-----\n",
+        "sha256": "77e0f982184b52578bc2fca856c41d5808392c9c037f7f7318249cacc9e88197",
+        "size": 213145444,
+        "version": "1.11.0-rc4",
+        "os": "mac",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/winnt/x64/1.11/julia-1.11.0-rc4-win64.exe",
+        "triplet": "x86_64-w64-mingw32",
+        "kind": "installer",
+        "arch": "x86_64",
+        "sha256": "8db57de418602e300e8332b7140498cd3f72ce841bbd16135b20bf1f0cada689",
+        "size": 143262976,
+        "version": "1.11.0-rc4",
+        "os": "winnt",
+        "extension": "exe"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/winnt/x86/1.11/julia-1.11.0-rc4-win32.exe",
+        "triplet": "i686-w64-mingw32",
+        "kind": "installer",
+        "arch": "i686",
+        "sha256": "88787dc332ead00cfd4840a4e7e6dd152a96041b9da2e89f6731a9d98db53f51",
+        "size": 122754824,
+        "version": "1.11.0-rc4",
+        "os": "winnt",
+        "extension": "exe"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/winnt/x64/1.11/julia-1.11.0-rc4-win64.zip",
+        "triplet": "x86_64-w64-mingw32",
+        "kind": "archive",
+        "arch": "x86_64",
+        "sha256": "0ce373ce4202aef697016b1ced4f473011efeae72ef32a30e6d92c959b89936d",
+        "size": 242855092,
+        "version": "1.11.0-rc4",
+        "os": "winnt",
+        "extension": "zip"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/winnt/x86/1.11/julia-1.11.0-rc4-win32.zip",
+        "triplet": "i686-w64-mingw32",
+        "kind": "archive",
+        "arch": "i686",
+        "sha256": "68f09033fb766b7beac547ebb600909898de2471a0d61b86c4a6b5d351536123",
+        "size": 212022942,
+        "version": "1.11.0-rc4",
+        "os": "winnt",
+        "extension": "zip"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/winnt/x64/1.11/julia-1.11.0-rc4-win64.tar.gz",
+        "triplet": "x86_64-w64-mingw32",
+        "kind": "archive",
+        "arch": "x86_64",
+        "sha256": "f4a49c3fbf32fda9f64ab66f3b8b000b2d3529b8889754e4606a0a034de46858",
+        "size": 248970370,
+        "version": "1.11.0-rc4",
+        "os": "winnt",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/winnt/x86/1.11/julia-1.11.0-rc4-win32.tar.gz",
+        "triplet": "i686-w64-mingw32",
+        "kind": "archive",
+        "arch": "i686",
+        "sha256": "54a0cb004ba531a4428f940696f2c60b5c2cb41255b264068b0c88a2965cbb93",
+        "size": 217041811,
+        "version": "1.11.0-rc4",
+        "os": "winnt",
+        "extension": "tar.gz"
+      },
+      {
+        "url": "https://julialang-s3.julialang.org/bin/freebsd/x64/1.11/julia-1.11.0-rc4-freebsd-x86_64.tar.gz",
+        "triplet": "x86_64-unknown-freebsd11.1",
+        "kind": "archive",
+        "arch": "x86_64",
+        "asc": "-----BEGIN PGP SIGNATURE-----\n\niQIzBAABCAAdFiEENnPfUp2QSUd/drN1ZuPH3APW5JUFAmbz/7MACgkQZuPH3APW\n5JWvSA/8C6C4fplL8qzjnOfV7EtbvcM9sebzvpeoYHHFEl1vY/1PZ9rGVxZYACkV\nVobK2d20dCF46WyhM+G6i55h/B1NqKqj8teRZ6kbyaM4RBl8HRZZuc9/86YsOp7Q\n2967xnUVeu0hGcnJ3wwuitVAozgT62bBGIruAXCs03kDOWr03vSu1XA/mN/Tk2pa\n0cZUoyQ3i89hFEQM8Yb/pMUL2sEvOmjBjKKMC82lCW3g65s7ggbKLYaLAx+i1kRm\ncvbkOWGZkwb8P0i7qQD6B8u6m+dVpaajtLfo5fOVcQSahLnu5ONZi1wlZZomyRTo\n3NTfvX51osKITugRZoRM0bamIqJJWigU9PJp3eWHpnHi7RCE5Dhb+1IrNAjdENHL\nyWyhmGn9KhMkEAXKiLIoDucOo1wIDGLmDNYc04cPAWTWRoR7ucRstA4he4aOfNJ/\nwPWrc/D0zGNkHi383Q+XrX58FBhnLk5eWUra+cw8YpH33EY4/e1NcJsdWKExz498\n3WmpczFyVjDXLIDmWhLlJ7ATAnNnZQeGz5n/9/aC3h/vNqA9aIAYVqIeTFbqEOvG\nDcNL5akQyge85NNfcxCrEZ0XRrSBiqcfpiLnJrr2ni2qy37YywzAzezmk04YbPpQ\nNIw/pGvXF8mNWiBTGcKNn3YeQR0xA+awAmsD7iju/Mjv7UjPRAs=\n=F9/E\n-----END PGP SIGNATURE-----\n",
+        "sha256": "895d2a51c4909bbdd3e2bc4ac4c0eaba811c40ee6ccd9e653edf653f77f28f85",
+        "size": 229350598,
+        "version": "1.11.0-rc4",
         "os": "freebsd",
         "extension": "tar.gz"
       }

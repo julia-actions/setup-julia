@@ -26,8 +26,8 @@ const testVersions = [
     '1.7.0', '1.7.0-beta1', '1.7.0-beta2', '1.7.0-beta3', '1.7.0-beta4', '1.7.0-rc1', '1.7.0-rc2', '1.7.0-rc3', '1.7.1', '1.7.2', '1.7.3',
     '1.8.0', '1.8.0-beta1', '1.8.0-beta2', '1.8.0-beta3', '1.8.0-rc1', '1.8.0-rc2', '1.8.0-rc3', '1.8.0-rc4', '1.8.1', '1.8.2', '1.8.3', '1.8.4', '1.8.5',
     '1.9.0', '1.9.0-alpha1', '1.9.0-beta1', '1.9.0-beta2', '1.9.0-beta3', '1.9.0-beta4', '1.9.0-rc1', '1.9.0-rc2', '1.9.0-rc3', '1.9.1', '1.9.2', '1.9.3', '1.9.4',
-    '1.10.0', '1.10.0-alpha1', '1.10.0-beta1', '1.10.0-beta2', '1.10.0-beta3', '1.10.0-rc1', '1.10.0-rc2', '1.10.0-rc3', '1.10.1', '1.10.2',
-    '1.11.0-alpha1', '1.11.0-alpha2', '1.11.0-beta1'
+    '1.10.0', '1.10.0-alpha1', '1.10.0-beta1', '1.10.0-beta2', '1.10.0-beta3', '1.10.0-rc1', '1.10.0-rc2', '1.10.0-rc3', '1.10.1', '1.10.2', '1.10.3', '1.10.4', '1.10.5',
+    '1.11.0', '1.11.0-alpha1', '1.11.0-alpha2', '1.11.0-beta1', '1.11.0-beta2', '1.11.0-rc1', '1.11.0-rc2', '1.11.0-rc3', '1.11.0-rc4',
 ]
 
 const toolDir = path.join(__dirname, 'runner', 'tools')
@@ -187,30 +187,30 @@ describe('version matching tests', () => {
 
         it('LTS', () => {
             // Update test when LTS is updated
-            expect(installer.getJuliaVersion(testVersions, 'lts')).toEqual(installer.getJuliaVersion(testVersions, '1.6'))
-            expect(installer.getJuliaVersion(testVersions, 'lts')).toEqual('1.6.7')
+            expect(installer.getJuliaVersion(testVersions, 'lts')).toEqual(installer.getJuliaVersion(testVersions, '1.10'))
+            expect(installer.getJuliaVersion(testVersions, 'lts')).toEqual('1.10.5')
         })
 
         it('pre', () => {
-            expect(installer.getJuliaVersion(testVersions, 'pre')).toEqual('1.11.0-beta1')
+            expect(installer.getJuliaVersion(testVersions, 'pre')).toEqual('1.11.0')
         })
     })
 
     describe('version ranges', () => {
         it('Chooses the highest available version that matches the input', () => {
-            expect(installer.getJuliaVersion(testVersions, '1')).toEqual('1.10.2')
+            expect(installer.getJuliaVersion(testVersions, '1')).toEqual('1.11.0')
             expect(installer.getJuliaVersion(testVersions, '1.0')).toEqual('1.0.5')
-            expect(installer.getJuliaVersion(testVersions, '^1.3.0-rc1')).toEqual('1.10.2')
-            expect(installer.getJuliaVersion(testVersions, '^1.2.0-rc1')).toEqual('1.10.2')
-            expect(installer.getJuliaVersion(testVersions, '^1.10.0-rc1')).toEqual('1.10.2')
+            expect(installer.getJuliaVersion(testVersions, '^1.3.0-rc1')).toEqual('1.11.0')
+            expect(installer.getJuliaVersion(testVersions, '^1.2.0-rc1')).toEqual('1.11.0')
+            expect(installer.getJuliaVersion(testVersions, '^1.10.0-rc1')).toEqual('1.11.0')
         })
     })
 
     describe('include-prereleases', () => {
         it('Chooses the highest available version that matches the input including prereleases', () => {
-            expect(installer.getJuliaVersion(testVersions, '^1.2.0-0', true)).toEqual('1.11.0-beta1')
-            expect(installer.getJuliaVersion(testVersions, '1', true)).toEqual('1.11.0-beta1')
-            expect(installer.getJuliaVersion(testVersions, '^1.2.0-0', false)).toEqual('1.10.2')
+            expect(installer.getJuliaVersion(testVersions, '^1.2.0-0', true)).toEqual('1.11.0')
+            expect(installer.getJuliaVersion(testVersions, '1', true)).toEqual('1.11.0')
+            expect(installer.getJuliaVersion(testVersions, '^1.2.0-0', false)).toEqual('1.11.0')
         })
     })
 
