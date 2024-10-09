@@ -29,9 +29,9 @@
     "toml": "^3.0.0"
   },
   "devDependencies": {
-    "@types/async-retry": "^1.4.8",
+    "@types/async-retry": "^1.4.9",
     "@types/jest": "^29.5.13",
-    "@types/node": "^22.6.1",
+    "@types/node": "^22.7.5",
     "@types/retry": "^0.12.5",
     "@types/semver": "^7.5.8",
     "@vercel/ncc": "^0.38.1",
