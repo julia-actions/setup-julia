@@ -187,8 +187,8 @@ describe('version matching tests', () => {
 
         it('LTS', () => {
             // Update test when LTS is updated
-            expect(installer.getJuliaVersion(testVersions, 'lts')).toEqual(installer.getJuliaVersion(testVersions, '1.6'))
-            expect(installer.getJuliaVersion(testVersions, 'lts')).toEqual('1.6.7')
+            expect(installer.getJuliaVersion(testVersions, 'lts')).toEqual(installer.getJuliaVersion(testVersions, '1.10'))
+            expect(installer.getJuliaVersion(testVersions, 'lts')).toEqual('1.10.5')
         })
 
         it('pre', () => {
