@@ -201,8 +201,8 @@ describe('version matching tests', () => {
             expect(installer.getJuliaVersion(testVersions, '1')).toEqual('1.11.0')
             expect(installer.getJuliaVersion(testVersions, '1.0')).toEqual('1.0.5')
             expect(installer.getJuliaVersion(testVersions, '^1.3.0-rc1')).toEqual('1.11.0')
-            expect(installer.getJuliaVersion(testVersions, '^1.2.0-rc1')).toEqual('1.10.2')
-            expect(installer.getJuliaVersion(testVersions, '^1.10.0-rc1')).toEqual('1.10.2')
+            expect(installer.getJuliaVersion(testVersions, '^1.2.0-rc1')).toEqual('1.11.0')
+            expect(installer.getJuliaVersion(testVersions, '^1.10.0-rc1')).toEqual('1.11.0')
         })
     })
 
