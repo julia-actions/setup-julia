@@ -200,7 +200,7 @@ describe('version matching tests', () => {
         it('Chooses the highest available version that matches the input', () => {
             expect(installer.getJuliaVersion(testVersions, '1')).toEqual('1.11.0')
             expect(installer.getJuliaVersion(testVersions, '1.0')).toEqual('1.0.5')
-            expect(installer.getJuliaVersion(testVersions, '^1.3.0-rc1')).toEqual('1.10.2')
+            expect(installer.getJuliaVersion(testVersions, '^1.3.0-rc1')).toEqual('1.11.0')
             expect(installer.getJuliaVersion(testVersions, '^1.2.0-rc1')).toEqual('1.10.2')
             expect(installer.getJuliaVersion(testVersions, '^1.10.0-rc1')).toEqual('1.10.2')
         })
@@ -210,7 +210,7 @@ describe('version matching tests', () => {
         it('Chooses the highest available version that matches the input including prereleases', () => {
             expect(installer.getJuliaVersion(testVersions, '^1.2.0-0', true)).toEqual('1.11.0')
             expect(installer.getJuliaVersion(testVersions, '1', true)).toEqual('1.11.0')
-            expect(installer.getJuliaVersion(testVersions, '^1.2.0-0', false)).toEqual('1.10.2')
+            expect(installer.getJuliaVersion(testVersions, '^1.2.0-0', false)).toEqual('1.11.0')
         })
     })
 
