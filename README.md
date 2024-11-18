@@ -75,7 +75,7 @@ This action sets up a Julia environment for use in actions by downloading a spec
     # Set the path to the project directory or file to use when resolving some versions (e.g. `min`).
     #
     # Defaults to using JULIA_PROJECT if defined, otherwise '.'
-    project: '.'
+    project: ${{ env.JULIA_PROJECT }} or '.' (if JULIA_PROJECT is unset)
 ```
 
 ### Outputs
