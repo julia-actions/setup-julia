@@ -53,7 +53,7 @@ This action sets up a Julia environment for use in actions by downloading a spec
     #
     # Note: you can use X64, X86, and ARM64 as synonyms for x64, x86, and aarch64, respectively.
     #
-    # Defaults to the architecture of the runner executing the job.
+    # Specifying `'default'` uses the architecture of the runner executing the job.
     arch: 'default'
 
     # Set the display setting for printing InteractiveUtils.versioninfo() after installing.
