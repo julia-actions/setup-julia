@@ -62,6 +62,10 @@ async function run() {
             throw new Error(`Arch input must not be null`)
         }
 
+        if (originalArchInput == 'x64' && os.platform() == 'darwin' && os.arch() == 'arm64') {
+            core.warning('[setup-julia] x64 arch has been requested on a macOS runner that has an arm64 architecture. You may have meant to use the "aarch64" arch instead (or left it unspecified for the correct default).')
+        }
+
         let processedArchInput: string;
         if (originalArchInput == "default") {
             // If the user sets the `arch` input to `default`, then we use the
