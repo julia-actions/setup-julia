@@ -194,12 +194,18 @@ jobs:
     strategy:
       matrix:
         julia-version: ['1.0', '1.2.0', '^1.3.0-rc1']
-        julia-arch: [x64, x86]
+        julia-arch: [x64, x86, aarch64]
         os: [ubuntu-latest, windows-latest, macOS-latest]
-        # 32-bit Julia binaries are not available on macOS
+        # exclude unavailable/unwanted architectures
         exclude:
           - os: macOS-latest
             julia-arch: x86
+          - os: macOS-latest
+            julia-arch: x64 # can be run but via rosetta on apple silicon runners
+          - os: ubuntu-latest
+            julia-arch: aarch64
+          - os: windows-latest
+            julia-arch: aarch64
 
     steps:
       - uses: actions/checkout@v4
