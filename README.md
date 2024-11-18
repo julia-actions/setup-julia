@@ -41,7 +41,7 @@ This action sets up a Julia environment for use in actions by downloading a spec
     #          For example, `1.10` may be parsed as `1.1`.
     #
     # Default: '1'
-    version: ''
+    version: '1'
 
     # The architecture of the Julia binaries.
     #
