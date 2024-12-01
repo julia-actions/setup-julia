@@ -41,7 +41,7 @@ This action sets up a Julia environment for use in actions by downloading a spec
     #          For example, `1.10` may be parsed as `1.1`.
     #
     # Default: '1'
-    version: ''
+    version: '1'
 
     # The architecture of the Julia binaries.
     #
@@ -53,8 +53,8 @@ This action sets up a Julia environment for use in actions by downloading a spec
     #
     # Note: you can use X64, X86, and ARM64 as synonyms for x64, x86, and aarch64, respectively.
     #
-    # Defaults to the architecture of the runner executing the job.
-    arch: ''
+    # Specifying 'default' uses the architecture of the runner executing the job.
+    arch: 'default'
 
     # Set the display setting for printing InteractiveUtils.versioninfo() after installing.
     #
@@ -70,12 +70,12 @@ This action sets up a Julia environment for use in actions by downloading a spec
     # never: Never print versioninfo
     #
     # Default: false
-    show-versioninfo: ''
+    show-versioninfo: 'false'
 
     # Set the path to the project directory or file to use when resolving some versions (e.g. `min`).
     #
     # Defaults to using JULIA_PROJECT if defined, otherwise '.'
-    project: ''
+    project: ${{ env.JULIA_PROJECT }} or '.' (if JULIA_PROJECT is unset)
 ```
 
 ### Outputs
