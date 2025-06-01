@@ -5,15 +5,30 @@ updates:
   schedule:
     interval: monthly
   open-pull-requests-limit: 99
+  groups:
+    # Group all Git submodules PRs into a single PR:
+    all-gitsubmodule-actions:
+      patterns:
+        - "*"
 
 - package-ecosystem: 'github-actions'
   directory: '/'
   schedule:
     interval: 'monthly'
   open-pull-requests-limit: 99
+  groups:
+    # Group all GitHub Actions PRs into a single PR:
+    all-github-actions:
+      patterns:
+        - "*"
     
 - package-ecosystem: npm
   directory: "/"
   schedule:
     interval: monthly
   open-pull-requests-limit: 99
+  groups:
+    # Group all NPM PRs into a single PR:
+    all-npm-actions:
+      patterns:
+        - "*"
