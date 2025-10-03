@@ -45,6 +45,7 @@ async function run() {
         const versionInput = core.getInput('version').trim()
         const includePrereleases = core.getInput('include-all-prereleases').trim() == 'true'
         const originalArchInput = core.getInput('arch').trim()
+        const forceArch = core.getInput('force-arch').trim() == 'true'
         const projectInput = core.getInput('project').trim()  // Julia project file
 
         // It can easily happen that, for example, a workflow file contains an input `version: ${{ matrix.julia-version }}`
@@ -63,7 +64,11 @@ async function run() {
         }
 
         if (originalArchInput == 'x64' && os.platform() == 'darwin' && os.arch() == 'arm64') {
-            core.warning('[setup-julia] x64 arch has been requested on a macOS runner that has an arm64 (Apple Silicon) architecture. You may have meant to use the "aarch64" arch instead (or left it unspecified for the correct default).')
+            if (forceArch) {
+                core.warning('[setup-julia] x64 arch has been requested on a macOS runner that has an arm64 (Apple Silicon) architecture. The "force-arch" input is set to "true", so proceeding with x64 installation. Note that this will mean Julia will be run under Rosetta emulation.')
+            } else {
+                throw new Error('[setup-julia] x64 arch has been requested on a macOS runner that has an arm64 (Apple Silicon) architecture. You may have meant to use the "aarch64" arch instead (or left it unspecified for the correct default). To force the use of x64 on this runner, set the "force-arch" input to "true".')
+            }
         }
 
         let processedArchInput: string;
