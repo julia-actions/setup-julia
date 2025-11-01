@@ -39,7 +39,7 @@ jobs:
       fail-fast: false
     steps:
       ### Check out the repo:
-      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
+      - uses: actions/checkout@ff7abcd0c3c05ccf6adc123a8cd1fd4fb30fb493
         with:
           persist-credentials: false
       ### Cleanall:
@@ -53,7 +53,7 @@ jobs:
       # Windows:
         # Windows does not support asdf, so we have to use `actions/setup-node`
         # to install asdf:
-      - uses: actions/setup-node@1e60f620b9541d16bece96c5465dc8ee9832be0b
+      - uses: actions/setup-node@dda4788290998366da86b6a4f497909644397bb2
         if: runner.os == 'Windows'
         with:
           node-version-file: '.tool-versions'
@@ -82,7 +82,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       ### Check out the repo:
-      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
+      - uses: actions/checkout@ff7abcd0c3c05ccf6adc123a8cd1fd4fb30fb493
         with:
           persist-credentials: false
       ### Cleanall:
@@ -96,7 +96,7 @@ jobs:
       # Windows:
         # Windows does not support asdf, so we have to use `actions/setup-node`
         # to install asdf:
-      - uses: actions/setup-node@1e60f620b9541d16bece96c5465dc8ee9832be0b
+      - uses: actions/setup-node@dda4788290998366da86b6a4f497909644397bb2
         if: runner.os == 'Windows'
         with:
           node-version-file: '.tool-versions'
@@ -126,7 +126,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       ### Check out the repo:
-      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
+      - uses: actions/checkout@ff7abcd0c3c05ccf6adc123a8cd1fd4fb30fb493
         with:
           persist-credentials: false
       ### Cleanall:
@@ -140,7 +140,7 @@ jobs:
       # Windows:
         # Windows does not support asdf, so we have to use `actions/setup-node`
         # to install asdf:
-      - uses: actions/setup-node@1e60f620b9541d16bece96c5465dc8ee9832be0b
+      - uses: actions/setup-node@dda4788290998366da86b6a4f497909644397bb2
         if: runner.os == 'Windows'
         with:
           node-version-file: '.tool-versions'
@@ -161,7 +161,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       ### Check out the repo:
-      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
+      - uses: actions/checkout@ff7abcd0c3c05ccf6adc123a8cd1fd4fb30fb493
         with:
           persist-credentials: false
       ### Cleanall:
@@ -199,7 +199,7 @@ jobs:
       fail-fast: false
     steps:
       ### Check out the repo:
-      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
+      - uses: actions/checkout@ff7abcd0c3c05ccf6adc123a8cd1fd4fb30fb493
         with:
           persist-credentials: false
       ### Install NodeJS
