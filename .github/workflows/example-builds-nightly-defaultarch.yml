@@ -18,16 +18,16 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        julia-version: [nightly, 1.10-nightly]
+        julia-version: [nightly, 1.13-nightly]
         os:
           - ubuntu-latest
           - windows-latest
-          - macos-13 # Intel
+          - macos-15-intel # Intel
           - macos-14 # Apple Silicon
           - macos-latest # Apple Silicon
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - uses: actions/setup-node@v6
         if: ${{ ! startsWith(github.ref, 'refs/heads/releases') }}
