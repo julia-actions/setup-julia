@@ -36,7 +36,7 @@ jobs:
             julia-version: '1'
 
     steps:
-      - uses: actions/checkout@v6.0.1
+      - uses: actions/checkout@v6.0.2
 
       - uses: actions/setup-node@v6
         if: ${{ ! startsWith(github.ref, 'refs/heads/releases') }}
