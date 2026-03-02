@@ -75,7 +75,7 @@ jobs:
         with:
           version: ${{ matrix.julia-version }}
           # If `julia-wordsize` is 32, then we set `arch` to `x86`, because we know that
-          # 32-bit builds of Julia are only available for x86.
+          # Tier 1 32-bit builds of Julia are only available for x86.
           #
           # If `julia-wordsize` is 64, then we set `arch` to `${{ runner.arch }}`, which
           # GitHub will automatically expand to the correct value (`x86_64` or `aarch64`)
