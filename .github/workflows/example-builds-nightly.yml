@@ -20,13 +20,23 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        julia-version: [nightly, 1.13-nightly]
-        julia-arch: [x64, x86]
-        os: [ubuntu-latest, macOS-latest, windows-latest]
+        julia-version:
+          - nightly
+          - 1.13-nightly
+        julia-wordsize:
+          - 64
+          - 32
+        os:
+          - ubuntu-latest
+          - windows-latest
+          - macos-15-intel # Intel
+          - macos-latest # Apple Silicon
         # 32-bit Julia binaries are not available on macOS
         exclude:
-          - os: macOS-latest
-            julia-arch: x86
+          - os: macos-15-intel # Intel
+            julia-wordsize: 32
+          - os: macos-latest # Apple Silicon
+            julia-wordsize: 32
 
     steps:
       - uses: actions/checkout@v6.0.2
@@ -47,7 +57,14 @@ jobs:
         uses: ./
         with:
           version: ${{ matrix.julia-version }}
-          arch: ${{ matrix.julia-arch }}
+          # If `julia-wordsize` is 32, then we set `arch` to `x86`, because we know that
+          # 32-bit builds of Julia are only available for x86.
+          #
+          # If `julia-wordsize` is 64, then we set `arch` to `${{ runner.arch }}`, which
+          # GitHub will automatically expand to the correct value (`x86_64` or `aarch64`)
+          # based on the architecture of the underlying GitHub Runner (virtual machine).
+          arch: ${{ matrix.julia-wordsize == '32' && 'x86' || runner.arch }}
+
       - run: julia --version
       - run: julia --compile=min -O0 -e 'import InteractiveUtils; InteractiveUtils.versioninfo()'
       - name: "Check that the correct julia is used and that archive mtimes are maintained"
