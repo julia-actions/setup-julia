@@ -56,6 +56,8 @@ jobs:
         with:
           version: ${{ matrix.julia-version }}
           arch: ${{ matrix.julia-arch }}
+        env:
+          TEMP: ${{ runner.temp }}
       - run: julia --version
       - run: julia --compile=min -O0 -e 'import InteractiveUtils; InteractiveUtils.versioninfo()'
       - name: "Check that the correct julia is used and that archive mtimes are maintained"
