@@ -56,6 +56,18 @@ This action sets up a Julia environment for use in actions by downloading a spec
     # Specifying 'default' uses the architecture of the runner executing the job.
     arch: 'default'
 
+    # Force the use of the specified architecture even when it may be suboptimal on the runner.
+    #
+    # By default, requesting x86 or x64 on an aarch64 macOS runner (Apple Silicon) will fail with an error,
+    # as this is usually a misconfiguration. Set this to 'true' to override the error and allow the installation.
+    #
+    # Note: x64 Julia can run on Apple Silicon via Rosetta 2, but native aarch64 is typically preferred.
+    #
+    # Supported values: true | false
+    #
+    # Default: false
+    force-arch: 'false'
+
     # Set the display setting for printing InteractiveUtils.versioninfo() after installing.
     #
     # Starting Julia and running InteractiveUtils.versioninfo() takes a significant amount of time (1s or ~10% of the total build time in testing),

@@ -13,6 +13,10 @@ inputs:
     description: 'Architecture of the Julia binaries. Defaults to the architecture of the runner executing the job.'
     required: false
     default: 'default'
+  force-arch:
+    description: 'Force the use of the specified architecture even when it may be suboptimal on the runner (e.g., x86 on Apple Silicon macOS runners). By default, requesting x86/x64 on aarch64 macOS runners will fail with an error.'
+    required: false
+    default: 'false'
   show-versioninfo:
     description: 'Display InteractiveUtils.versioninfo() after installing'
     required: false
