@@ -1,0 +1,42 @@
+name: Run make everything-from-scratch
+
+on:
+  pull_request:
+    types: [opened, reopened]
+
+jobs:
+  npm_run_build:
+    name: NPM run build
+    runs-on: ubuntu-latest
+    if: ${{ github.event.pull_request.user.login == 'dependabot[bot]' }}
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout PR head
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
+        with:
+          node-version: "24"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Make everything from scratch
+        run: make everything-from-scratch
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --staged --quiet; then
+              echo "No build changes to commit"
+          else
+              git commit -m "chore: rebuild dist with make everything-from-scratch"
+              git push
+          fi
