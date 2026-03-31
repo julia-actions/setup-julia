@@ -39,7 +39,7 @@ jobs:
       fail-fast: false
     steps:
       ### Check out the repo:
-      - uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8
         with:
           persist-credentials: false
       ### Cleanall:
@@ -71,7 +71,7 @@ jobs:
       ### Clean (not cleanall!):
       - run: make clean
       ### Make sure there are no uncommited changes
-      - uses: julia-actions/setup-julia@5c9647d97b78a5debe5164e9eec09d653d29bd71 # v2.6.1
+      - uses: julia-actions/setup-julia@4c0cb0fce8556fdb04a90347310e5db8b1f98fb9 # v2.7.0
         with:
           version: '1'
       - run: git --no-pager status
@@ -82,7 +82,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       ### Check out the repo:
-      - uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8
         with:
           persist-credentials: false
       ### Cleanall:
@@ -126,7 +126,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       ### Check out the repo:
-      - uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8
         with:
           persist-credentials: false
       ### Cleanall:
@@ -161,7 +161,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       ### Check out the repo:
-      - uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8
         with:
           persist-credentials: false
       ### Cleanall:
@@ -199,7 +199,7 @@ jobs:
       fail-fast: false
     steps:
       ### Check out the repo:
-      - uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8
         with:
           persist-credentials: false
       ### Install NodeJS
@@ -214,7 +214,7 @@ jobs:
       # - run: npm install --package-lock-only
       - run: npm install
       ### Make sure there are no uncommited changes
-      - uses: julia-actions/setup-julia@5c9647d97b78a5debe5164e9eec09d653d29bd71 # v2.6.1
+      - uses: julia-actions/setup-julia@4c0cb0fce8556fdb04a90347310e5db8b1f98fb9 # v2.7.0
         with:
           version: '1'
       - run: git --no-pager status
