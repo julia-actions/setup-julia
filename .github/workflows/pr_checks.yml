@@ -45,18 +45,7 @@ jobs:
       ### Cleanall:
       - run: make cleanall
       ### Install NodeJS
-      # Unix (non-Windows):
-      - uses: asdf-vm/actions/setup@b7bcd026f18772e44fe1026d729e1611cc435d47
-        if: runner.os != 'Windows'
-      - run: make unix-asdf-install
-        if: runner.os != 'Windows'
-      # Windows:
-        # Windows does not support asdf, so we have to use `actions/setup-node`
-        # to install asdf:
-      - uses: actions/setup-node@dda4788290998366da86b6a4f497909644397bb2
-        if: runner.os == 'Windows'
-        with:
-          node-version-file: '.tool-versions'
+      - uses: jdx/mise-action@v4
       ### Install the NodeJS packages that we depend on:
       - run: make install-packages
       ### Print some debugging info:
@@ -70,7 +59,7 @@ jobs:
       - run: make pack
       ### Clean (not cleanall!):
       - run: make clean
-      ### Make sure there are no uncommited changes
+      ### Make sure there are no uncommitted changes
       - uses: julia-actions/setup-julia@5c9647d97b78a5debe5164e9eec09d653d29bd71 # v2.6.1
         with:
           version: '1'
@@ -88,18 +77,7 @@ jobs:
       ### Cleanall:
       - run: make cleanall
       ### Install NodeJS
-      # Unix (non-Windows):
-      - uses: asdf-vm/actions/setup@b7bcd026f18772e44fe1026d729e1611cc435d47
-        if: runner.os != 'Windows'
-      - run: make unix-asdf-install
-        if: runner.os != 'Windows'
-      # Windows:
-        # Windows does not support asdf, so we have to use `actions/setup-node`
-        # to install asdf:
-      - uses: actions/setup-node@dda4788290998366da86b6a4f497909644397bb2
-        if: runner.os == 'Windows'
-        with:
-          node-version-file: '.tool-versions'
+      - uses: jdx/mise-action@v4
       ### Install the NodeJS packages that we depend on:
       - run: make install-packages
       ### Print some debugging info:
@@ -132,18 +110,7 @@ jobs:
       ### Cleanall:
       - run: make cleanall
       ### Install NodeJS
-      # Unix (non-Windows):
-      - uses: asdf-vm/actions/setup@b7bcd026f18772e44fe1026d729e1611cc435d47
-        if: runner.os != 'Windows'
-      - run: make unix-asdf-install
-        if: runner.os != 'Windows'
-      # Windows:
-        # Windows does not support asdf, so we have to use `actions/setup-node`
-        # to install asdf:
-      - uses: actions/setup-node@dda4788290998366da86b6a4f497909644397bb2
-        if: runner.os == 'Windows'
-        with:
-          node-version-file: '.tool-versions'
+      - uses: jdx/mise-action@v4
       ### Install the NodeJS packages that we depend on:
       - run: make install-packages
       ### Print some debugging info:
@@ -167,17 +134,13 @@ jobs:
       ### Cleanall:
       - run: make cleanall
       ### Install NodeJS
-      # Unix (non-Windows):
-      - uses: asdf-vm/actions/setup@b7bcd026f18772e44fe1026d729e1611cc435d47
-        if: runner.os != 'Windows'
-      - run: make unix-asdf-install
-        if: runner.os != 'Windows'
+      - uses: jdx/mise-action@v4
       ### Install the NodeJS packages that we depend on:
       - run: make install-packages
       ### Make sure some other `make` targets don't bitrot:
       - name: Run some other `make` targets to ensure that they don't bitrot
         run: |
-          make unix-asdf-install
+          make mise-install
           make install-packages
           make build
           make pack
@@ -188,7 +151,7 @@ jobs:
           make cleanall
   stalecheck-npm-install:
     # In this job, we are basically trying to check if `package-lock.json` is in
-    # sync with `package-lock.json`.
+    # sync with `package.json`.
     #
     # So, for example, if someone manually edits the `package.json` file, we want
     # to make sure that the `package-lock.json` file is not out of sync with the
@@ -203,17 +166,13 @@ jobs:
         with:
           persist-credentials: false
       ### Install NodeJS
-      # Unix (non-Windows):
-      - uses: asdf-vm/actions/setup@b7bcd026f18772e44fe1026d729e1611cc435d47
-        if: runner.os != 'Windows'
-      - run: make unix-asdf-install
-        if: runner.os != 'Windows'
+      - uses: jdx/mise-action@v4
       ### Run the master commands for this job:
       - run: make clean
       - run: npm ci
       # - run: npm install --package-lock-only
       - run: npm install
-      ### Make sure there are no uncommited changes
+      ### Make sure there are no uncommitted changes
       - uses: julia-actions/setup-julia@5c9647d97b78a5debe5164e9eec09d653d29bd71 # v2.6.1
         with:
           version: '1'

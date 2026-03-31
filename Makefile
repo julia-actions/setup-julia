@@ -39,11 +39,8 @@ cleanall: clean
 
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-# asdf does not support Windows.
-# On Windows, users need to install the correct version of NodeJS themselves.
-.PHONY: unix-asdf-install
-unix-asdf-install:
-	asdf plugin add nodejs # update this list when we add more tools to `.tool-versions`
-	asdf install
+.PHONY: mise-install
+mise-install:
+	mise install
 
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

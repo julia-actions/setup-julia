@@ -5,7 +5,7 @@
   "main": "lib/setup-julia.js",
   "scripts": {
     "build": "tsc",
-    "pack": "ncc build",
+    "pack": "tsup",
     "test": "jest"
   },
   "repository": {
@@ -34,11 +34,11 @@
     "@types/node": "^25.2.0",
     "@types/retry": "^0.12.5",
     "@types/semver": "^7.7.0",
-    "@vercel/ncc": "^0.38.3",
     "jest": "^30.0.5",
     "jest-circus": "^30.0.3",
     "nock": "^14.0.8",
     "prettier": "^3.6.2",
+    "tsup": "^8.5.0",
     "ts-jest": "^29.4.0",
     "typescript": "^5.9.2"
   }

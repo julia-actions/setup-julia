@@ -9,30 +9,26 @@ cd setup-julia
 
 ## 2. Install NodeJS
 
-### Unix, using `asdf` (recommended, but not required)
+This repo pins the required NodeJS version in [`.tool-versions`](../.tool-versions).
+At the time of writing, that version is `nodejs 24.13.0`.
 
-First, make sure that you have installed [`asdf`](https://asdf-vm.com/) on your local machine.
+### Using `mise` (recommended)
 
-Then, `cd` to your clone of the repo and run the following commands:
+First, make sure that you have installed [`mise`](https://mise.jdx.dev/) on your local machine.
+
+Then, `cd` to your clone of the repo and run the following command:
 
 ```bash
-asdf plugin add nodejs
-asdf install
+mise install
 ```
 
-This will use `asdf` to install the correct version of NodeJS.
+This will use `mise` to install the correct version of NodeJS from `.tool-versions`.
 
-### Unix, but not using `asdf`
+### Manual install
 
-Instead of using `asdf`, you can instead choose to install NodeJS manually.
+Instead of using `mise`, you can instead choose to install NodeJS manually.
 
-First, check the `.tool-versions` file in this repo, and see what version of NodeJS you need. Then, install that same version of NodejS on your local machine.
-
-### Windows
-
-`asdf` does not (currently) support Windows. So on Windows, you have to install NodeJS manually.
-
-First, check the `.tool-versions` file in this repo, and see what version of NodeJS you need. Then, install that same version of NodejS on your local machine.
+First, check the `.tool-versions` file in this repo, and see what version of NodeJS you need. Then, install that same version of NodeJS on your local machine.
 
 ## 3. Working locally
 

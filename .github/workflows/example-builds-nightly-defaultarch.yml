@@ -29,15 +29,13 @@ jobs:
     steps:
       - uses: actions/checkout@v6.0.2
 
-      - uses: actions/setup-node@v6
+      - uses: jdx/mise-action@v4
         if: ${{ ! startsWith(github.ref, 'refs/heads/releases') }}
-        with:
-          node-version-file: '.tool-versions'
 
       - name: "Install dependencies"
         if: ${{ ! startsWith(github.ref, 'refs/heads/releases') }}
         run: |
-          npm install
+          npm ci
           npm run build
           npm run pack
 
