@@ -2,11 +2,12 @@
 // Check README.md for licence information.
 
 import * as path from 'path'
+import { fileURLToPath } from 'url'
 
 import * as io from '@actions/io'
 import * as semver from 'semver'
 
-import nock = require('nock')
+import nock from 'nock'
 
 const testVersions = [
     '0.1.2',
@@ -30,6 +31,7 @@ const testVersions = [
     '1.11.0', '1.11.0-alpha1', '1.11.0-alpha2', '1.11.0-beta1', '1.11.0-beta2', '1.11.0-rc1', '1.11.0-rc2', '1.11.0-rc3', '1.11.0-rc4',
 ]
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const toolDir = path.join(__dirname, 'runner', 'tools')
 const tempDir = path.join(__dirname, 'runner', 'temp')
 const fixtureDir = path.join(__dirname, 'fixtures')
