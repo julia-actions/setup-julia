@@ -6,7 +6,7 @@ import * as crypto from 'crypto'
 import * as fs from 'fs'
 import * as os from 'os'
 import * as path from 'path'
-import retry = require('async-retry')
+import retry from 'async-retry'
 
 import * as semver from 'semver'
 import * as toml from 'toml'
