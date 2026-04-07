@@ -215,12 +215,28 @@ function getJuliaVersion(availableReleases, versionInput, includePrerelease = fa
         // versionInput is a valid version or a nightly version, use it directly
         version = versionInput;
     }
-    else if (versionInput == "min") {
+    else if (versionInput == "min" || versionInput == "min-minor" || versionInput == "min-patch") {
         // Resolve "min" to the minimum supported Julia version compatible with the project file
         if (!juliaCompatRange) {
-            throw new Error('Unable to use version "min" when the Julia project file does not specify a compat for Julia');
+            throw new Error('Unable to use version "min" (or "min-minor" or "min-patch") when the Julia project file does not specify a compat for Julia');
         }
-        version = semver.minSatisfying(availableReleases, juliaCompatRange, { includePrerelease });
+        // true_min_version is the actual minimum
+        // E.g. if the Julia [compat] entry is "1.10", then true_min_version is v"1.10.0"
+        let true_min_version = semver.minSatisfying(availableReleases, juliaCompatRange, { includePrerelease });
+        let my_tilde_range = `~${true_min_version}`;
+        // min_with_latest_patch is the minimum major/minor, but latest patch
+        // E.g. if the Julia [compat] entry is "1.10", then true__version is v"1.10.11" (or whatever the latest 1.10.x patch is)
+        // https://github.com/julia-actions/setup-julia/issues/372
+        let min_with_latest_patch = semver.maxSatisfying(availableReleases, my_tilde_range, { includePrerelease });
+        if (versionInput == "min" || versionInput == "min-minor") {
+            version = min_with_latest_patch;
+        }
+        else if (versionInput == "min-patch") {
+            version = true_min_version;
+        }
+        else {
+            throw new Error(`Unexpected error. Invalid value for versionInput: ${versionInput}`);
+        }
     }
     else if (versionInput == "lts") {
         version = semver.maxSatisfying(availableReleases, LTS_VERSION, { includePrerelease: false });
