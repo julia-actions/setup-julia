@@ -641,7 +641,7 @@ function run() {
             core.debug(`Mapped the "arch" from ${processedArchInput} to ${arch}`);
             // Determine the Julia compat ranges as specified by the Project.toml only for special versions that require them.
             let juliaCompatRange = "";
-            if (versionInput === "min") {
+            if ((versionInput === "min") || (versionInput === "min-minor") || (versionInput === "min-patch")) {
                 const projectFilePath = installer.getProjectFilePath(projectInput);
                 juliaCompatRange = installer.readJuliaCompatRange(fs.readFileSync(projectFilePath).toString());
             }
