@@ -86,3 +86,52 @@ jobs:
       - run: julia --compile=min -O0 -e 'import InteractiveUtils; InteractiveUtils.versioninfo()'
       - name: "Check that the correct julia is used and that archive mtimes are maintained"
         run: julia --startup-file=no --color=yes ./.github/scripts/common-tests.jl
+
+  other-tests:
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        julia-version:
+          - 'min'
+          - 'min-patch'
+          - 'min-minor'
+        os:
+          - ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6.0.2
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: '.tool-versions'
+
+      - name: "Install dependencies"
+        run: |
+          npm install
+          npm run build
+          npm run pack
+
+      - name: Install Node dependencies
+        run: npm ci
+
+      - name: Build the action
+        run: |
+          npm run build
+          npm run pack
+
+      - name: Copy a test fixture file into place
+        run: cp ./__tests__/fixtures/PkgD/Project.toml ./Project.toml
+
+      - name: "Set up Julia"
+        id: setup-julia
+        uses: ./
+        with:
+          version: ${{ matrix.julia-version }}
+
+      - run: julia --version
+      - run: julia --compile=min -O0 -e 'import InteractiveUtils; InteractiveUtils.versioninfo()'
+      - name: "Check that the correct julia is used and that archive mtimes are maintained"
+        run: julia --startup-file=no --color=yes ./.github/scripts/common-tests.jl

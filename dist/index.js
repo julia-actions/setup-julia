@@ -218,7 +218,7 @@ function getJuliaVersion(availableReleases, versionInput, includePrerelease = fa
     else if (versionInput == "min" || versionInput == "min-minor" || versionInput == "min-patch") {
         // Resolve "min" to the minimum supported Julia version compatible with the project file
         if (!juliaCompatRange) {
-            throw new Error('Unable to use version "min" (or "min-minor" or "min-patch") when the Julia project file does not specify a compat for Julia');
+            throw new Error(`Unable to use version "${versionInput}" when the Julia project file does not specify a compat for Julia`);
         }
         // true_min_version is the actual minimum
         // E.g. if the Julia [compat] entry is "1.10", then true_min_version is v"1.10.0"
@@ -641,7 +641,7 @@ function run() {
             core.debug(`Mapped the "arch" from ${processedArchInput} to ${arch}`);
             // Determine the Julia compat ranges as specified by the Project.toml only for special versions that require them.
             let juliaCompatRange = "";
-            if (versionInput === "min") {
+            if ((versionInput === "min") || (versionInput === "min-minor") || (versionInput === "min-patch")) {
                 const projectFilePath = installer.getProjectFilePath(projectInput);
                 juliaCompatRange = installer.readJuliaCompatRange(fs.readFileSync(projectFilePath).toString());
             }

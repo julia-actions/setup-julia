@@ -115,7 +115,7 @@ export function getProjectFilePath(projectInput: string = ""): string {
  */
 export function validJuliaCompatRange(compatRange: string): string | null {
     let ranges: Array<string> = []
-    for(let range of compatRange.split(",")) {
+    for (let range of compatRange.split(",")) {
         range = range.trim()
 
         // An empty range isn't supported by Julia
@@ -177,16 +177,16 @@ export function getJuliaVersion(availableReleases: string[], versionInput: strin
     } else if (versionInput == "min" || versionInput == "min-minor" || versionInput == "min-patch") {
         // Resolve "min" to the minimum supported Julia version compatible with the project file
         if (!juliaCompatRange) {
-            throw new Error('Unable to use version "min" (or "min-minor" or "min-patch") when the Julia project file does not specify a compat for Julia')
+            throw new Error(`Unable to use version "${versionInput}" when the Julia project file does not specify a compat for Julia`)
         }
         // true_min_version is the actual minimum
         // E.g. if the Julia [compat] entry is "1.10", then true_min_version is v"1.10.0"
-        let true_min_version = semver.minSatisfying(availableReleases, juliaCompatRange, {includePrerelease})
+        let true_min_version = semver.minSatisfying(availableReleases, juliaCompatRange, { includePrerelease })
         let my_tilde_range = `~${true_min_version}`
         // min_with_latest_patch is the minimum major/minor, but latest patch
         // E.g. if the Julia [compat] entry is "1.10", then true__version is v"1.10.11" (or whatever the latest 1.10.x patch is)
         // https://github.com/julia-actions/setup-julia/issues/372
-        let min_with_latest_patch = semver.maxSatisfying(availableReleases, my_tilde_range, {includePrerelease})
+        let min_with_latest_patch = semver.maxSatisfying(availableReleases, my_tilde_range, { includePrerelease })
         if (versionInput == "min" || versionInput == "min-minor") {
             version = min_with_latest_patch
         } else if (versionInput == "min-patch") {
@@ -200,7 +200,7 @@ export function getJuliaVersion(availableReleases: string[], versionInput: strin
         version = semver.maxSatisfying(availableReleases, MAJOR_VERSION, { includePrerelease: true });
     } else {
         // Use the highest available version that matches versionInput
-        version = semver.maxSatisfying(availableReleases, versionInput, {includePrerelease})
+        version = semver.maxSatisfying(availableReleases, versionInput, { includePrerelease })
     }
 
     if (!version) {
@@ -240,7 +240,7 @@ function getDesiredFileExts(): [string, boolean, string] {
 function getNightlyFileName(arch: string): string {
     let versionExt: string
     let fileExt1: string
-    [fileExt1, , ] = getDesiredFileExts()
+    [fileExt1, ,] = getDesiredFileExts()
 
     if (osPlat == 'win32') {
         if (arch == 'x86') {
@@ -292,8 +292,8 @@ export function getFileInfo(versionInfo, version: string, arch: string) {
     }
 
     if (!versionInfo[version]) {
-       core.error(`Encountered error: ${err}`)
-       throw err
+        core.error(`Encountered error: ${err}`)
+        throw err
     }
 
     for (let file of versionInfo[version].files) {
@@ -331,15 +331,15 @@ export function getFileInfo(versionInfo, version: string, arch: string) {
             const this_is_macos = osPlat == 'darwin';
             if (this_is_macos && one_fileext_is_targz_and_other_is_dmg && this_julia_version_does_NOT_have_native_binaries_for_apple_silicon) {
                 const msg = `It looks like you are trying to install Julia 1.6 or 1.7 on ` +
-                            `the "macos-latest" runners.\n` +
-                            `"macos-latest" now resolves to "macos-14", which run on Apple ` +
-                            `Silicon (aarch64) macOS machines.\n` +
-                            `Unfortunately, Julia 1.6 and 1.7 do not have native binaries ` +
-                            `available for Apple Silicon macOS.\n` +
-                            `Therefore, it is not possible to install Julia with the current ` +
-                            `constraints.\n` +
-                            `For instructions on how to fix this error, please see the following Discourse post: ` +
-                            `https://discourse.julialang.org/t/how-to-fix-github-actions-ci-failures-with-julia-1-6-or-1-7-on-macos-latest-and-macos-14/117019`
+                    `the "macos-latest" runners.\n` +
+                    `"macos-latest" now resolves to "macos-14", which run on Apple ` +
+                    `Silicon (aarch64) macOS machines.\n` +
+                    `Unfortunately, Julia 1.6 and 1.7 do not have native binaries ` +
+                    `available for Apple Silicon macOS.\n` +
+                    `Therefore, it is not possible to install Julia with the current ` +
+                    `constraints.\n` +
+                    `For instructions on how to fix this error, please see the following Discourse post: ` +
+                    `https://discourse.julialang.org/t/how-to-fix-github-actions-ci-failures-with-julia-1-6-or-1-7-on-macos-latest-and-macos-14/117019`
                 core.error(msg);
             }
         }
@@ -406,7 +406,7 @@ export async function installJulia(dest: string, versionInfo, version: string, a
             return dest
         case 'win32':
             if (fileInfo !== null && fileInfo.extension == 'exe') {
-                if (version.endsWith('nightly') || semver.gtr(version, '1.3', {includePrerelease: true})) {
+                if (version.endsWith('nightly') || semver.gtr(version, '1.3', { includePrerelease: true })) {
                     // The installer changed in 1.4: https://github.com/JuliaLang/julia/blob/ef0c9108b12f3ae177c51037934351ffa703b0b5/NEWS.md#build-system-changes
                     await exec.exec('powershell', ['-Command', `Start-Process -FilePath ${juliaDownloadPath} -ArgumentList "/SILENT /dir=${path.join(process.cwd(), dest)}" -NoNewWindow -Wait`])
                 } else {
