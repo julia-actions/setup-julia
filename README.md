@@ -4,7 +4,7 @@
 
 This action sets up a Julia environment for use in actions by downloading a specified version of Julia and adding it to PATH.
 
-[Migration guide for upgrading from v2 to v3](https://github.com/julia-actions/setup-julia/releases/tag/v3.0.0).
+[Release notes for v2 to v3](https://github.com/julia-actions/setup-julia/releases/tag/v3.0.0).
 
 ## Table of Contents
 - [setup-julia Action](#setup-julia-action)
