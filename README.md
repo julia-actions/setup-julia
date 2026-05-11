@@ -32,7 +32,7 @@ This action sets up a Julia environment for use in actions by downloading a spec
 ### Inputs
 
 ```yaml
-- uses: julia-actions/setup-julia@v2
+- uses: julia-actions/setup-julia@v3
   with:
     # The Julia version that will be installed and added as `julia` to the PATH.
     # See "Julia Versions" below for a list of valid values.
@@ -114,7 +114,7 @@ outputs:
 ```yaml
 steps:
 - uses: actions/checkout@v4
-- uses: julia-actions/setup-julia@v2
+- uses: julia-actions/setup-julia@v3
   with:
     version: '1.10'
 - run: julia -e 'println("Hello, World!")'
@@ -166,7 +166,7 @@ With `include-all-prereleases: true`, it would match `1.3.0-rc1`, `1.3.0-rc2`, `
 If you want to run tests against the latest tagged version, no matter what version that is, you can use
 
 ```yaml
-- uses: julia-actions/setup-julia@v2
+- uses: julia-actions/setup-julia@v3
   with:
     version: '1'
     include-all-prereleases: true
@@ -194,7 +194,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: "Set up Julia"
-        uses: julia-actions/setup-julia@v2
+        uses: julia-actions/setup-julia@v3
         with:
           version: ${{ matrix.julia-version }}
       - run: julia -e 'println("Hello, World!")'
@@ -226,7 +226,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: "Set up Julia"
-        uses: julia-actions/setup-julia@v2
+        uses: julia-actions/setup-julia@v3
         with:
           version: ${{ matrix.julia-version }}
           arch: ${{ matrix.julia-arch }}
@@ -253,7 +253,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: "Set up Julia"
-        uses: julia-actions/setup-julia@v2
+        uses: julia-actions/setup-julia@v3
         with:
           version: ${{ matrix.julia-version }}
       - run: julia -e 'println("Hello, World!")'
@@ -283,10 +283,8 @@ You can specify commits, branches or tags in your workflows as follows:
 ```yaml
 steps:
   - uses: julia-actions/setup-julia@f2258781c657ad9b4b88072c5eeaf9ec8c370874 # commit SHA of the tagged 2.0.0 commit
-  - uses: julia-actions/setup-julia@latest  # latest version tag (may break existing workflows)
-  - uses: julia-actions/setup-julia@v2      # major version tag
-  - uses: julia-actions/setup-julia@v2.0    # minor version tag
-  - uses: julia-actions/setup-julia@v2.0.0  # specific version tag
+  - uses: julia-actions/setup-julia@v3      # major version tag
+  - uses: julia-actions/setup-julia@v3.0.0  # specific version tag
 ```
 
 If your workflow requires access to secrets, you should always pin it to a commit SHA instead of a tag.
