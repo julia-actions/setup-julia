@@ -1,6 +1,8 @@
 // The testing setup has been derived from the actions/setup-go@bc6edb5 action.
 // Check README.md for licence information.
 
+import * as fs from 'fs'
+import * as os from 'os'
 import * as path from 'path'
 
 import * as io from '@actions/io'
@@ -39,6 +41,85 @@ process.env['RUNNER_TEMP'] = tempDir
 
 import * as installer from '../src/installer'
 import exp from 'constants'
+
+describe("readJuliaVersionFromToolVersionsFile tests", () => {
+    let tempDirForToolVersions: string
+
+    beforeEach(() => {
+        tempDirForToolVersions = fs.mkdtempSync(path.join(os.tmpdir(), "setup-julia-tool-versions-"))
+    })
+
+    afterEach(() => {
+        fs.rmSync(tempDirForToolVersions, { force: true, recursive: true })
+    })
+
+    function writeToolVersions(content: string): string {
+        const versionFilePath = path.join(tempDirForToolVersions, ".tool-versions")
+        fs.writeFileSync(versionFilePath, content)
+        return versionFilePath
+    }
+
+    it("Reads a Julia version", () => {
+        const versionFilePath = writeToolVersions("julia 1.10.4\n")
+        expect(installer.readJuliaVersionFromToolVersionsFile(versionFilePath)).toEqual("1.10.4")
+    })
+
+    it("Handles comments and blank lines", () => {
+        const versionFilePath = writeToolVersions("\n# tools\n\njulia 1.11.0\n")
+        expect(installer.readJuliaVersionFromToolVersionsFile(versionFilePath)).toEqual("1.11.0")
+    })
+
+    it("Finds Julia among multiple tools", () => {
+        const versionFilePath = writeToolVersions("nodejs 24.11.1\njulia 1.10.7\npython 3.14.0\n")
+        expect(installer.readJuliaVersionFromToolVersionsFile(versionFilePath)).toEqual("1.10.7")
+    })
+
+    it("Uses the first Julia version token", () => {
+        const versionFilePath = writeToolVersions("julia 1.10.4 1.11.1 # fallback\n")
+        expect(installer.readJuliaVersionFromToolVersionsFile(versionFilePath)).toEqual("1.10.4")
+    })
+
+    it("Reads a prerelease Julia version", () => {
+        const versionFilePath = writeToolVersions("julia 1.11.0-rc1\n")
+        expect(installer.readJuliaVersionFromToolVersionsFile(versionFilePath)).toEqual("1.11.0-rc1")
+    })
+
+    it("Throws when the Julia entry only specifies major and minor", () => {
+        const versionFilePath = writeToolVersions("julia 1.10\n")
+        expect(() => installer.readJuliaVersionFromToolVersionsFile(versionFilePath)).toThrow("must specify major, minor, and patch")
+    })
+
+    it("Throws when the Julia entry only specifies major", () => {
+        const versionFilePath = writeToolVersions("julia 1\n")
+        expect(() => installer.readJuliaVersionFromToolVersionsFile(versionFilePath)).toThrow("must specify major, minor, and patch")
+    })
+
+    it("Throws when the Julia entry uses a version keyword", () => {
+        const versionFilePath = writeToolVersions("julia lts\n")
+        expect(() => installer.readJuliaVersionFromToolVersionsFile(versionFilePath)).toThrow("must specify major, minor, and patch")
+    })
+
+    it("Throws when no Julia entry exists", () => {
+        const versionFilePath = writeToolVersions("nodejs 24.11.1\npython 3.14.0\n")
+        expect(() => installer.readJuliaVersionFromToolVersionsFile(versionFilePath)).toThrow("No Julia version found")
+    })
+
+    it("Throws when the Julia entry has no version", () => {
+        const versionFilePath = writeToolVersions("julia\n")
+        expect(() => installer.readJuliaVersionFromToolVersionsFile(versionFilePath)).toThrow("No Julia version found")
+    })
+
+    it("Throws when the version file is not named .tool-versions", () => {
+        const versionFilePath = path.join(tempDirForToolVersions, "julia-version")
+        fs.writeFileSync(versionFilePath, "julia 1.10.4\n")
+        expect(() => installer.readJuliaVersionFromToolVersionsFile(versionFilePath)).toThrow("only supports .tool-versions")
+    })
+
+    it("Throws when the version file does not exist", () => {
+        const versionFilePath = path.join(tempDirForToolVersions, ".tool-versions")
+        expect(() => installer.readJuliaVersionFromToolVersionsFile(versionFilePath)).toThrow("does not exist")
+    })
+})
 
 describe("getProjectFilePath tests", () => {
     let orgJuliaProject

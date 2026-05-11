@@ -81,6 +81,45 @@ export async function getJuliaVersions(versionInfo): Promise<string[]> {
 }
 
 /**
+ * @returns The Julia version specified in an asdf/mise-en-place .tool-versions file.
+ */
+export function readJuliaVersionFromToolVersionsFile(versionFilePath: string): string {
+    if (path.basename(versionFilePath) !== ".tool-versions") {
+        throw new Error(`The version-file input only supports .tool-versions files: ${versionFilePath}`)
+    }
+
+    if (!fs.existsSync(versionFilePath)) {
+        throw new Error(`The specified version-file does not exist: ${versionFilePath}`)
+    }
+
+    const lines = fs.readFileSync(versionFilePath, 'utf8').split(/\r\n|\r|\n/)
+    for (let line of lines) {
+        line = line.trim()
+
+        if (!line || line.startsWith("#")) {
+            continue
+        }
+
+        const match = line.match(/^julia(?:\s+(.+))?$/)
+        if (!match) {
+            continue
+        }
+
+        const version = match[1]?.trim().split(/\s+/)[0] || ""
+        if (!version || version.startsWith("#")) {
+            throw new Error(`No Julia version found in ${versionFilePath}`)
+        }
+        if (!semver.valid(version)) {
+            throw new Error(`The Julia version in ${versionFilePath} must specify major, minor, and patch versions: ${version}`)
+        }
+
+        return version
+    }
+
+    throw new Error(`No Julia version found in ${versionFilePath}`)
+}
+
+/**
  * @returns The path to the Julia project file
  */
 export function getProjectFilePath(projectInput: string = ""): string {

@@ -45,6 +45,17 @@ This action sets up a Julia environment for use in actions by downloading a spec
     # Default: '1'
     version: '1'
 
+    # Read the Julia version from a .tool-versions file.
+    #
+    # This is useful for repositories that already pin Julia with asdf or mise-en-place.
+    # The file must contain a Julia entry with major, minor, and patch versions, for example:
+    #     julia 1.10.11
+    #
+    # The `version-file` input cannot be used together with the `version` input.
+    #
+    # Default: ''
+    version-file: '.tool-versions'
+
     # The architecture of the Julia binaries.
     #
     # Please note that installing aarch64 binaries only makes sense on self-hosted aarch64 runners.
@@ -127,6 +138,24 @@ You can either specify specific Julia versions or version ranges. If you specify
 > **Warning**
 >
 > It is strongly recommended to wrap versions in quotes. Otherwise, the YAML parser used by GitHub Actions parses certain versions as numbers which causes the wrong version to be selected. For example, `1.0` may be parsed as `1`.
+
+Alternatively, set `version-file` to a `.tool-versions` file containing a Julia entry:
+
+```yaml
+steps:
+- uses: actions/checkout@v6
+- uses: julia-actions/setup-julia@v3
+  with:
+    version-file: '.tool-versions'
+```
+
+For example, the `.tool-versions` file might contain:
+
+```text
+julia 1.10.11
+```
+
+The Julia entry must specify major, minor, and patch versions. The `version` and `version-file` inputs cannot be used together.
 
 #### Examples
 
