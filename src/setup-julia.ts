@@ -1,4 +1,5 @@
 import * as core from '@actions/core'
+import * as io from '@actions/io'
 import * as tc from '@actions/tool-cache'
 
 import * as fs from 'fs'
@@ -102,6 +103,18 @@ async function run() {
         let juliaPath: string;
         juliaPath = tc.find('julia', version, arch)
 
+        // tc.find only checks for the .complete marker; the marker can be present
+        // while the directory is empty/partial because tc.cacheDir is called with
+        // an empty dir BEFORE installJulia extracts into it (see PR196 hack below).
+        // Validate the cached entry by checking the binary file exists.
+        if (juliaPath) {
+            const cachedJuliaBin = path.join(juliaPath, 'bin', os.platform() == 'win32' ? 'julia.exe' : 'julia')
+            if (!fs.existsSync(cachedJuliaBin)) {
+                core.warning(`Cached Julia ${arch}/${version} at ${juliaPath} is incomplete (missing ${cachedJuliaBin}); reinstalling.`)
+                juliaPath = ''
+            }
+        }
+
         if (!juliaPath) {
             core.debug(`could not find Julia ${arch}/${version} in cache`)
 
@@ -124,10 +137,24 @@ async function run() {
         }
 
         // Add it to PATH
-        core.addPath(path.join(juliaPath, 'bin'))
+        const juliaBindir = path.join(juliaPath, 'bin')
+        core.addPath(juliaBindir)
+
+        // Verify that PATH lookup of `julia` resolves to the binary we just installed.
+        // On self-hosted runners other Julia entries (e.g. juliaup launcher in
+        // ~/.juliaup/bin) can shadow the toolcache binary depending on PATH state.
+        const resolvedJulia = await io.which('julia', true)
+        const expectedJulia = path.join(juliaBindir, os.platform() == 'win32' ? 'julia.exe' : 'julia')
+        const norm = (p: string) => {
+            const resolved = path.resolve(fs.realpathSync(p))
+            return os.platform() == 'win32' ? resolved.toLowerCase() : resolved
+        }
+        if (norm(resolvedJulia) !== norm(expectedJulia)) {
+            core.warning(`PATH lookup of \`julia\` resolves to ${resolvedJulia}, not the installed binary at ${expectedJulia}. Another Julia in PATH is shadowing setup-julia's install; fix the runner's PATH (e.g. remove or reorder \`~/.juliaup/bin\`).`)
+        }
 
         // Set output
-        core.setOutput('julia-bindir', path.join(juliaPath, 'bin'))
+        core.setOutput('julia-bindir', juliaBindir)
 
         // Test if Julia has been installed and print the version
         const showVersionInfoInput = core.getInput('show-versioninfo')
