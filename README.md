@@ -113,7 +113,7 @@ outputs:
 
 ```yaml
 steps:
-- uses: actions/checkout@v4
+- uses: actions/checkout@v6
 - uses: julia-actions/setup-julia@v3
   with:
     version: '1.10'
@@ -192,7 +192,7 @@ jobs:
         os: [ubuntu-latest, windows-latest, macOS-latest]
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: "Set up Julia"
         uses: julia-actions/setup-julia@v3
         with:
@@ -224,7 +224,7 @@ jobs:
             julia-arch: aarch64
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: "Set up Julia"
         uses: julia-actions/setup-julia@v3
         with:
@@ -251,7 +251,7 @@ jobs:
             julia-arch: x86
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: "Set up Julia"
         uses: julia-actions/setup-julia@v3
         with:
