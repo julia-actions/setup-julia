@@ -41,6 +41,6 @@ updates:
     default-days: 7
   groups:
     # Group all NPM PRs into a single PR:
-    all-npm-actions:
+    all-npm:
       patterns:
         - "*"
