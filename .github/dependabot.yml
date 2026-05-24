@@ -5,6 +5,10 @@ updates:
   schedule:
     interval: monthly
   open-pull-requests-limit: 99
+  # Cooldown only affects Dependabot version updates, not security updates:
+  # https://docs.github.com/en/code-security/reference/supply-chain-security/dependabot-options-reference#cooldown
+  cooldown:
+    default-days: 7
   groups:
     # Group all Git submodules PRs into a single PR:
     all-gitsubmodule-actions:
@@ -16,6 +20,10 @@ updates:
   schedule:
     interval: 'monthly'
   open-pull-requests-limit: 99
+  # Cooldown only affects Dependabot version updates, not security updates:
+  # https://docs.github.com/en/code-security/reference/supply-chain-security/dependabot-options-reference#cooldown
+  cooldown:
+    default-days: 7
   groups:
     # Group all GitHub Actions PRs into a single PR:
     all-github-actions:
@@ -27,6 +35,10 @@ updates:
   schedule:
     interval: monthly
   open-pull-requests-limit: 99
+  # Cooldown only affects Dependabot version updates, not security updates:
+  # https://docs.github.com/en/code-security/reference/supply-chain-security/dependabot-options-reference#cooldown
+  cooldown:
+    default-days: 7
   groups:
     # Group all NPM PRs into a single PR:
     all-npm-actions:
