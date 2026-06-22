@@ -1,5 +1,4 @@
 import * as core from '@actions/core'
-import * as io from '@actions/io'
 import * as tc from '@actions/tool-cache'
 
 import * as fs from 'fs'
@@ -8,6 +7,7 @@ import * as os from 'os'
 import * as path from 'path'
 
 import * as installer from './installer'
+import {configureJuliaPath} from './path'
 
 // Note: before we index into this dict, we always first do `.toLowerCase()` on
 // the key.
@@ -136,25 +136,10 @@ async function run() {
             core.debug(`using cached version of Julia: ${juliaPath}`)
         }
 
-        // Add it to PATH
-        const juliaBindir = path.join(juliaPath, 'bin')
-        core.addPath(juliaBindir)
-
-        // Verify that PATH lookup of `julia` resolves to the binary we just installed.
-        // On self-hosted runners other Julia entries (e.g. juliaup launcher in
-        // ~/.juliaup/bin) can shadow the toolcache binary depending on PATH state.
-        const resolvedJulia = await io.which('julia', true)
-        const expectedJulia = path.join(juliaBindir, os.platform() == 'win32' ? 'julia.exe' : 'julia')
-        const norm = (p: string) => {
-            const resolved = path.resolve(fs.realpathSync(p))
-            return os.platform() == 'win32' ? resolved.toLowerCase() : resolved
-        }
-        if (norm(resolvedJulia) !== norm(expectedJulia)) {
-            core.warning(`PATH lookup of \`julia\` resolves to ${resolvedJulia}, not the installed binary at ${expectedJulia}. Another Julia in PATH is shadowing setup-julia's install; fix the runner's PATH (e.g. remove or reorder \`~/.juliaup/bin\`).`)
-        }
-
-        // Set output
-        core.setOutput('julia-bindir', juliaBindir)
+        // Configure PATH and the environment so that subsequent steps and
+        // downstream actions use the Julia we just installed, dethroning any Julia
+        // preinstalled on the runner image that would otherwise shadow it.
+        await configureJuliaPath(juliaPath)
 
         // Test if Julia has been installed and print the version
         const showVersionInfoInput = core.getInput('show-versioninfo')

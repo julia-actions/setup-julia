@@ -109,6 +109,18 @@ outputs:
   julia-bindir: ''
 ```
 
+### Environment variables
+
+The action exports the following environment variables for use by subsequent
+steps and downstream actions:
+
+- `JULIA_ACTIONS_JULIA`: the absolute path to the Julia executable that this
+  action installed (e.g. `/opt/hostedtoolcache/julia/1.5.3/x64/bin/julia`).
+  Downstream actions can invoke this directly instead of relying on a bare
+  `julia` PATH lookup, which can be shadowed by a Julia preinstalled on the
+  runner image. Prefer it when set, falling back to `julia`, e.g.
+  `"${JULIA_ACTIONS_JULIA:-julia}"`.
+
 ### Basic
 
 ```yaml
