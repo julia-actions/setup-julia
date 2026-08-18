@@ -145,7 +145,7 @@ You can either specify specific Julia versions or version ranges. If you specify
 - `'min-minor'` will install the earliest supported major/minor version of Julia compatible with the project. Especially useful in monorepos. Note: `min-minor` chooses the lowest major/minor, but gives the latest patch. For example, for a Julia `[compat]` entry of `julia = "1.10"`, `min-minor` would resolve to e.g. `1.10.11` (NOT `1.10.0`).
 - `'min-patch'` will install the earliest supported major/minor/patch version of Julia compatible with the project. For example, for a Julia `[compat]` entry of `julia = "1.10"`, `min-patch` would resolve to e.g. `1.10.0`.
 
-Internally the action uses node's semver package to resolve version ranges. Its [documentation](https://github.com/npm/node-semver#advanced-range-syntax) contains more details on the version range syntax. You can test what version will be selected for a given input in this JavaScript [REPL](https://repl.it/@SaschaMann/setup-julia-version-logic).
+Internally the action uses node's semver package to resolve version ranges. Its [documentation](https://github.com/npm/node-semver#advanced-range-syntax) contains more details on the version range syntax.
 
 #### Prereleases
 
