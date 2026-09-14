@@ -51,6 +51,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getJuliaVersionInfo = getJuliaVersionInfo;
 exports.getJuliaVersions = getJuliaVersions;
+exports.readJuliaVersionFromToolVersionsFile = readJuliaVersionFromToolVersionsFile;
 exports.getProjectFilePath = getProjectFilePath;
 exports.validJuliaCompatRange = validJuliaCompatRange;
 exports.readJuliaCompatRange = readJuliaCompatRange;
@@ -132,6 +133,38 @@ function getJuliaVersions(versionInfo) {
         }
         return versions;
     });
+}
+/**
+ * @returns The Julia version specified in an asdf/mise-en-place .tool-versions file.
+ */
+function readJuliaVersionFromToolVersionsFile(versionFilePath) {
+    var _a;
+    if (path.basename(versionFilePath) !== ".tool-versions") {
+        throw new Error(`The version-file input only supports .tool-versions files: ${versionFilePath}`);
+    }
+    if (!fs.existsSync(versionFilePath)) {
+        throw new Error(`The specified version-file does not exist: ${versionFilePath}`);
+    }
+    const lines = fs.readFileSync(versionFilePath, 'utf8').split(/\r\n|\r|\n/);
+    for (let line of lines) {
+        line = line.trim();
+        if (!line || line.startsWith("#")) {
+            continue;
+        }
+        const match = line.match(/^julia(?:\s+(.+))?$/);
+        if (!match) {
+            continue;
+        }
+        const version = ((_a = match[1]) === null || _a === void 0 ? void 0 : _a.trim().split(/\s+/)[0]) || "";
+        if (!version || version.startsWith("#")) {
+            throw new Error(`No Julia version found in ${versionFilePath}`);
+        }
+        if (!semver.valid(version)) {
+            throw new Error(`The Julia version in ${versionFilePath} must specify major, minor, and patch versions: ${version}`);
+        }
+        return version;
+    }
+    throw new Error(`No Julia version found in ${versionFilePath}`);
 }
 /**
  * @returns The path to the Julia project file
@@ -599,18 +632,37 @@ function run() {
             }
             // Inputs.
             // Note that we intentionally strip leading and lagging whitespace by using `.trim()`
-            const versionInput = core.getInput('version').trim();
+            const rawVersionInput = core.getInput('version').trim();
+            const versionFileInput = core.getInput('version-file').trim();
             const includePrereleases = core.getInput('include-all-prereleases').trim() == 'true';
             const originalArchInput = core.getInput('arch').trim();
             const forceArch = core.getInput('force-arch').trim() == 'true';
             const projectInput = core.getInput('project').trim(); // Julia project file
-            // It can easily happen that, for example, a workflow file contains an input `version: ${{ matrix.julia-version }}`
-            // while the strategy matrix only contains a key `${{ matrix.version }}`.
-            // In that case, we want the action to fail, rather than trying to download julia from an URL that's missing parts and 404ing.
-            // We _could_ fall back to the default but that means that builds silently do things differently than they're meant to, which
-            // is worse than failing the build.
-            if (!versionInput) { // if `versionInput` is an empty string
+            // `core.getInput('version')` returns an empty string both when the input is
+            // omitted and when it is explicitly set to an empty value. Those cases now
+            // differ: omitted means use `version-file` or the default `1`, while an
+            // explicitly empty value usually indicates a typo like
+            // `version: ${{ matrix.julia-version }}` with no matching matrix key.
+            // GitHub exposes provided inputs as `INPUT_*` environment variables, so
+            // `INPUT_VERSION` lets us preserve the old explicit-empty error.
+            const versionInputWasProvided = process.env.INPUT_VERSION !== undefined;
+            if (versionInputWasProvided && !rawVersionInput) { // if `rawVersionInput` is an empty string
                 throw new Error('Version input must not be null');
+            }
+            if (rawVersionInput && versionFileInput) {
+                throw new Error('The "version" and "version-file" inputs cannot both be set');
+            }
+            let versionInput = rawVersionInput;
+            if (!versionInput && versionFileInput) {
+                // GitHub Actions does not apply a step-specific working directory to `uses:` steps,
+                // so relative `version-file` paths are resolved from the checked-out workspace.
+                const workspace = process.env.GITHUB_WORKSPACE || process.cwd();
+                const versionFilePath = path.isAbsolute(versionFileInput) ? versionFileInput : path.join(workspace, versionFileInput);
+                versionInput = installer.readJuliaVersionFromToolVersionsFile(versionFilePath);
+                core.info(`Resolved ${versionFileInput} as ${versionInput}`);
+            }
+            if (!versionInput) {
+                versionInput = '1';
             }
             if (versionInput == '1.6') {
                 core.notice('[setup-julia] If you are testing 1.6 as a Long Term Support (lts) version, consider using the new "lts" version specifier instead of "1.6" explicitly, which will automatically resolve the current lts.');
