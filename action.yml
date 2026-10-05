@@ -25,6 +25,10 @@ inputs:
     description: 'The path to the project directory or file to use when resolving some versions (e.g. min)'
     required: false
     default: ''  # Special value which fallsback to using JULIA_PROJECT if defined, otherwise "."
+  variants:
+    description: 'EXPERIMENTAL: the `variants` input may change in breaking ways (or be removed) in non-major releases of this action. A comma-separated list of build variants to install, e.g. "opt", "nogpl", or "opt, nogpl". The build whose set of variants is exactly the given set is installed (the order does not matter). Variants are currently only available for nightly versions (e.g. "nightly" or "1.13-nightly"), but will likely be available for regular Julia releases in the future. The default value "[default]" installs the standard build.'
+    required: false
+    default: '[default]'
 outputs:
   julia-version:
     description: 'The installed Julia version. May vary from the version input if a version range was given as input.'

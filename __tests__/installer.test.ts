@@ -1,6 +1,7 @@
 // The testing setup has been derived from the actions/setup-go@bc6edb5 action.
 // Check README.md for licence information.
 
+import * as fs from 'fs'
 import * as path from 'path'
 
 import * as io from '@actions/io'
@@ -340,6 +341,144 @@ describe('installer tests', () => {
 
         it('Extracts the list of available versions', async () => {
             expect(await (await installer.getJuliaVersions(await installer.getJuliaVersionInfo())).sort()).toEqual(testVersions.sort())
+        })
+    })
+})
+
+describe('variant tests', () => {
+    describe('parseVariantsInput', () => {
+        it('Returns null for the default value', () => {
+            expect(installer.parseVariantsInput('[default]')).toBeNull()
+            expect(installer.parseVariantsInput('  [default]  ')).toBeNull()
+        })
+
+        it('Parses a single variant', () => {
+            expect(installer.parseVariantsInput('opt')).toEqual(['opt'])
+            expect(installer.parseVariantsInput('  nogpl\n')).toEqual(['nogpl'])
+        })
+
+        it('Parses and sorts a list of variants', () => {
+            expect(installer.parseVariantsInput('opt, nogpl')).toEqual(['nogpl', 'opt'])
+            expect(installer.parseVariantsInput(' nogpl ,opt ')).toEqual(['nogpl', 'opt'])
+        })
+
+        it('Rejects empty input', () => {
+            expect(() => installer.parseVariantsInput('')).toThrow('must not be empty')
+            expect(() => installer.parseVariantsInput('   ')).toThrow('must not be empty')
+        })
+
+        it('Rejects empty variants', () => {
+            expect(() => installer.parseVariantsInput(',')).toThrow('must not contain empty variants')
+            expect(() => installer.parseVariantsInput('opt,')).toThrow('must not contain empty variants')
+            expect(() => installer.parseVariantsInput('opt, , nogpl')).toThrow('must not contain empty variants')
+        })
+
+        it('Rejects duplicate variants', () => {
+            expect(() => installer.parseVariantsInput('opt, opt')).toThrow('must not contain duplicate variants')
+        })
+
+        it('Rejects invalid variant names', () => {
+            expect(() => installer.parseVariantsInput('Opt')).toThrow('Invalid variant')
+            expect(() => installer.parseVariantsInput('no-gpl')).toThrow('Invalid variant')
+            expect(() => installer.parseVariantsInput('opt nogpl')).toThrow('Invalid variant')
+            expect(() => installer.parseVariantsInput('opt, [default]')).toThrow('Invalid variant')
+        })
+    })
+
+    describe('toolcacheArch', () => {
+        it('Leaves the arch unchanged without variants', () => {
+            expect(installer.toolcacheArch('x64', null)).toEqual('x64')
+        })
+
+        it('Appends the sorted variants', () => {
+            expect(installer.toolcacheArch('x64', ['opt'])).toEqual('x64+opt')
+            expect(installer.toolcacheArch('x64', ['opt', 'nogpl'])).toEqual('x64+nogpl+opt')
+        })
+    })
+
+    describe('getVariantFileInfo', () => {
+        const nightliesInfo = JSON.parse(fs.readFileSync(path.join(fixtureDir, 'nightlies.json')).toString())
+
+        it('Finds a single variant', () => {
+            const file = installer.getVariantFileInfo(nightliesInfo, 'nightly', 'x64', ['opt'], 'linux')
+            expect(file.url).toEqual('https://julialangnightlies-s3.julialang.org/bin/linuxopt/x86_64/julia-latest-linuxopt-x86_64.tar.gz')
+
+            const macFile = installer.getVariantFileInfo(nightliesInfo, 'nightly', 'aarch64', ['nogpl'], 'darwin')
+            expect(macFile.url).toEqual('https://julialang-nogpl.s3.amazonaws.com/bin-nogpl/macosnogpl/aarch64/julia-latest-macosnogpl-aarch64.tar.gz')
+
+            const releaseBranchFile = installer.getVariantFileInfo(nightliesInfo, '1.13-nightly', 'x64', ['nogpl'], 'win32')
+            expect(releaseBranchFile.url).toEqual('https://julialang-nogpl.s3.amazonaws.com/bin-nogpl/windowsnogpl/x86_64/1.13/julia-latest-windowsnogpl-x86_64.tar.gz')
+        })
+
+        it('Matches a set of variants regardless of order', () => {
+            const a = installer.getVariantFileInfo(nightliesInfo, 'nightly', 'x64', ['opt', 'nogpl'], 'linux')
+            const b = installer.getVariantFileInfo(nightliesInfo, 'nightly', 'x64', ['nogpl', 'opt'], 'linux')
+            expect(a.variants.sort()).toEqual(['nogpl', 'opt'])
+            expect(a).toBe(b)
+        })
+
+        it('Requires the sets of variants to be equal', () => {
+            // ['opt'] must not match ['opt', 'nogpl'] and vice versa
+            expect(installer.getVariantFileInfo(nightliesInfo, 'nightly', 'x64', ['opt'], 'linux').variants).toEqual(['opt'])
+            expect(installer.getVariantFileInfo(nightliesInfo, 'nightly', 'x64', ['nogpl'], 'linux').variants).toEqual(['nogpl'])
+            expect(() => installer.getVariantFileInfo(nightliesInfo, 'nightly', 'x64', ['assert', 'opt'], 'linux')).toThrow("Could not find variant 'assert, opt'")
+        })
+
+        it('Fails if the variant is not available for the platform', () => {
+            expect(() => installer.getVariantFileInfo(nightliesInfo, 'nightly', 'aarch64', ['assert'], 'linux')).toThrow("Available variants: 'opt'")
+            expect(() => installer.getVariantFileInfo(nightliesInfo, '1.13-nightly', 'x64', ['opt'], 'linux')).toThrow("Available variants: 'nogpl'")
+            expect(() => installer.getVariantFileInfo(nightliesInfo, '1.13-nightly', 'x86', ['nogpl'], 'linux')).toThrow('No variants are available for this platform')
+        })
+
+        it('Fails for unknown nightly channels', () => {
+            expect(() => installer.getVariantFileInfo(nightliesInfo, '1.11-nightly', 'x64', ['opt'], 'linux')).toThrow("Could not find nightly channel '1.11-nightly'")
+        })
+
+        it('Fails for non-nightly versions', () => {
+            expect(() => installer.getVariantFileInfo(nightliesInfo, '1.12.0', 'x64', ['opt'], 'linux')).toThrow('only available for nightly builds')
+            expect(() => installer.checkVariantVersion('1.12.0', ['opt'])).toThrow('only available for nightly builds')
+            expect(() => installer.checkVariantVersion('nightly', ['opt'])).not.toThrow()
+        })
+    })
+
+    describe('getDownloadURL for variants', () => {
+        it('Accepts the official download servers', () => {
+            const nightlyURL = 'https://julialangnightlies-s3.julialang.org/bin/linuxopt/x86_64/julia-latest-linuxopt-x86_64.tar.gz'
+            const nogplURL = 'https://julialang-nogpl.s3.amazonaws.com/bin-nogpl/linuxnogpl/x86_64/julia-latest-linuxnogpl-x86_64.tar.gz'
+            expect(installer.getDownloadURL(null, 'nightly', 'x64', { url: nightlyURL })).toEqual(nightlyURL)
+            expect(installer.getDownloadURL(null, 'nightly', 'x64', { url: nogplURL })).toEqual(nogplURL)
+        })
+
+        it('Rejects other download locations', () => {
+            expect(() => installer.getDownloadURL(null, 'nightly', 'x64', { url: 'https://example.com/julia.tar.gz' })).toThrow('Aborting for security reasons')
+            expect(() => installer.getDownloadURL(null, 'nightly', 'x64', { url: 'http://julialangnightlies-s3.julialang.org/julia.tar.gz' })).toThrow('Aborting for security reasons')
+            expect(() => installer.getDownloadURL(null, 'nightly', 'x64', { url: 'https://julialang-nogpl.s3.amazonaws.com.example.com/julia.tar.gz' })).toThrow('Aborting for security reasons')
+        })
+    })
+
+    describe('nightlies.json download', () => {
+        afterAll(async () => {
+            try {
+                await io.rmRF(tempDir)
+            } catch {
+                console.log('Failed to remove test directories')
+            }
+        }, 100000)
+
+        beforeEach(() => {
+            nock('https://julialang-s3.julialang.org').persist()
+                .get('/bin/nightlies.json')
+                .replyWithFile(200, path.join(fixtureDir, 'nightlies.json'))
+        })
+
+        afterEach(() => {
+            nock.cleanAll()
+            nock.enableNetConnect()
+        })
+
+        it('Downloads and parses nightlies.json', async () => {
+            const nightliesInfo = await installer.getJuliaNightliesInfo()
+            expect(Object.keys(nightliesInfo).sort()).toEqual(['1.13-nightly', 'nightly'])
         })
     })
 })
