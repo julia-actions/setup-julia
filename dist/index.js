@@ -49,7 +49,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.DEFAULT_VARIANTS_INPUT = void 0;
 exports.getJuliaVersionInfo = getJuliaVersionInfo;
+exports.getJuliaNightliesInfo = getJuliaNightliesInfo;
+exports.parseVariantsInput = parseVariantsInput;
+exports.toolcacheArch = toolcacheArch;
+exports.checkVariantVersion = checkVariantVersion;
+exports.getVariantFileInfo = getVariantFileInfo;
 exports.getJuliaVersions = getJuliaVersions;
 exports.getProjectFilePath = getProjectFilePath;
 exports.validJuliaCompatRange = validJuliaCompatRange;
@@ -82,6 +88,13 @@ const archMap = {
     'x64': 'x86_64',
     'aarch64': 'aarch64'
 };
+// Hosts that variant builds listed in nightlies.json may be downloaded from
+const allowedVariantURLPrefixes = [
+    'https://julialangnightlies-s3.julialang.org/',
+    'https://julialang-nogpl.s3.amazonaws.com/',
+];
+// Value of the `variants` input that means "no variant" (the default)
+exports.DEFAULT_VARIANTS_INPUT = '[default]';
 // Store information about the environment
 const osPlat = os.platform(); // possible values: win32 (Windows), linux (Linux), darwin (macOS)
 core.debug(`platform: ${osPlat}`);
@@ -120,6 +133,99 @@ function getJuliaVersionInfo() {
         });
         return JSON.parse(fs.readFileSync(versionsFile).toString());
     });
+}
+/**
+ * @returns The content of the downloaded nightlies.json file as object.
+ */
+function getJuliaNightliesInfo() {
+    return __awaiter(this, void 0, void 0, function* () {
+        // Occasionally the connection is reset for unknown reasons
+        // In those cases, retry the download
+        const nightliesFile = yield retry((bail) => __awaiter(this, void 0, void 0, function* () {
+            return yield tc.downloadTool('https://julialang-s3.julialang.org/bin/nightlies.json');
+        }), {
+            retries: 5,
+            onRetry: (err) => {
+                core.info(`Download of nightlies.json failed, trying again. Error: ${err}`);
+            }
+        });
+        return JSON.parse(fs.readFileSync(nightliesFile).toString());
+    });
+}
+/**
+ * Parse the (experimental) `variants` input.
+ *
+ * @returns null if no variant was requested, otherwise the requested variants, sorted alphabetically.
+ */
+function parseVariantsInput(variantsInput) {
+    const input = variantsInput.trim();
+    if (input === exports.DEFAULT_VARIANTS_INPUT) {
+        return null;
+    }
+    if (!input) {
+        throw new Error(`Variants input must not be empty. To not use a variant, omit the input or set it to '${exports.DEFAULT_VARIANTS_INPUT}'.`);
+    }
+    const variants = input.split(',').map((v) => v.trim());
+    if (variants.length === 0) {
+        throw new Error(`Variants input must contain at least one variant: '${variantsInput}'`);
+    }
+    for (let variant of variants) {
+        if (!variant) {
+            throw new Error(`Variants input must not contain empty variants: '${variantsInput}'`);
+        }
+        if (!/^[a-z0-9]+$/.test(variant)) {
+            throw new Error(`Invalid variant '${variant}' in variants input '${variantsInput}'. Variant names may only contain lowercase letters and digits.`);
+        }
+    }
+    if (new Set(variants).size !== variants.length) {
+        throw new Error(`Variants input must not contain duplicate variants: '${variantsInput}'`);
+    }
+    return variants.sort();
+}
+/**
+ * @returns The architecture string used as the toolcache key, with the variants appended, e.g. `x64+nogpl+opt`.
+ */
+function toolcacheArch(arch, variants) {
+    if (!variants) {
+        return arch;
+    }
+    return [arch, ...[...variants].sort()].join('+');
+}
+/**
+ * Throws if variants were requested for a version that has no variants.
+ */
+function checkVariantVersion(version, variants) {
+    if (!version.endsWith('nightly')) {
+        throw new Error(`Variants are currently only available for nightly builds (e.g. 'nightly' or '1.13-nightly'), but version '${version}' was requested with variants '${variants.join(', ')}'.`);
+    }
+}
+/**
+ * @returns The nightlies.json entry of the build of `version` (a nightly channel) whose set of variants equals `variants`.
+ */
+function getVariantFileInfo(nightliesInfo, version, arch, variants, platform = osPlat) {
+    const requested = [...variants].sort();
+    const requestedName = requested.join(', ');
+    checkVariantVersion(version, requested);
+    const channel = nightliesInfo[version];
+    if (!channel) {
+        throw new Error(`Could not find nightly channel '${version}' in nightlies.json`);
+    }
+    const sameSet = (a, b) => {
+        const sa = new Set(a);
+        const sb = new Set(b);
+        return sa.size === sb.size && [...sa].every((x) => sb.has(x));
+    };
+    const platformFiles = (channel.variants || []).filter((file) => file.os == osMap[platform] && file.arch == archMap[arch] && file.extension == 'tar.gz' && Array.isArray(file.variants));
+    const matches = platformFiles.filter((file) => sameSet(file.variants, requested));
+    if (matches.length === 0) {
+        const available = platformFiles.map((file) => `'${[...file.variants].sort().join(', ')}'`);
+        const availableMsg = available.length > 0 ? `Available variants: ${available.join('; ')}` : 'No variants are available for this platform.';
+        throw new Error(`Could not find variant '${requestedName}' of ${archMap[arch]}/${version} for ${osMap[platform]}. ${availableMsg}`);
+    }
+    if (matches.length > 1) {
+        throw new Error(`Found more than one build of variant '${requestedName}' of ${archMap[arch]}/${version} for ${osMap[platform]} in nightlies.json`);
+    }
+    return matches[0];
 }
 /**
  * @returns An array of all Julia versions available for download
@@ -388,7 +494,15 @@ function getFileInfo(versionInfo, version, arch) {
     core.error(`Encountered error: ${err}`);
     throw err;
 }
-function getDownloadURL(fileInfo, version, arch) {
+function getDownloadURL(fileInfo, version, arch, variantFileInfo = null) {
+    // variant builds: use the URL listed in nightlies.json
+    if (variantFileInfo !== null) {
+        const url = variantFileInfo.url;
+        if (!allowedVariantURLPrefixes.some((prefix) => url.startsWith(prefix))) {
+            throw new Error(`nightlies.json points at a download location outside of Julia's download servers: ${url}. Aborting for security reasons.`);
+        }
+        return url;
+    }
     const baseURL = `https://julialangnightlies-s3.julialang.org/bin/${osMap[osPlat]}/${arch}`;
     // release branch nightlies, e.g. 1.6-nightlies should return .../bin/linux/x64/1.6/julia-latest-linux64.tar.gz
     const majorMinorMatches = /^(\d*.\d*)-nightly/.exec(version);
@@ -405,11 +519,12 @@ function getDownloadURL(fileInfo, version, arch) {
     }
     return fileInfo.url;
 }
-function installJulia(dest, versionInfo, version, arch) {
-    return __awaiter(this, void 0, void 0, function* () {
+function installJulia(dest_1, versionInfo_1, version_1, arch_1) {
+    return __awaiter(this, arguments, void 0, function* (dest, versionInfo, version, arch, variantFileInfo = null) {
         // Download Julia
+        // Variant builds are only available for nightlies, so `fileInfo` is null for them
         const fileInfo = getFileInfo(versionInfo, version, arch);
-        const downloadURL = getDownloadURL(fileInfo, version, arch);
+        const downloadURL = getDownloadURL(fileInfo, version, arch, variantFileInfo);
         core.debug(`downloading Julia from ${downloadURL}`);
         // Occasionally the connection is reset for unknown reasons
         // In those cases, retry the download
@@ -604,6 +719,7 @@ function run() {
             const originalArchInput = core.getInput('arch').trim();
             const forceArch = core.getInput('force-arch').trim() == 'true';
             const projectInput = core.getInput('project').trim(); // Julia project file
+            const variants = installer.parseVariantsInput(core.getInput('variants')); // Experimental
             // It can easily happen that, for example, a workflow file contains an input `version: ${{ matrix.julia-version }}`
             // while the strategy matrix only contains a key `${{ matrix.version }}`.
             // In that case, we want the action to fail, rather than trying to download julia from an URL that's missing parts and 404ing.
@@ -651,9 +767,20 @@ function run() {
             const version = installer.getJuliaVersion(availableReleases, versionInput, includePrereleases, juliaCompatRange);
             core.debug(`selected Julia version: ${arch}/${version}`);
             core.setOutput('julia-version', version);
+            // Variants (experimental) are selected from nightlies.json
+            let variantFileInfo = null;
+            if (variants) {
+                installer.checkVariantVersion(version, variants);
+                const nightliesInfo = yield installer.getJuliaNightliesInfo();
+                variantFileInfo = installer.getVariantFileInfo(nightliesInfo, version, arch, variants);
+                core.info(`[setup-julia] Using the experimental variants ${variants.join(', ')} of Julia ${version}`);
+            }
+            // Variants are cached under their own arch key (e.g. `x64+nogpl+opt`) so they
+            // don't clash with each other or with the standard build
+            const cacheArch = installer.toolcacheArch(arch, variants);
             // Search in cache
             let juliaPath;
-            juliaPath = tc.find('julia', version, arch);
+            juliaPath = tc.find('julia', version, cacheArch);
             // tc.find only checks for the .complete marker; the marker can be present
             // while the directory is empty/partial because tc.cacheDir is called with
             // an empty dir BEFORE installJulia extracts into it (see PR196 hack below).
@@ -661,12 +788,12 @@ function run() {
             if (juliaPath) {
                 const cachedJuliaBin = path.join(juliaPath, 'bin', os.platform() == 'win32' ? 'julia.exe' : 'julia');
                 if (!fs.existsSync(cachedJuliaBin)) {
-                    core.warning(`Cached Julia ${arch}/${version} at ${juliaPath} is incomplete (missing ${cachedJuliaBin}); reinstalling.`);
+                    core.warning(`Cached Julia ${cacheArch}/${version} at ${juliaPath} is incomplete (missing ${cachedJuliaBin}); reinstalling.`);
                     juliaPath = '';
                 }
             }
             if (!juliaPath) {
-                core.debug(`could not find Julia ${arch}/${version} in cache`);
+                core.debug(`could not find Julia ${cacheArch}/${version} in cache`);
                 // https://github.com/julia-actions/setup-julia/pull/196
                 // we want julia to be installed with unmodified file mtimes
                 // but `tc.cacheDir` uses `cp` internally which destroys mtime
@@ -674,8 +801,8 @@ function run() {
                 // so hack it by installing a empty directory then use the path it returns
                 // and extract the archives directly to that location
                 const emptyDir = fs.mkdtempSync('empty');
-                juliaPath = yield tc.cacheDir(emptyDir, 'julia', version, arch);
-                yield installer.installJulia(juliaPath, versionInfo, version, arch);
+                juliaPath = yield tc.cacheDir(emptyDir, 'julia', version, cacheArch);
+                yield installer.installJulia(juliaPath, versionInfo, version, arch, variantFileInfo);
                 core.debug(`added Julia to cache: ${juliaPath}`);
                 // Remove empty dir
                 fs.rmdirSync(emptyDir);
