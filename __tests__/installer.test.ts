@@ -2,11 +2,12 @@
 // Check README.md for licence information.
 
 import * as path from 'path'
+import { fileURLToPath } from 'url'
+
+import { jest } from '@jest/globals'
 
 import * as io from '@actions/io'
 import * as semver from 'semver'
-
-import nock = require('nock')
 
 const testVersions = [
     '0.1.2',
@@ -30,6 +31,7 @@ const testVersions = [
     '1.11.0', '1.11.0-alpha1', '1.11.0-alpha2', '1.11.0-beta1', '1.11.0-beta2', '1.11.0-rc1', '1.11.0-rc2', '1.11.0-rc3', '1.11.0-rc4',
 ]
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const toolDir = path.join(__dirname, 'runner', 'tools')
 const tempDir = path.join(__dirname, 'runner', 'temp')
 const fixtureDir = path.join(__dirname, 'fixtures')
@@ -37,7 +39,13 @@ const fixtureDir = path.join(__dirname, 'fixtures')
 process.env['RUNNER_TOOL_CACHE'] = toolDir
 process.env['RUNNER_TEMP'] = tempDir
 
-import * as installer from '../src/installer'
+// Instead of downloading versions.json, use fixtures/versions.json.
+// The module must be mocked before the module under test is loaded.
+const tc = await import('@actions/tool-cache')
+const downloadTool = jest.fn<(url: string) => Promise<string>>()
+jest.unstable_mockModule('@actions/tool-cache', () => ({ ...tc, downloadTool }))
+
+const installer = await import('../src/installer')
 import exp from 'constants'
 
 describe("getProjectFilePath tests", () => {
@@ -326,20 +334,13 @@ describe('installer tests', () => {
     }, 100000)
 
     describe('versions.json parsing', () => {
-        // Instead of downloading versions.json, use fixtures/versions.json
         beforeEach(() => {
-            nock('https://julialang-s3.julialang.org').persist()
-                .get('/bin/versions.json')
-                .replyWithFile(200, path.join(fixtureDir, 'versions.json'))
-        })
-
-        afterEach(() => {
-            nock.cleanAll()
-            nock.enableNetConnect()
+            downloadTool.mockResolvedValue(path.join(fixtureDir, 'versions.json'))
         })
 
         it('Extracts the list of available versions', async () => {
             expect(await (await installer.getJuliaVersions(await installer.getJuliaVersionInfo())).sort()).toEqual(testVersions.sort())
+            expect(downloadTool).toHaveBeenCalledWith('https://julialang-s3.julialang.org/bin/versions.json')
         })
     })
 })
