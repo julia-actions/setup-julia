@@ -48,6 +48,7 @@ async function run() {
         const originalArchInput = core.getInput('arch').trim()
         const forceArch = core.getInput('force-arch').trim() == 'true'
         const projectInput = core.getInput('project').trim()  // Julia project file
+        const variants = installer.parseVariantsInput(core.getInput('variants'))  // Experimental
 
         // It can easily happen that, for example, a workflow file contains an input `version: ${{ matrix.julia-version }}`
         // while the strategy matrix only contains a key `${{ matrix.version }}`.
@@ -99,9 +100,22 @@ async function run() {
         core.debug(`selected Julia version: ${arch}/${version}`)
         core.setOutput('julia-version', version)
 
+        // Variants (experimental) are selected from nightlies.json
+        let variantFileInfo: any = null
+        if (variants) {
+            installer.checkVariantVersion(version, variants)
+            const nightliesInfo = await installer.getJuliaNightliesInfo()
+            variantFileInfo = installer.getVariantFileInfo(nightliesInfo, version, arch, variants)
+            core.info(`[setup-julia] Using the experimental variants ${variants.join(', ')} of Julia ${version}`)
+        }
+
+        // Variants are cached under their own arch key (e.g. `x64+nogpl+opt`) so they
+        // don't clash with each other or with the standard build
+        const cacheArch = installer.toolcacheArch(arch, variants)
+
         // Search in cache
         let juliaPath: string;
-        juliaPath = tc.find('julia', version, arch)
+        juliaPath = tc.find('julia', version, cacheArch)
 
         // tc.find only checks for the .complete marker; the marker can be present
         // while the directory is empty/partial because tc.cacheDir is called with
@@ -110,13 +124,13 @@ async function run() {
         if (juliaPath) {
             const cachedJuliaBin = path.join(juliaPath, 'bin', os.platform() == 'win32' ? 'julia.exe' : 'julia')
             if (!fs.existsSync(cachedJuliaBin)) {
-                core.warning(`Cached Julia ${arch}/${version} at ${juliaPath} is incomplete (missing ${cachedJuliaBin}); reinstalling.`)
+                core.warning(`Cached Julia ${cacheArch}/${version} at ${juliaPath} is incomplete (missing ${cachedJuliaBin}); reinstalling.`)
                 juliaPath = ''
             }
         }
 
         if (!juliaPath) {
-            core.debug(`could not find Julia ${arch}/${version} in cache`)
+            core.debug(`could not find Julia ${cacheArch}/${version} in cache`)
 
             // https://github.com/julia-actions/setup-julia/pull/196
             // we want julia to be installed with unmodified file mtimes
@@ -125,8 +139,8 @@ async function run() {
             // so hack it by installing a empty directory then use the path it returns
             // and extract the archives directly to that location
             const emptyDir = fs.mkdtempSync('empty')
-            juliaPath = await tc.cacheDir(emptyDir, 'julia', version, arch)
-            await installer.installJulia(juliaPath, versionInfo, version, arch)
+            juliaPath = await tc.cacheDir(emptyDir, 'julia', version, cacheArch)
+            await installer.installJulia(juliaPath, versionInfo, version, arch, variantFileInfo)
 
             core.debug(`added Julia to cache: ${juliaPath}`)
 

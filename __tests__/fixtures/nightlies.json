@@ -1,0 +1,375 @@
+{
+  "nightly": {
+    "files": [
+      {
+        "arch": "x86_64",
+        "asc-url": "https://julialangnightlies-s3.julialang.org/bin/linux/x86_64/julia-latest-linux-x86_64.tar.gz.asc",
+        "extension": "tar.gz",
+        "kind": "archive",
+        "os": "linux",
+        "triplet": "x86_64-linux-gnu",
+        "url": "https://julialangnightlies-s3.julialang.org/bin/linux/x86_64/julia-latest-linux-x86_64.tar.gz"
+      },
+      {
+        "arch": "i686",
+        "asc-url": "https://julialangnightlies-s3.julialang.org/bin/linux/i686/julia-latest-linux-i686.tar.gz.asc",
+        "extension": "tar.gz",
+        "kind": "archive",
+        "os": "linux",
+        "triplet": "i686-linux-gnu",
+        "url": "https://julialangnightlies-s3.julialang.org/bin/linux/i686/julia-latest-linux-i686.tar.gz"
+      },
+      {
+        "arch": "aarch64",
+        "asc-url": "https://julialangnightlies-s3.julialang.org/bin/linux/aarch64/julia-latest-linux-aarch64.tar.gz.asc",
+        "extension": "tar.gz",
+        "kind": "archive",
+        "os": "linux",
+        "triplet": "aarch64-linux-gnu",
+        "url": "https://julialangnightlies-s3.julialang.org/bin/linux/aarch64/julia-latest-linux-aarch64.tar.gz"
+      },
+      {
+        "arch": "x86_64",
+        "asc-url": "https://julialangnightlies-s3.julialang.org/bin/macos/x86_64/julia-latest-macos-x86_64.tar.gz.asc",
+        "extension": "tar.gz",
+        "kind": "archive",
+        "os": "mac",
+        "triplet": "x86_64-apple-darwin14",
+        "url": "https://julialangnightlies-s3.julialang.org/bin/macos/x86_64/julia-latest-macos-x86_64.tar.gz"
+      },
+      {
+        "arch": "aarch64",
+        "asc-url": "https://julialangnightlies-s3.julialang.org/bin/macos/aarch64/julia-latest-macos-aarch64.tar.gz.asc",
+        "extension": "tar.gz",
+        "kind": "archive",
+        "os": "mac",
+        "triplet": "aarch64-apple-darwin14",
+        "url": "https://julialangnightlies-s3.julialang.org/bin/macos/aarch64/julia-latest-macos-aarch64.tar.gz"
+      },
+      {
+        "arch": "x86_64",
+        "asc-url": "https://julialangnightlies-s3.julialang.org/bin/winnt/x64/julia-latest-win64.tar.gz.asc",
+        "extension": "tar.gz",
+        "kind": "archive",
+        "os": "winnt",
+        "triplet": "x86_64-w64-mingw32",
+        "url": "https://julialangnightlies-s3.julialang.org/bin/winnt/x64/julia-latest-win64.tar.gz"
+      },
+      {
+        "arch": "i686",
+        "asc-url": "https://julialangnightlies-s3.julialang.org/bin/winnt/x86/julia-latest-win32.tar.gz.asc",
+        "extension": "tar.gz",
+        "kind": "archive",
+        "os": "winnt",
+        "triplet": "i686-w64-mingw32",
+        "url": "https://julialangnightlies-s3.julialang.org/bin/winnt/x86/julia-latest-win32.tar.gz"
+      },
+      {
+        "arch": "x86_64",
+        "asc-url": "https://julialangnightlies-s3.julialang.org/bin/freebsd/x86_64/julia-latest-freebsd-x86_64.tar.gz.asc",
+        "extension": "tar.gz",
+        "kind": "archive",
+        "os": "freebsd",
+        "triplet": "x86_64-unknown-freebsd11.1",
+        "url": "https://julialangnightlies-s3.julialang.org/bin/freebsd/x86_64/julia-latest-freebsd-x86_64.tar.gz"
+      }
+    ],
+    "variants": [
+      {
+        "arch": "x86_64",
+        "asc-url": "https://julialangnightlies-s3.julialang.org/bin/linuxopt/x86_64/julia-latest-linuxopt-x86_64.tar.gz.asc",
+        "extension": "tar.gz",
+        "kind": "archive",
+        "os": "linux",
+        "triplet": "x86_64-linux-gnu",
+        "url": "https://julialangnightlies-s3.julialang.org/bin/linuxopt/x86_64/julia-latest-linuxopt-x86_64.tar.gz",
+        "variants": [
+          "opt"
+        ]
+      },
+      {
+        "arch": "i686",
+        "asc-url": "https://julialangnightlies-s3.julialang.org/bin/linuxopt/i686/julia-latest-linuxopt-i686.tar.gz.asc",
+        "extension": "tar.gz",
+        "kind": "archive",
+        "os": "linux",
+        "triplet": "i686-linux-gnu",
+        "url": "https://julialangnightlies-s3.julialang.org/bin/linuxopt/i686/julia-latest-linuxopt-i686.tar.gz",
+        "variants": [
+          "opt"
+        ]
+      },
+      {
+        "arch": "aarch64",
+        "asc-url": "https://julialangnightlies-s3.julialang.org/bin/linuxopt/aarch64/julia-latest-linuxopt-aarch64.tar.gz.asc",
+        "extension": "tar.gz",
+        "kind": "archive",
+        "os": "linux",
+        "triplet": "aarch64-linux-gnu",
+        "url": "https://julialangnightlies-s3.julialang.org/bin/linuxopt/aarch64/julia-latest-linuxopt-aarch64.tar.gz",
+        "variants": [
+          "opt"
+        ]
+      },
+      {
+        "arch": "x86_64",
+        "asc-url": "https://julialangnightlies-s3.julialang.org/bin/macosopt/x86_64/julia-latest-macosopt-x86_64.tar.gz.asc",
+        "extension": "tar.gz",
+        "kind": "archive",
+        "os": "mac",
+        "triplet": "x86_64-apple-darwin14",
+        "url": "https://julialangnightlies-s3.julialang.org/bin/macosopt/x86_64/julia-latest-macosopt-x86_64.tar.gz",
+        "variants": [
+          "opt"
+        ]
+      },
+      {
+        "arch": "aarch64",
+        "asc-url": "https://julialangnightlies-s3.julialang.org/bin/macosopt/aarch64/julia-latest-macosopt-aarch64.tar.gz.asc",
+        "extension": "tar.gz",
+        "kind": "archive",
+        "os": "mac",
+        "triplet": "aarch64-apple-darwin14",
+        "url": "https://julialangnightlies-s3.julialang.org/bin/macosopt/aarch64/julia-latest-macosopt-aarch64.tar.gz",
+        "variants": [
+          "opt"
+        ]
+      },
+      {
+        "arch": "x86_64",
+        "asc-url": "https://julialangnightlies-s3.julialang.org/bin/windowsopt/x86_64/julia-latest-windowsopt-x86_64.tar.gz.asc",
+        "extension": "tar.gz",
+        "kind": "archive",
+        "os": "winnt",
+        "triplet": "x86_64-w64-mingw32",
+        "url": "https://julialangnightlies-s3.julialang.org/bin/windowsopt/x86_64/julia-latest-windowsopt-x86_64.tar.gz",
+        "variants": [
+          "opt"
+        ]
+      },
+      {
+        "arch": "x86_64",
+        "asc-url": "https://julialangnightlies-s3.julialang.org/bin/linuxassert/x86_64/julia-latest-linuxassert-x86_64.tar.gz.asc",
+        "extension": "tar.gz",
+        "kind": "archive",
+        "os": "linux",
+        "triplet": "x86_64-linux-gnu",
+        "url": "https://julialangnightlies-s3.julialang.org/bin/linuxassert/x86_64/julia-latest-linuxassert-x86_64.tar.gz",
+        "variants": [
+          "assert"
+        ]
+      },
+      {
+        "arch": "x86_64",
+        "asc-url": "https://julialang-nogpl.s3.amazonaws.com/bin-nogpl/linuxnogpl/x86_64/julia-latest-linuxnogpl-x86_64.tar.gz.asc",
+        "extension": "tar.gz",
+        "kind": "archive",
+        "os": "linux",
+        "triplet": "x86_64-linux-gnu",
+        "url": "https://julialang-nogpl.s3.amazonaws.com/bin-nogpl/linuxnogpl/x86_64/julia-latest-linuxnogpl-x86_64.tar.gz",
+        "variants": [
+          "nogpl"
+        ]
+      },
+      {
+        "arch": "x86_64",
+        "asc-url": "https://julialang-nogpl.s3.amazonaws.com/bin-nogpl/macosnogpl/x86_64/julia-latest-macosnogpl-x86_64.tar.gz.asc",
+        "extension": "tar.gz",
+        "kind": "archive",
+        "os": "mac",
+        "triplet": "x86_64-apple-darwin14",
+        "url": "https://julialang-nogpl.s3.amazonaws.com/bin-nogpl/macosnogpl/x86_64/julia-latest-macosnogpl-x86_64.tar.gz",
+        "variants": [
+          "nogpl"
+        ]
+      },
+      {
+        "arch": "aarch64",
+        "asc-url": "https://julialang-nogpl.s3.amazonaws.com/bin-nogpl/macosnogpl/aarch64/julia-latest-macosnogpl-aarch64.tar.gz.asc",
+        "extension": "tar.gz",
+        "kind": "archive",
+        "os": "mac",
+        "triplet": "aarch64-apple-darwin14",
+        "url": "https://julialang-nogpl.s3.amazonaws.com/bin-nogpl/macosnogpl/aarch64/julia-latest-macosnogpl-aarch64.tar.gz",
+        "variants": [
+          "nogpl"
+        ]
+      },
+      {
+        "arch": "x86_64",
+        "asc-url": "https://julialang-nogpl.s3.amazonaws.com/bin-nogpl/windowsnogpl/x86_64/julia-latest-windowsnogpl-x86_64.tar.gz.asc",
+        "extension": "tar.gz",
+        "kind": "archive",
+        "os": "winnt",
+        "triplet": "x86_64-w64-mingw32",
+        "url": "https://julialang-nogpl.s3.amazonaws.com/bin-nogpl/windowsnogpl/x86_64/julia-latest-windowsnogpl-x86_64.tar.gz",
+        "variants": [
+          "nogpl"
+        ]
+      },
+      {
+        "arch": "x86_64",
+        "asc-url": "https://julialang-nogpl.s3.amazonaws.com/bin-nogpl/linuxnogplopt/x86_64/julia-latest-linuxnogplopt-x86_64.tar.gz.asc",
+        "extension": "tar.gz",
+        "kind": "archive",
+        "os": "linux",
+        "triplet": "x86_64-linux-gnu",
+        "url": "https://julialang-nogpl.s3.amazonaws.com/bin-nogpl/linuxnogplopt/x86_64/julia-latest-linuxnogplopt-x86_64.tar.gz",
+        "variants": [
+          "opt",
+          "nogpl"
+        ]
+      },
+      {
+        "arch": "x86_64",
+        "extension": "tar.gz",
+        "kind": "archive",
+        "os": "mac",
+        "triplet": "x86_64-apple-darwin14",
+        "url": "https://julialang-nogpl.s3.amazonaws.com/bin-nogplopt/macosnogpl/x86_64/julia-latest-macosnogplopt-x86_64.tar.gz",
+        "variants": [
+          "opt",
+          "nogpl"
+        ]
+      },
+      {
+        "arch": "x86_64",
+        "extension": "tar.gz",
+        "kind": "archive",
+        "os": "winnt",
+        "triplet": "x86_64-w64-mingw32",
+        "url": "https://julialang-nogpl.s3.amazonaws.com/bin-nogplopt/windowsnogpl/x86_64/julia-latest-windowsnogplopt-x86_64.tar.gz",
+        "variants": [
+          "opt",
+          "nogpl"
+        ]
+      }
+    ]
+  },
+  "1.13-nightly": {
+    "files": [
+      {
+        "arch": "x86_64",
+        "asc-url": "https://julialangnightlies-s3.julialang.org/bin/linux/x86_64/1.13/julia-latest-linux-x86_64.tar.gz.asc",
+        "extension": "tar.gz",
+        "kind": "archive",
+        "os": "linux",
+        "triplet": "x86_64-linux-gnu",
+        "url": "https://julialangnightlies-s3.julialang.org/bin/linux/x86_64/1.13/julia-latest-linux-x86_64.tar.gz"
+      },
+      {
+        "arch": "i686",
+        "asc-url": "https://julialangnightlies-s3.julialang.org/bin/linux/i686/1.13/julia-latest-linux-i686.tar.gz.asc",
+        "extension": "tar.gz",
+        "kind": "archive",
+        "os": "linux",
+        "triplet": "i686-linux-gnu",
+        "url": "https://julialangnightlies-s3.julialang.org/bin/linux/i686/1.13/julia-latest-linux-i686.tar.gz"
+      },
+      {
+        "arch": "aarch64",
+        "asc-url": "https://julialangnightlies-s3.julialang.org/bin/linux/aarch64/1.13/julia-latest-linux-aarch64.tar.gz.asc",
+        "extension": "tar.gz",
+        "kind": "archive",
+        "os": "linux",
+        "triplet": "aarch64-linux-gnu",
+        "url": "https://julialangnightlies-s3.julialang.org/bin/linux/aarch64/1.13/julia-latest-linux-aarch64.tar.gz"
+      },
+      {
+        "arch": "x86_64",
+        "asc-url": "https://julialangnightlies-s3.julialang.org/bin/macos/x86_64/1.13/julia-latest-macos-x86_64.tar.gz.asc",
+        "extension": "tar.gz",
+        "kind": "archive",
+        "os": "mac",
+        "triplet": "x86_64-apple-darwin14",
+        "url": "https://julialangnightlies-s3.julialang.org/bin/macos/x86_64/1.13/julia-latest-macos-x86_64.tar.gz"
+      },
+      {
+        "arch": "aarch64",
+        "asc-url": "https://julialangnightlies-s3.julialang.org/bin/macos/aarch64/1.13/julia-latest-macos-aarch64.tar.gz.asc",
+        "extension": "tar.gz",
+        "kind": "archive",
+        "os": "mac",
+        "triplet": "aarch64-apple-darwin14",
+        "url": "https://julialangnightlies-s3.julialang.org/bin/macos/aarch64/1.13/julia-latest-macos-aarch64.tar.gz"
+      },
+      {
+        "arch": "x86_64",
+        "asc-url": "https://julialangnightlies-s3.julialang.org/bin/winnt/x64/1.13/julia-latest-win64.tar.gz.asc",
+        "extension": "tar.gz",
+        "kind": "archive",
+        "os": "winnt",
+        "triplet": "x86_64-w64-mingw32",
+        "url": "https://julialangnightlies-s3.julialang.org/bin/winnt/x64/1.13/julia-latest-win64.tar.gz"
+      },
+      {
+        "arch": "i686",
+        "asc-url": "https://julialangnightlies-s3.julialang.org/bin/winnt/x86/1.13/julia-latest-win32.tar.gz.asc",
+        "extension": "tar.gz",
+        "kind": "archive",
+        "os": "winnt",
+        "triplet": "i686-w64-mingw32",
+        "url": "https://julialangnightlies-s3.julialang.org/bin/winnt/x86/1.13/julia-latest-win32.tar.gz"
+      },
+      {
+        "arch": "x86_64",
+        "asc-url": "https://julialangnightlies-s3.julialang.org/bin/freebsd/x86_64/1.13/julia-latest-freebsd-x86_64.tar.gz.asc",
+        "extension": "tar.gz",
+        "kind": "archive",
+        "os": "freebsd",
+        "triplet": "x86_64-unknown-freebsd11.1",
+        "url": "https://julialangnightlies-s3.julialang.org/bin/freebsd/x86_64/1.13/julia-latest-freebsd-x86_64.tar.gz"
+      }
+    ],
+    "variants": [
+      {
+        "arch": "x86_64",
+        "asc-url": "https://julialang-nogpl.s3.amazonaws.com/bin-nogpl/linuxnogpl/x86_64/1.13/julia-latest-linuxnogpl-x86_64.tar.gz.asc",
+        "extension": "tar.gz",
+        "kind": "archive",
+        "os": "linux",
+        "triplet": "x86_64-linux-gnu",
+        "url": "https://julialang-nogpl.s3.amazonaws.com/bin-nogpl/linuxnogpl/x86_64/1.13/julia-latest-linuxnogpl-x86_64.tar.gz",
+        "variants": [
+          "nogpl"
+        ]
+      },
+      {
+        "arch": "x86_64",
+        "asc-url": "https://julialang-nogpl.s3.amazonaws.com/bin-nogpl/macosnogpl/x86_64/1.13/julia-latest-macosnogpl-x86_64.tar.gz.asc",
+        "extension": "tar.gz",
+        "kind": "archive",
+        "os": "mac",
+        "triplet": "x86_64-apple-darwin14",
+        "url": "https://julialang-nogpl.s3.amazonaws.com/bin-nogpl/macosnogpl/x86_64/1.13/julia-latest-macosnogpl-x86_64.tar.gz",
+        "variants": [
+          "nogpl"
+        ]
+      },
+      {
+        "arch": "aarch64",
+        "asc-url": "https://julialang-nogpl.s3.amazonaws.com/bin-nogpl/macosnogpl/aarch64/1.13/julia-latest-macosnogpl-aarch64.tar.gz.asc",
+        "extension": "tar.gz",
+        "kind": "archive",
+        "os": "mac",
+        "triplet": "aarch64-apple-darwin14",
+        "url": "https://julialang-nogpl.s3.amazonaws.com/bin-nogpl/macosnogpl/aarch64/1.13/julia-latest-macosnogpl-aarch64.tar.gz",
+        "variants": [
+          "nogpl"
+        ]
+      },
+      {
+        "arch": "x86_64",
+        "asc-url": "https://julialang-nogpl.s3.amazonaws.com/bin-nogpl/windowsnogpl/x86_64/1.13/julia-latest-windowsnogpl-x86_64.tar.gz.asc",
+        "extension": "tar.gz",
+        "kind": "archive",
+        "os": "winnt",
+        "triplet": "x86_64-w64-mingw32",
+        "url": "https://julialang-nogpl.s3.amazonaws.com/bin-nogpl/windowsnogpl/x86_64/1.13/julia-latest-windowsnogpl-x86_64.tar.gz",
+        "variants": [
+          "nogpl"
+        ]
+      }
+    ]
+  }
+}
