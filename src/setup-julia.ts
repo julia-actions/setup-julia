@@ -1,4 +1,5 @@
 import * as core from '@actions/core'
+import * as exec from '@actions/exec'
 import * as io from '@actions/io'
 import * as tc from '@actions/tool-cache'
 
@@ -19,6 +20,77 @@ const archSynonyms = {
     'x86_64': 'x64',
     'aarch64': 'aarch64',
     'arm64': 'aarch64'
+}
+
+// Normalise a path for comparison: resolve symlinks, make it absolute, and (on
+// Windows, where the filesystem is case-insensitive) lower-case it. Throws if the
+// path does not exist.
+function normalizePath(p: string): string {
+    const resolved = path.resolve(fs.realpathSync(p))
+    return os.platform() == 'win32' ? resolved.toLowerCase() : resolved
+}
+
+// Resolve `name` (e.g. `julia` or `julia.exe`) the way the given shell would, and
+// return the normalised Windows path it points at, or null if the shell is
+// unavailable or the command isn't found there. This catches shadowing that a
+// Node-side `io.which` cannot: Git Bash and PowerShell each have their own command
+// resolution (MSYS PATH translation, PATHEXT, command hashing), so bare `julia` in
+// one shell can resolve to a different Julia than `julia.exe`, or than Node sees.
+async function whichInShell(shell: 'bash' | 'pwsh' | 'powershell', name: string): Promise<string | null> {
+    let args: string[]
+    if (shell == 'bash') {
+        // Resolve in bash, then convert the MSYS path to a Windows path (via
+        // cygpath when available) so it's comparable to the toolcache path.
+        const script = `p="$(command -v '${name}' 2>/dev/null)" || exit 0; ` +
+            `[ -n "$p" ] || exit 0; ` +
+            `if command -v cygpath >/dev/null 2>&1; then cygpath -wa "$p"; else printf '%s' "$p"; fi`
+        args = ['-c', script]
+    } else {
+        args = ['-NoProfile', '-Command', `$ErrorActionPreference='SilentlyContinue'; (Get-Command '${name}').Source`]
+    }
+
+    let stdout: string
+    try {
+        const res = await exec.getExecOutput(shell, args, {silent: true, ignoreReturnCode: true})
+        stdout = res.stdout.trim()
+    } catch {
+        return null // shell not available on this runner
+    }
+
+    if (!stdout) return null
+    try {
+        return normalizePath(stdout)
+    } catch {
+        return null // resolved to something that doesn't exist / can't be normalised
+    }
+}
+
+// Windows-specific: warn if `julia`/`julia.exe`, as resolved by Git Bash or
+// PowerShell, point at a different Julia than the one we just installed. Warn-only;
+// the remedy is to fix the runner's PATH (or have downstream actions invoke the
+// installed binary by absolute path).
+async function warnOnShellShadowing(expectedJulia: string): Promise<void> {
+    let expected: string
+    try {
+        expected = normalizePath(expectedJulia)
+    } catch {
+        return
+    }
+
+    const shells: Array<'bash' | 'pwsh' | 'powershell'> = ['bash', 'pwsh', 'powershell']
+    for (const shell of shells) {
+        for (const name of ['julia', 'julia.exe']) {
+            const resolved = await whichInShell(shell, name)
+            if (resolved === null) continue // shell unavailable or command not found there
+            if (resolved !== expected) {
+                core.warning(
+                    `In ${shell}, \`${name}\` resolves to ${resolved}, not setup-julia's install at ${expectedJulia}. ` +
+                    `Another Julia in PATH is shadowing it, so downstream steps using ${shell} may run the wrong Julia. ` +
+                    `Fix the runner's PATH (e.g. remove or reorder the shadowing entry), or have downstream actions invoke the installed Julia by absolute path.`
+                )
+            }
+        }
+    }
 }
 
 async function run() {
@@ -143,13 +215,16 @@ async function run() {
         // Verify that PATH lookup of `julia` resolves to the binary we just installed.
         // On self-hosted runners other Julia entries (e.g. juliaup launcher in
         // ~/.juliaup/bin) can shadow the toolcache binary depending on PATH state.
+        // `io.which('julia', true)` also asserts that Julia is findable at all
+        // (it throws otherwise).
         const resolvedJulia = await io.which('julia', true)
         const expectedJulia = path.join(juliaBindir, os.platform() == 'win32' ? 'julia.exe' : 'julia')
-        const norm = (p: string) => {
-            const resolved = path.resolve(fs.realpathSync(p))
-            return os.platform() == 'win32' ? resolved.toLowerCase() : resolved
-        }
-        if (norm(resolvedJulia) !== norm(expectedJulia)) {
+        if (os.platform() == 'win32') {
+            // On Windows, downstream steps run in Git Bash or PowerShell, whose
+            // command resolution differs from Node's `io.which` (and can differ
+            // between `julia` and `julia.exe`). Check each shell directly.
+            await warnOnShellShadowing(expectedJulia)
+        } else if (normalizePath(resolvedJulia) !== normalizePath(expectedJulia)) {
             core.warning(`PATH lookup of \`julia\` resolves to ${resolvedJulia}, not the installed binary at ${expectedJulia}. Another Julia in PATH is shadowing setup-julia's install; fix the runner's PATH (e.g. remove or reorder \`~/.juliaup/bin\`).`)
         }
 
