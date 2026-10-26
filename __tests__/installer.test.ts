@@ -343,3 +343,22 @@ describe('installer tests', () => {
         })
     })
 })
+
+describe('GLIBC_TUNABLES tests', () => {
+    it('Allows an executable stack for affected versions', () => {
+        for (const version of ['1.0.5', '1.6.7', '1.9.4', '1.10.0', '1.10.8', '1.11.0-rc1', '1.11.0', '1.11.3']) {
+            expect(installer.getGlibcTunables(version)).toEqual('glibc.rtld.execstack=2')
+        }
+    })
+
+    it('Does nothing for unaffected versions', () => {
+        for (const version of ['1.10.9', '1.10.10', '1.11.4', '1.12.0', '1.13.0-beta1', 'nightly', '1.13-nightly']) {
+            expect(installer.getGlibcTunables(version)).toBeNull()
+        }
+    })
+
+    it('Preserves existing tunables', () => {
+        expect(installer.getGlibcTunables('1.9.4', 'glibc.malloc.check=3')).toEqual('glibc.malloc.check=3:glibc.rtld.execstack=2')
+        expect(installer.getGlibcTunables('1.9.4', 'glibc.rtld.execstack=0')).toBeNull()
+    })
+})

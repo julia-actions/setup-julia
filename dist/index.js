@@ -57,6 +57,7 @@ exports.readJuliaCompatRange = readJuliaCompatRange;
 exports.getJuliaVersion = getJuliaVersion;
 exports.getFileInfo = getFileInfo;
 exports.getDownloadURL = getDownloadURL;
+exports.getGlibcTunables = getGlibcTunables;
 exports.installJulia = installJulia;
 exports.showVersionInfo = showVersionInfo;
 const core = __importStar(__nccwpck_require__(7484));
@@ -405,6 +406,23 @@ function getDownloadURL(fileInfo, version, arch) {
     }
     return fileInfo.url;
 }
+/**
+ * Some Julia releases (e.g. 1.9.x, 1.10.0-1.10.8, 1.11.0-1.11.3) ship a `libopenlibm` that
+ * requests an executable stack, which recent versions of glibc refuse to load, so Julia fails to start.
+ * See https://github.com/JuliaLang/julia/issues/57250.
+ *
+ * @returns The value of `GLIBC_TUNABLES` that allows an executable stack for the given Julia version,
+ * or `null` if it does not need to be changed.
+ */
+function getGlibcTunables(version, currentTunables = '') {
+    if (version.endsWith('nightly') || !semver.satisfies(version, '<1.10.9 || >=1.11.0-0 <1.11.4', { includePrerelease: true })) {
+        return null;
+    }
+    if (currentTunables.includes('glibc.rtld.execstack=')) {
+        return null;
+    }
+    return currentTunables ? `${currentTunables}:glibc.rtld.execstack=2` : 'glibc.rtld.execstack=2';
+}
 function installJulia(dest, versionInfo, version, arch) {
     return __awaiter(this, void 0, void 0, function* () {
         // Download Julia
@@ -686,6 +704,14 @@ function run() {
             // Add it to PATH
             const juliaBindir = path.join(juliaPath, 'bin');
             core.addPath(juliaBindir);
+            // Allow loading libraries that request an executable stack, required by some Julia versions on recent glibc
+            if (os.platform() == 'linux') {
+                const glibcTunables = installer.getGlibcTunables(version, process.env['GLIBC_TUNABLES']);
+                if (glibcTunables !== null) {
+                    core.info(`Setting GLIBC_TUNABLES=${glibcTunables}, see https://github.com/JuliaLang/julia/issues/57250`);
+                    core.exportVariable('GLIBC_TUNABLES', glibcTunables);
+                }
+            }
             // Verify that PATH lookup of `julia` resolves to the binary we just installed.
             // On self-hosted runners other Julia entries (e.g. juliaup launcher in
             // ~/.juliaup/bin) can shadow the toolcache binary depending on PATH state.

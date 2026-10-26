@@ -370,6 +370,24 @@ export function getDownloadURL(fileInfo, version: string, arch: string): string 
     return fileInfo.url
 }
 
+/**
+ * Some Julia releases (e.g. 1.9.x, 1.10.0-1.10.8, 1.11.0-1.11.3) ship a `libopenlibm` that
+ * requests an executable stack, which recent versions of glibc refuse to load, so Julia fails to start.
+ * See https://github.com/JuliaLang/julia/issues/57250.
+ *
+ * @returns The value of `GLIBC_TUNABLES` that allows an executable stack for the given Julia version,
+ * or `null` if it does not need to be changed.
+ */
+export function getGlibcTunables(version: string, currentTunables: string = ''): string | null {
+    if (version.endsWith('nightly') || !semver.satisfies(version, '<1.10.9 || >=1.11.0-0 <1.11.4', { includePrerelease: true })) {
+        return null
+    }
+    if (currentTunables.includes('glibc.rtld.execstack=')) {
+        return null
+    }
+    return currentTunables ? `${currentTunables}:glibc.rtld.execstack=2` : 'glibc.rtld.execstack=2'
+}
+
 export async function installJulia(dest: string, versionInfo, version: string, arch: string): Promise<string> {
     // Download Julia
     const fileInfo = getFileInfo(versionInfo, version, arch)
