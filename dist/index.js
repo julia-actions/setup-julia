@@ -9644,6 +9644,23 @@ module.exports = {
 
 "use strict";
 
+
+var INT64_MIN = -(2n ** 63n);
+var INT64_MAX = 2n ** 63n - 1n;
+var MAX_SAFE = BigInt(Number.MAX_SAFE_INTEGER);
+var MIN_SAFE = BigInt(Number.MIN_SAFE_INTEGER);
+
+// TOML's redefinition rules depend on how a table came to exist, not on its
+// shape, so every container the compiler creates is tagged with its origin.
+// Values that arrive from the parser (dates, static arrays, primitives) are
+// never tagged, which is what stops key paths from descending into them and
+// on into their prototype chains.
+var HEADER_TABLE = "header";     // [a]
+var IMPLICIT_TABLE = "implicit"; // `a` in [a.b]; a later [a] header may still define it
+var DOTTED_TABLE = "dotted";     // `a` in a.b = 1
+var INLINE_TABLE = "inline";     // a = { b = 1 }; closed once parsed
+var TABLE_ARRAY = "table-array"; // [[a]]
+
 function compile(nodes, inputText, options) {
   options = options || {};
   var temporal = null;
@@ -9658,13 +9675,10 @@ function compile(nodes, inputText, options) {
     }
   }
 
-  var assignedPaths = new Set();
-  var valueAssignments = new Set();
-  var explicitTablePaths = new Set();
-  var currentPath = [];
-  var ownedContainers = new WeakSet();
-  var data = createTable();
+  var containerKinds = new WeakMap();
+  var data = createTable(HEADER_TABLE);
   var context = data;
+  var currentPath = [];
 
   return reduce(nodes);
 
@@ -9706,48 +9720,47 @@ function compile(nodes, inputText, options) {
   }
 
   function assign(node) {
-    var keys = node.key;
-    var value = node.value;
-    var off = node.offset;
+    var keys = Array.isArray(node.key) ? node.key : [node.key];
+    assignDotted(context, keys, reduceValueNode(node.value), node.offset, currentPath);
+  }
 
-    if (!Array.isArray(keys)) keys = [keys];
-
-    var reduced = reduceValueNode(value);
-
-    var target = context;
+  // Walks `keys` down from `table`, creating intermediate tables as needed,
+  // and stores `value` under the last key. `prefix` names the path leading to
+  // `table` and is only used in error messages.
+  function assignDotted(table, keys, value, off, prefix) {
     for (var i = 0; i < keys.length - 1; i++) {
-      var k = keys[i];
-      var intermediatePath = makeFullPath(keys.slice(0, i + 1));
-
-      if (typeof target[k] === "undefined") {
-        target[k] = createTable();
-        assignedPaths.add(intermediatePath);
-      } else if (typeof target[k] !== "object" || target[k] === null || Array.isArray(target[k])) {
-        genError("Cannot redefine existing key '" + intermediatePath + "'.", off);
-      } else if (valueAssignments.has(intermediatePath)) {
-        genError("Cannot redefine existing key '" + intermediatePath + "'.", off);
-      } else if (explicitTablePaths.has(intermediatePath) && intermediatePath !== pathKey(currentPath)) {
-        genError("Cannot use dotted keys to extend table '" + intermediatePath + "' defined elsewhere.", off);
+      var key = keys[i];
+      var next = table[key];
+      if (next === undefined) {
+        next = createTable(DOTTED_TABLE);
+        table[key] = next;
+      } else {
+        var kind = containerKinds.get(next);
+        if (kind !== DOTTED_TABLE && kind !== IMPLICIT_TABLE) {
+          var path = pathKey(prefix.concat(keys.slice(0, i + 1)));
+          if (kind === HEADER_TABLE) {
+            genError("Cannot use dotted keys to extend table '" + path + "' defined elsewhere.", off);
+          }
+          if (kind === INLINE_TABLE) {
+            genError("Cannot extend inline table '" + path + "'.", off);
+          }
+          genError("Cannot redefine existing key '" + path + "'.", off);
+        }
       }
-      target = target[k];
+      table = next;
     }
 
     var lastKey = keys[keys.length - 1];
-    var fullPath = makeFullPath(keys);
-
-    if (typeof target[lastKey] !== "undefined") {
-      genError("Cannot redefine existing key '" + fullPath + "'.", off);
+    if (table[lastKey] !== undefined) {
+      genError("Cannot redefine existing key '" + pathKey(prefix.concat(keys)) + "'.", off);
     }
-
-    target[lastKey] = reduced;
-
-    assignedPaths.add(fullPath);
-    valueAssignments.add(fullPath);
+    table[lastKey] = value;
   }
 
-
   function reduceValueNode(node) {
-    if (node.type === "Array") {
+    if (node.type === "Integer") {
+      return reduceInteger(node);
+    } else if (node.type === "Array") {
       return reduceArray(node.value);
     } else if (node.type === "InlineTable") {
       return reduceInlineTableNode(node.value);
@@ -9775,127 +9788,130 @@ function compile(nodes, inputText, options) {
     return str.replace(/\.(\d{9})\d+/, ".$1");
   }
 
+  // Integer nodes arrive from the parser as BigInt so the full 64-bit
+  // range is preserved exactly.
+  function reduceInteger(node) {
+    var value = node.value;
+    if (value < INT64_MIN || value > INT64_MAX) {
+      genError(
+        "Integer " + value + " is outside the 64-bit signed integer range required by TOML.",
+        node.offset
+      );
+    }
+    if (options.bigint) {
+      return value;
+    }
+    if (value < MIN_SAFE || value > MAX_SAFE) {
+      genError(
+        "Integer " + value + " cannot be represented losslessly as a JavaScript number. " +
+        "Use the `bigint` option to parse integers as BigInt values.",
+        node.offset
+      );
+    }
+    return Number(value);
+  }
+
   function reduceInlineTableNode(values) {
-    var obj = createTable();
-    var definedKeys = new Set();
+    var table = createTable(INLINE_TABLE);
 
     for (var i = 0; i < values.length; i++) {
       var val = values[i];
       if (val.type !== "InlineTableValue") continue;
 
-      var keys = val.key;
-      if (!Array.isArray(keys)) keys = [keys];
-
-      var reduced = reduceValueNode(val.value);
-      setNestedKey(obj, keys, reduced, val.offset, definedKeys);
-
-      definedKeys.add(pathKey(keys));
+      var keys = Array.isArray(val.key) ? val.key : [val.key];
+      assignDotted(table, keys, reduceValueNode(val.value), val.offset, []);
     }
 
-    return obj;
-  }
-
-  function setNestedKey(obj, keys, value, off, definedKeys) {
-    for (var i = 0; i < keys.length - 1; i++) {
-      var k = keys[i];
-      var intermediatePath = pathKey(keys.slice(0, i + 1));
-      if (typeof obj[k] === "undefined") {
-        obj[k] = createTable();
-      } else if (typeof obj[k] !== "object" || obj[k] === null || Array.isArray(obj[k])) {
-        genError("Cannot redefine existing key '" + intermediatePath + "'.", off);
-      } else if (definedKeys && definedKeys.has(intermediatePath)) {
-        genError("Cannot extend inline table '" + intermediatePath + "'.", off);
-      }
-      obj = obj[k];
-    }
-    var lastKey = keys[keys.length - 1];
-    if (typeof obj[lastKey] !== "undefined") {
-      genError("Cannot redefine existing key '" + pathKey(keys) + "'.", off);
-    }
-    obj[lastKey] = value;
+    return table;
   }
 
   function setPath(node) {
     var path = node.value;
-    var quotedPath = path.map(quoteDottedString).join(".");
     var off = node.offset;
 
-    if (assignedPaths.has(quotedPath)) {
-      genError("Cannot redefine existing key '" + path + "'.", off);
+    var parent = resolveParentTable(path, off);
+    var name = path[path.length - 1];
+    var table = parent[name];
+
+    if (table === undefined) {
+      table = createTable(HEADER_TABLE);
+      parent[name] = table;
+    } else if (containerKinds.get(table) === IMPLICIT_TABLE) {
+      containerKinds.set(table, HEADER_TABLE);
+    } else {
+      genError("Cannot redefine existing key '" + pathKey(path) + "'.", off);
     }
-    assignedPaths.add(quotedPath);
-    explicitTablePaths.add(quotedPath);
-    context = deepRef(data, path, createTable(), off);
+
+    context = table;
     currentPath = path;
   }
 
   function addTableArray(node) {
     var path = node.value;
-    var quotedPath = path.map(quoteDottedString).join(".");
     var off = node.offset;
 
-    if (valueAssignments.has(quotedPath)) {
-      genError("Cannot append to statically defined array '" + quotedPath + "'.", off);
+    var parent = resolveParentTable(path, off);
+    var name = path[path.length - 1];
+    var tableArray = parent[name];
+
+    if (tableArray === undefined) {
+      tableArray = createTableArray();
+      parent[name] = tableArray;
+    } else if (containerKinds.get(tableArray) !== TABLE_ARRAY) {
+      if (Array.isArray(tableArray)) {
+        genError("Cannot append to statically defined array '" + pathKey(path) + "'.", off);
+      }
+      genError("Cannot redefine existing key '" + pathKey(path) + "'.", off);
     }
 
-    // Clear this table array path and paths nested under it.
-    assignedPaths.forEach(function(p) {
-      if (isSameOrSubPath(p, quotedPath)) assignedPaths.delete(p);
-    });
-    valueAssignments.forEach(function(p) {
-      if (isSameOrSubPath(p, quotedPath)) valueAssignments.delete(p);
-    });
-    assignedPaths.add(quotedPath);
-    context = deepRef(data, path, createTableArray(), off);
+    var table = createTable(HEADER_TABLE);
+    tableArray.push(table);
+    context = table;
     currentPath = path;
-
-    if (context instanceof Array) {
-      var newObj = createTable();
-      context.push(newObj);
-      context = newObj;
-    } else {
-      genError("Cannot redefine existing key '" + path + "'.", off);
-    }
   }
 
-  function deepRef(start, keys, value, off) {
-    var ctx = start;
-
-    for (var i = 0; i < keys.length; i++) {
-      var key = keys[i];
-      var traversedPath = pathKey(keys.slice(0, i + 1));
-      if (typeof ctx[key] === "undefined") {
-        if (i === keys.length - 1) {
-          ctx[key] = value;
-        } else {
-          ctx[key] = createTable();
-        }
-      } else if (i !== keys.length - 1 && valueAssignments.has(traversedPath)) {
-        genError("Cannot redefine existing key '" + traversedPath + "'.", off);
+  // Returns the table a header's last key belongs in, creating implicit
+  // tables along the way. A path through an array of tables refers to its
+  // most recent element.
+  function resolveParentTable(path, off) {
+    var table = data;
+    for (var i = 0; i < path.length - 1; i++) {
+      var key = path[i];
+      var next = table[key];
+      if (next === undefined) {
+        next = createTable(IMPLICIT_TABLE);
+        table[key] = next;
       }
 
-      ctx = ctx[key];
-      if (i < keys.length - 1) {
-        if (!isOwnedContainer(ctx)) {
-          genError("Cannot redefine existing key '" + traversedPath + "'.", off);
-        }
-        if (ctx instanceof Array) {
-          if (!ctx.length) {
-            genError("Cannot redefine existing key '" + traversedPath + "'.", off);
-          }
-          ctx = ctx[ctx.length - 1];
-          if (!isOwnedContainer(ctx)) {
-            genError("Cannot redefine existing key '" + traversedPath + "'.", off);
-          }
-        }
+      var kind = containerKinds.get(next);
+      if (kind === TABLE_ARRAY) {
+        next = next[next.length - 1];
+      } else if (kind === undefined || kind === INLINE_TABLE) {
+        genError("Cannot redefine existing key '" + pathKey(path.slice(0, i + 1)) + "'.", off);
       }
+      table = next;
     }
-
-    return ctx;
+    return table;
   }
 
   function reduceArray(array) {
     return array.map(reduceValueNode);
+  }
+
+  function createTable(kind) {
+    var table = Object.create(null);
+    containerKinds.set(table, kind);
+    return table;
+  }
+
+  function createTableArray() {
+    var tableArray = [];
+    containerKinds.set(tableArray, TABLE_ARRAY);
+    return tableArray;
+  }
+
+  function pathKey(keys) {
+    return keys.map(quoteDottedString).join(".");
   }
 
   function quoteDottedString(str) {
@@ -9904,34 +9920,6 @@ function compile(nodes, inputText, options) {
     } else {
       return str;
     }
-  }
-
-  function createTable() {
-    var table = Object.create(null);
-    ownedContainers.add(table);
-    return table;
-  }
-
-  function createTableArray() {
-    var tableArray = [];
-    ownedContainers.add(tableArray);
-    return tableArray;
-  }
-
-  function isOwnedContainer(value) {
-    return value !== null && typeof value === "object" && ownedContainers.has(value);
-  }
-
-  function pathKey(keys) {
-    return keys.map(quoteDottedString).join(".");
-  }
-
-  function makeFullPath(keys) {
-    return pathKey(currentPath.concat(keys));
-  }
-
-  function isSameOrSubPath(path, prefix) {
-    return path === prefix || path.indexOf(prefix + ".") === 0;
   }
 }
 
@@ -10271,10 +10259,10 @@ function peg$parse(input, options) {
   function peg$f39(sign, digits) {    return (sign === '-' ? '-' : '') + digits  }
   function peg$f40() {    return '0'  }
   function peg$f41(sign, digits) {    return (sign || '') + digits  }
-  function peg$f42(digits) {    return node('Integer', parseInt(stripUnderscores(digits), 16), offset())  }
-  function peg$f43(digits) {    return node('Integer', parseInt(stripUnderscores(digits), 8), offset())  }
-  function peg$f44(digits) {    return node('Integer', parseInt(stripUnderscores(digits), 2), offset())  }
-  function peg$f45(text) {    return node('Integer', parseInt(stripUnderscores(text), 10), offset())  }
+  function peg$f42(digits) {    return integerNode(16, digits, offset())  }
+  function peg$f43(digits) {    return integerNode(8, digits, offset())  }
+  function peg$f44(digits) {    return integerNode(2, digits, offset())  }
+  function peg$f45(text) {    return integerNode(10, text, offset())  }
   function peg$f46(sign) {    return (sign || '') + '0'  }
   function peg$f47(sign, digits) {    return (sign || '') + digits  }
   function peg$f48() {    return node('Boolean', true, offset())  }
@@ -14362,6 +14350,22 @@ function peg$parse(input, options) {
 
   function stripUnderscores(str) {
     return str.indexOf('_') === -1 ? str : str.replace(/_/g, '');
+  }
+
+  // Digits in the largest int64 magnitude for each base. BigInt conversion
+  // is super-linear in digit count, so a literal that cannot fit is rejected
+  // by length before converting (GHSA-9qmh-m7c6-f92p); the compiler still
+  // performs the exact range check on what gets through.
+  var MAX_INT64_DIGITS = { 2: 63, 8: 21, 10: 19, 16: 16 };
+  var RADIX_PREFIX = { 2: '0b', 8: '0o', 10: '', 16: '0x' };
+
+  function integerNode(radix, text, off) {
+    var digits = stripUnderscores(text);
+    var significant = digits.replace(/^[+-]?0*/, '');
+    if (significant.length > MAX_INT64_DIGITS[radix]) {
+      genError("Integer literal is outside the 64-bit signed integer range required by TOML.", off);
+    }
+    return node('Integer', BigInt(RADIX_PREFIX[radix] + digits), off);
   }
 
   function convertCodePoint(str) {
