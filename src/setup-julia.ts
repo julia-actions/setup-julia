@@ -140,6 +140,15 @@ async function run() {
         const juliaBindir = path.join(juliaPath, 'bin')
         core.addPath(juliaBindir)
 
+        // Allow loading libraries that request an executable stack, required by some Julia versions on recent glibc
+        if (os.platform() == 'linux') {
+            const glibcTunables = installer.getGlibcTunables(version, process.env['GLIBC_TUNABLES'])
+            if (glibcTunables !== null) {
+                core.info(`Setting GLIBC_TUNABLES=${glibcTunables}, see https://github.com/JuliaLang/julia/issues/57250`)
+                core.exportVariable('GLIBC_TUNABLES', glibcTunables)
+            }
+        }
+
         // Verify that PATH lookup of `julia` resolves to the binary we just installed.
         // On self-hosted runners other Julia entries (e.g. juliaup launcher in
         // ~/.juliaup/bin) can shadow the toolcache binary depending on PATH state.
