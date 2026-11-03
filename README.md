@@ -15,6 +15,7 @@ This action sets up a Julia environment for use in actions by downloading a spec
     - [Basic](#basic)
     - [Julia Versions](#julia-versions)
       - [Examples](#examples)
+      - [Variants (experimental)](#variants-experimental)
       - [Prereleases](#prereleases)
       - [Recently released versions](#recently-released-versions)
     - [Matrix Testing](#matrix-testing)
@@ -90,6 +91,14 @@ This action sets up a Julia environment for use in actions by downloading a spec
     #
     # Defaults to using JULIA_PROJECT if defined, otherwise '.'
     project: ${{ env.JULIA_PROJECT }} or '.' (if JULIA_PROJECT is unset)
+
+    # EXPERIMENTAL: the `variants` input may change in breaking ways (or be removed) in non-major releases of this action.
+    #
+    # A comma-separated list of build variants to install, e.g. 'opt', 'nogpl', or 'opt, nogpl'.
+    # See "Variants (experimental)" below.
+    #
+    # Default: '[default]' (the standard build)
+    variants: '[default]'
 ```
 
 ### Outputs
@@ -146,6 +155,26 @@ You can either specify specific Julia versions or version ranges. If you specify
 - `'min-patch'` will install the earliest supported major/minor/patch version of Julia compatible with the project. For example, for a Julia `[compat]` entry of `julia = "1.10"`, `min-patch` would resolve to e.g. `1.10.0`.
 
 Internally the action uses node's semver package to resolve version ranges. Its [documentation](https://github.com/npm/node-semver#advanced-range-syntax) contains more details on the version range syntax.
+
+#### Variants (experimental)
+
+> **Warning**
+>
+> EXPERIMENTAL: the `variants` input may change in breaking ways (or be removed) in non-major releases of this action.
+
+Julia publishes some builds in several variants, for example `opt` (optimized with PGO, LTO and BOLT), `assert` (with assertions enabled) and `nogpl` (without GPL-licensed libraries).
+The available variants are listed in [`nightlies.json`](https://julialang-s3.julialang.org/bin/nightlies.json).
+Variants are currently only available for nightly versions, such as `'nightly'` and `'1.13-nightly'`, but will likely be available for regular Julia releases in the future. Variants are not available on every platform.
+
+`variants` is a comma-separated list of variants. The action installs the build whose set of variants is exactly the given set, in any order: `'opt, nogpl'` and `'nogpl, opt'` select the same build, but `'opt'` does not select a build with the variants `nogpl` and `opt`.
+If there is no such build, or `variants` is set together with a version that is not a nightly, the action fails.
+
+```yaml
+- uses: julia-actions/setup-julia@v3
+  with:
+    version: 'nightly'
+    variants: 'opt'
+```
 
 #### Prereleases
 

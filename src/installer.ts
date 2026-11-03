@@ -26,6 +26,15 @@ const archMap = {
     'aarch64': 'aarch64'
 }
 
+// Hosts that variant builds listed in nightlies.json may be downloaded from
+const allowedVariantURLPrefixes = [
+    'https://julialangnightlies-s3.julialang.org/',
+    'https://julialang-nogpl.s3.amazonaws.com/',
+]
+
+// Value of the `variants` input that means "no variant" (the default)
+export const DEFAULT_VARIANTS_INPUT = '[default]'
+
 // Store information about the environment
 const osPlat = os.platform() // possible values: win32 (Windows), linux (Linux), darwin (macOS)
 core.debug(`platform: ${osPlat}`)
@@ -65,6 +74,118 @@ export async function getJuliaVersionInfo(): Promise<object> {
     })
 
     return JSON.parse(fs.readFileSync(versionsFile).toString())
+}
+
+/**
+ * @returns The content of the downloaded nightlies.json file as object.
+ */
+export async function getJuliaNightliesInfo(): Promise<object> {
+    // Occasionally the connection is reset for unknown reasons
+    // In those cases, retry the download
+    const nightliesFile = await retry(async (bail: Function) => {
+        return await tc.downloadTool('https://julialang-s3.julialang.org/bin/nightlies.json')
+    }, {
+        retries: 5,
+        onRetry: (err: Error) => {
+            core.info(`Download of nightlies.json failed, trying again. Error: ${err}`)
+        }
+    })
+
+    return JSON.parse(fs.readFileSync(nightliesFile).toString())
+}
+
+/**
+ * Parse the (experimental) `variants` input.
+ *
+ * @returns null if no variant was requested, otherwise the requested variants, sorted alphabetically.
+ */
+export function parseVariantsInput(variantsInput: string): string[] | null {
+    const input = variantsInput.trim()
+
+    if (input === DEFAULT_VARIANTS_INPUT) {
+        return null
+    }
+
+    if (!input) {
+        throw new Error(`Variants input must not be empty. To not use a variant, omit the input or set it to '${DEFAULT_VARIANTS_INPUT}'.`)
+    }
+
+    const variants = input.split(',').map((v) => v.trim())
+
+    if (variants.length === 0) {
+        throw new Error(`Variants input must contain at least one variant: '${variantsInput}'`)
+    }
+
+    for (let variant of variants) {
+        if (!variant) {
+            throw new Error(`Variants input must not contain empty variants: '${variantsInput}'`)
+        }
+        if (!/^[a-z0-9]+$/.test(variant)) {
+            throw new Error(`Invalid variant '${variant}' in variants input '${variantsInput}'. Variant names may only contain lowercase letters and digits.`)
+        }
+    }
+
+    if (new Set(variants).size !== variants.length) {
+        throw new Error(`Variants input must not contain duplicate variants: '${variantsInput}'`)
+    }
+
+    return variants.sort()
+}
+
+/**
+ * @returns The architecture string used as the toolcache key, with the variants appended, e.g. `x64+nogpl+opt`.
+ */
+export function toolcacheArch(arch: string, variants: string[] | null): string {
+    if (!variants) {
+        return arch
+    }
+    return [arch, ...[...variants].sort()].join('+')
+}
+
+/**
+ * Throws if variants were requested for a version that has no variants.
+ */
+export function checkVariantVersion(version: string, variants: string[]) {
+    if (!version.endsWith('nightly')) {
+        throw new Error(`Variants are currently only available for nightly builds (e.g. 'nightly' or '1.13-nightly'), but version '${version}' was requested with variants '${variants.join(', ')}'.`)
+    }
+}
+
+/**
+ * @returns The nightlies.json entry of the build of `version` (a nightly channel) whose set of variants equals `variants`.
+ */
+export function getVariantFileInfo(nightliesInfo, version: string, arch: string, variants: string[], platform: string = osPlat) {
+    const requested = [...variants].sort()
+    const requestedName = requested.join(', ')
+
+    checkVariantVersion(version, requested)
+
+    const channel = nightliesInfo[version]
+    if (!channel) {
+        throw new Error(`Could not find nightly channel '${version}' in nightlies.json`)
+    }
+
+    const sameSet = (a: string[], b: string[]) => {
+        const sa = new Set(a)
+        const sb = new Set(b)
+        return sa.size === sb.size && [...sa].every((x) => sb.has(x))
+    }
+
+    const platformFiles = (channel.variants || []).filter((file) =>
+        file.os == osMap[platform] && file.arch == archMap[arch] && file.extension == 'tar.gz' && Array.isArray(file.variants)
+    )
+    const matches = platformFiles.filter((file) => sameSet(file.variants, requested))
+
+    if (matches.length === 0) {
+        const available = platformFiles.map((file) => `'${[...file.variants].sort().join(', ')}'`)
+        const availableMsg = available.length > 0 ? `Available variants: ${available.join('; ')}` : 'No variants are available for this platform.'
+        throw new Error(`Could not find variant '${requestedName}' of ${archMap[arch]}/${version} for ${osMap[platform]}. ${availableMsg}`)
+    }
+    if (matches.length > 1) {
+        throw new Error(`Found more than one build of variant '${requestedName}' of ${archMap[arch]}/${version} for ${osMap[platform]} in nightlies.json`)
+    }
+
+    return matches[0]
 }
 
 /**
@@ -349,7 +470,16 @@ export function getFileInfo(versionInfo, version: string, arch: string) {
     throw err
 }
 
-export function getDownloadURL(fileInfo, version: string, arch: string): string {
+export function getDownloadURL(fileInfo, version: string, arch: string, variantFileInfo: any = null): string {
+    // variant builds: use the URL listed in nightlies.json
+    if (variantFileInfo !== null) {
+        const url: string = variantFileInfo.url
+        if (!allowedVariantURLPrefixes.some((prefix) => url.startsWith(prefix))) {
+            throw new Error(`nightlies.json points at a download location outside of Julia's download servers: ${url}. Aborting for security reasons.`)
+        }
+        return url
+    }
+
     const baseURL = `https://julialangnightlies-s3.julialang.org/bin/${osMap[osPlat]}/${arch}`
 
     // release branch nightlies, e.g. 1.6-nightlies should return .../bin/linux/x64/1.6/julia-latest-linux64.tar.gz
@@ -370,10 +500,11 @@ export function getDownloadURL(fileInfo, version: string, arch: string): string 
     return fileInfo.url
 }
 
-export async function installJulia(dest: string, versionInfo, version: string, arch: string): Promise<string> {
+export async function installJulia(dest: string, versionInfo, version: string, arch: string, variantFileInfo: any = null): Promise<string> {
     // Download Julia
+    // Variant builds are only available for nightlies, so `fileInfo` is null for them
     const fileInfo = getFileInfo(versionInfo, version, arch)
-    const downloadURL = getDownloadURL(fileInfo, version, arch)
+    const downloadURL = getDownloadURL(fileInfo, version, arch, variantFileInfo)
     core.debug(`downloading Julia from ${downloadURL}`)
 
     // Occasionally the connection is reset for unknown reasons
