@@ -3,8 +3,11 @@ description: 'Setup a Julia environment and add it to the PATH'
 author: 'Sascha Mann'
 inputs:
   version:
-    description: 'The Julia version to download (if necessary) and use. Use a string input to avoid unwanted decimal conversion e.g. 1.10 without quotes will be interpreted as 1.1. Examples: "1", "1.10", "lts", "pre"'
-    default: '1'
+    description: 'The Julia version to download (if necessary) and use. Use a string input to avoid unwanted decimal conversion e.g. 1.10 without quotes will be interpreted as 1.1. Examples: "1", "1.10", "lts", "pre". Defaults to "1" when neither version nor version-file is set.'
+    required: false
+  version-file:
+    description: 'Path to a .tool-versions file containing the Julia version to download (if necessary) and use. Cannot be used simultaneously with the `version` input.'
+    required: false
   include-all-prereleases:
     description: 'Include prereleases when matching the Julia version to available versions.'
     required: false
